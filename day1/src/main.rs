@@ -1,13 +1,17 @@
 use std::collections::HashMap;
-use std::fs;
 use std::iter::zip;
 use regex::Regex;
 
+const DAY: u8 = 1;
+
 fn main() {
 
-    let (col1, col2) = load_data("day1/input.txt");
+    let input = aocutil::load_input(DAY);
+    let (col1, col2) = parse_input(&input);
 
-    let part1: i64 = zip(&col1, &col2).map(|pair|(pair.0 - pair.1).abs()).sum();
+    let part1: i64 = zip(&col1, &col2)
+        .map(|pair|(pair.0 - pair.1).abs())
+        .sum();
     println!("Part 1: {part1}");
 
     let mut scores = HashMap::new();
@@ -15,15 +19,14 @@ fn main() {
         let score = scores.entry(*c2).or_insert(0);
         *score += c2;
     }
-    let part2: i64 = col1.iter().map(|&c1|*scores.entry(c1).or_default()).sum();
+    let part2: i64 = col1.iter()
+        .map(|&c1|*scores.entry(c1).or_default())
+        .sum();
     println!("Part 2: {part2}");
 
 }
 
-fn load_data(filename: &str) -> (Vec<i64>, Vec<i64>) {
-
-    let input = fs::read_to_string(filename).expect("Unable to read file");
-
+fn parse_input(input: &str) -> (Vec<i64>, Vec<i64>) {
     let mut col1 = vec![];
     let mut col2 = vec![];
     let re = Regex::new(r"^(\d+) +(\d+)$").unwrap();

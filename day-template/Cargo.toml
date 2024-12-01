@@ -1,9 +1,8 @@
 [package]
-name = "day1"
+name = "day99"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-regex = { workspace = true }
 aocutil = { workspace = true }
-indoc = { workspace = true }
+regex = { workspace = true }

@@ -15,8 +15,8 @@ fn main() {
     println!("Part 1: {part1}");
 
     let mut scores = HashMap::new();
-    for c2 in &col2 {
-        let score = scores.entry(*c2).or_insert(0);
+    for &c2 in &col2 {
+        let score = scores.entry(c2).or_insert(0);
         *score += c2;
     }
     let part2: i64 = col1.iter()

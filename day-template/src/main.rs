@@ -3,7 +3,7 @@ use regex::Regex;
 const DAY: u8 = 99; // FIXME
 
 fn main() {
-    let input = aocutil::load_input(DAY);
+    let input = aocutil::load_test_input(DAY);
     let _ = parse_input(&input);
 
     let part1 : i64 = 0; // TODO

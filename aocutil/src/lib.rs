@@ -8,7 +8,7 @@ pub fn load_test_input(day: u8) -> String {
 }
 
 pub fn load_input(day: u8) -> String {
-    load_file(&format!("day{day}/test_input.txt"))
+    load_file(&format!("day{day}/input.txt"))
 }
 
 fn load_file(filename: &str) -> String {

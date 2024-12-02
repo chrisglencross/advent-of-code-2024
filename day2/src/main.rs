@@ -11,14 +11,16 @@ fn main() {
         .count();
     println!("Part 1: {part1}");
 
-    let part2 = rows.iter().filter(|r| is_safe_with_dampener(r)).count();
+    let part2 = rows.iter()
+        .filter(|r| is_safe_with_dampener(r))
+        .count();
     println!("Part 2: {part2}");
 }
 
 fn is_safe(row: &Vec<i64>) -> bool {
-    return (row.iter().is_sorted() || row.iter().rev().is_sorted()) &&
+    (row.iter().is_sorted() || row.iter().rev().is_sorted()) &&
         zip(&row[0..row.len() - 1], &row[1..])
-            .all(|(&n0, &n1)| (1..=3).contains(&(n1 - n0).abs()));
+            .all(|(&n0, &n1)| (1..=3).contains(&(n1 - n0).abs()))
 }
 
 fn is_safe_with_dampener(row: &Vec<i64>) -> bool {

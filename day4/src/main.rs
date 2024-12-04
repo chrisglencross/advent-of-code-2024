@@ -16,17 +16,16 @@ fn main() {
 }
 
 fn count_xmas(grid: &Grid) -> usize {
-    let word = "XMAS".to_string();
     let compass8 = compass8::directions();
     grid.all_coords().iter()
         .map(|&start|
             compass8.values().iter()
-                .filter(|&direction| is_word_in_line(grid, &word, start, direction))
+                .filter(|&direction| is_word_in_line(grid, "XMAS", start, direction))
                 .count())
         .sum()
 }
 
-fn is_word_in_line(grid: &Grid, word: &String, start: &Coord, direction: &Direction) -> bool {
+fn is_word_in_line(grid: &Grid, word: &str, start: &Coord, direction: &Direction) -> bool {
     word.chars().enumerate().all(|(index, letter)| {
         let steps = i64::try_from(index).unwrap();
         let grid_cell = grid.get_or(direction.forward_from(start, steps), ' ');

@@ -1,151 +1,110 @@
+use std::collections::HashMap;
 use std::fmt;
-use std::fmt::{Debug, Display};
 use crate::Coord;
 
-pub struct DirectionScheme {
+#[derive(Clone)]
+struct DirectionDef {
     name: String,
-    values: Vec<&'static dyn Direction>,
+    delta: (i64, i64),
+    left: String,
+    right: String,
+    reverse: String
 }
 
-impl DirectionScheme {
-    pub fn parse(&self, value: &str) -> &dyn Direction {
-        for &dir in &self.values {
-            if dir.to_string() == value {
-                return dir;
-            }
+impl DirectionDef {
+    fn new(name: &str, delta: (i64, i64), left: &str, right: &str, reverse: &str) -> Self {
+        Self {
+            name: String::from(name),
+            delta,
+            left: String::from(left),
+            right: String::from(right),
+            reverse: String::from(reverse)
         }
-        panic!("Direction '{}' should be valid for scheme {}", value, self.name);
-    }
-    pub fn values(&self) -> &Vec<&dyn Direction> {
-        &self.values
     }
 }
 
-pub trait Direction: Debug + Display + ToString {
-    fn move_forward(&self, from: Coord, distance: i64) -> Coord;
-    fn turn_left(&self) -> &dyn Direction;
-    fn turn_right(&self) -> &dyn Direction;
-    fn reverse(&self) -> &dyn Direction;
+pub struct Directions {
+    direction_defs: HashMap<String, DirectionDef>
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum UDLRDirection { U, R, D, L }
+pub struct Direction<'a> {
+    direction_def: &'a DirectionDef,
+    directions: &'a Directions
+}
 
-impl Display for UDLRDirection {
+impl Direction<'_> {
+    pub fn step_from(&self, coord: &Coord) -> Coord {
+        self.forward_from(coord, 1)
+    }
+    pub fn forward_from(&self, coord: &Coord, distance: i64) -> Coord {
+        let (x, y) = self.direction_def.delta;
+        (coord.0 + x * distance, coord.1 + y * distance)
+    }
+    pub fn left(&self) -> Direction {
+        self.directions.parse(&self.direction_def.left)
+    }
+    pub fn right(&self) -> Direction {
+        self.directions.parse(&self.direction_def.right)
+    }
+    pub fn reverse(&self) -> Direction {
+        self.directions.parse(&self.direction_def.reverse)
+    }
+}
+
+impl fmt::Display for Direction<'_> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        Debug::fmt(self, f)
+        write!(f, "{}", self.direction_def.name)
     }
 }
 
-impl Direction for UDLRDirection {
-    fn move_forward(&self, from: Coord, distance: i64) -> Coord {
-        match self {
-            UDLRDirection::U => Coord(from.0, from.1 - distance),
-            UDLRDirection::R => Coord(from.0 + distance, from.1),
-            UDLRDirection::D => Coord(from.0, from.1 + distance),
-            UDLRDirection::L => Coord(from.0 - distance, from.1),
-        }
-    }
-    fn turn_left(&self) -> &dyn Direction {
-        match self {
-            UDLRDirection::U => &UDLRDirection::L,
-            UDLRDirection::R => &UDLRDirection::U,
-            UDLRDirection::D => &UDLRDirection::R,
-            UDLRDirection::L => &UDLRDirection::D,
-        }
-    }
-    fn turn_right(&self) -> &dyn Direction {
-        match self {
-            UDLRDirection::U => &UDLRDirection::R,
-            UDLRDirection::R => &UDLRDirection::D,
-            UDLRDirection::D => &UDLRDirection::L,
-            UDLRDirection::L => &UDLRDirection::U,
-        }
-    }
-    fn reverse(&self) -> &dyn Direction {
-        match self {
-            UDLRDirection::U => &UDLRDirection::D,
-            UDLRDirection::R => &UDLRDirection::L,
-            UDLRDirection::D => &UDLRDirection::U,
-            UDLRDirection::L => &UDLRDirection::R,
-        }
+impl fmt::Debug for Direction<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Direction")
+            .field("name", &self.direction_def.name)
+            .field("delta", &self.direction_def.delta)
+            .finish()
     }
 }
 
-pub fn scheme(name: &str) -> DirectionScheme {
-    match name {
-        "UDLR" => DirectionScheme {
-            name: "UDLR".to_string(),
-            values: vec![&UDLRDirection::U, &UDLRDirection::R, &UDLRDirection::D, &UDLRDirection::L],
-        },
-        "NSEW" => DirectionScheme {
-            name: "NSEW".to_string(),
-            values: vec![&NSEWDirection::N, &NSEWDirection::E, &NSEWDirection::S, &NSEWDirection::W],
-        },
-        _ => panic!("Direction scheme should be 'UDLR' or 'NSEW'")
+impl Directions {
+    pub fn parse(&self, name: &str) -> Direction {
+        let direction_def = self.direction_defs.get(&String::from(name)).unwrap();
+        Direction{direction_def, directions: self}
+    }
+    pub fn values(&self) -> Vec<Direction> {
+        self.direction_defs.values()
+            .map(|d|Direction{direction_def: d, directions: self})
+            .collect()
     }
 }
 
-#[derive(Debug, PartialEq, Eq)]
-enum NSEWDirection { N, E, S, W }
 
-impl fmt::Display for NSEWDirection {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        fmt::Debug::fmt(self, f)
+pub mod compass4 {
+    use crate::direction::{DirectionDef, Directions};
+    pub fn directions() -> Directions {
+        Directions{
+            direction_defs: vec![
+                DirectionDef::new("N", (0, -1), "W", "E", "S"),
+                DirectionDef::new("E", (1, 0), "N", "S", "W"),
+                DirectionDef::new("S", (0, 1), "E", "W", "N"),
+                DirectionDef::new("W", (-1, 0), "S", "N", "E"),
+            ].iter().map(|d|(d.name.clone(), d.clone())).collect()}
     }
 }
 
-impl Direction for NSEWDirection {
-    fn move_forward(&self, from: Coord, distance: i64) -> Coord {
-        match self {
-            NSEWDirection::N => Coord(from.0, from.1 - distance),
-            NSEWDirection::E => Coord(from.0 + distance, from.1),
-            NSEWDirection::S => Coord(from.0, from.1 + distance),
-            NSEWDirection::W => Coord(from.0 - distance, from.1),
-        }
-    }
-    fn turn_left(&self) -> &dyn Direction {
-        match self {
-            NSEWDirection::N => &NSEWDirection::W,
-            NSEWDirection::E => &NSEWDirection::N,
-            NSEWDirection::S => &NSEWDirection::E,
-            NSEWDirection::W => &NSEWDirection::S,
-        }
-    }
-    fn turn_right(&self) -> &dyn Direction {
-        match self {
-            NSEWDirection::N => &NSEWDirection::E,
-            NSEWDirection::E => &NSEWDirection::S,
-            NSEWDirection::S => &NSEWDirection::W,
-            NSEWDirection::W => &NSEWDirection::N,
-        }
-    }
-    fn reverse(&self) -> &dyn Direction {
-        match self {
-            NSEWDirection::N => &NSEWDirection::S,
-            NSEWDirection::E => &NSEWDirection::W,
-            NSEWDirection::S => &NSEWDirection::N,
-            NSEWDirection::W => &NSEWDirection::E,
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use std::ops::Deref;
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        assert_eq!(UDLRDirection::U.turn_left().to_string(), "L");
-        assert_eq!(NSEWDirection::N.turn_left().to_string(), "W");
-        assert_eq!(UDLRDirection::U.to_string(), "U");
-        assert_eq!(UDLRDirection::U.move_forward(Coord(0, 0), 5), Coord(0, -5));
-    }
-
-
-    #[test]
-    fn test_nsew_scheme() {
-        assert_eq!(scheme("NSEW").parse("N").to_string(), "N");
+pub mod compass8 {
+    use crate::direction::{DirectionDef, Directions};
+    pub fn directions() -> Directions {
+        Directions{
+            direction_defs: vec![
+                DirectionDef::new("N", (0, -1), "W", "E", "S"),
+                DirectionDef::new("NE", (1, -1), "W", "E", "SW"),
+                DirectionDef::new("E", (1, 0), "N", "S", "W"),
+                DirectionDef::new("SE", (1, 1), "W", "E", "NW"),
+                DirectionDef::new("S", (0, 1), "E", "W", "N"),
+                DirectionDef::new("SW", (-1, 1), "W", "E", "NE"),
+                DirectionDef::new("W", (-1, 0), "S", "N", "E"),
+                DirectionDef::new("NW", (-1, -1), "S", "N", "SE"),
+            ].iter().map(|d|(d.name.clone(), d.clone())).collect()}
     }
 }

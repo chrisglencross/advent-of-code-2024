@@ -30,30 +30,30 @@ impl Grid {
         let mut data = HashMap::new();
         for (y, row) in rows.enumerate() {
             for (x, cell) in row.chars().enumerate() {
-                data.insert(Coord(i64::try_from(x).unwrap(), i64::try_from(y).unwrap()), cell);
+                data.insert((i64::try_from(x).unwrap(), i64::try_from(y).unwrap()), cell);
             }
         }
         Grid::new_with_data(data)
     }
 
     pub fn min_x(&self) -> i64 {
-        self.data.keys().min_by_key(|Coord(x, _y)| x).expect("grid is empty").0
+        self.data.keys().min_by_key(|(x, _y)| x).expect("grid is empty").0
     }
 
     pub fn max_x(&self) -> i64 {
-        self.data.keys().max_by_key(|Coord(x, _y)| x).expect("grid is empty").0
+        self.data.keys().max_by_key(|(x, _y)| x).expect("grid is empty").0
     }
 
     pub fn min_y(&self) -> i64 {
-        self.data.keys().min_by_key(|Coord(_x, y)| y).expect("grid is empty").1
+        self.data.keys().min_by_key(|(_x, y)| y).expect("grid is empty").1
     }
 
     pub fn max_y(&self) -> i64 {
-        self.data.keys().max_by_key(|Coord(_x, y)| y).expect("grid is empty").1
+        self.data.keys().max_by_key(|(_x, y)| y).expect("grid is empty").1
     }
 
     pub fn get_bounds(&self) -> (Coord, Coord) {
-        (Coord(self.min_x(), self.min_y()), Coord(self.max_x()+1, self.max_y()+1))
+        ((self.min_x(), self.min_y()), (self.max_x()+1, self.max_y()+1))
     }
 
     pub fn get_width(&self) -> i64 {
@@ -65,7 +65,7 @@ impl Grid {
     }
 
     pub fn get_size(&self) -> Coord  {
-        Coord(self.get_width(), self.get_height())
+        (self.get_width(), self.get_height())
     }
 
     pub fn find_cell(&self, find: char) -> Option<Coord> {
@@ -84,7 +84,7 @@ impl Grid {
                 result.push(coord)
             }
         }
-        result.sort_by_key(|&Coord(x, y)| (y, x));
+        result.sort_by_key(|&(x, y)| (y, x));
         result
     }
 
@@ -95,6 +95,10 @@ impl Grid {
 
     pub fn get_or(&self, coord: Coord, default: char) -> char {
         self.get(coord).unwrap_or(default)
+    }
+
+    pub fn all_coords(&self) -> Vec<&Coord> {
+        self.data.keys().collect()
     }
 
     pub fn index_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Coord> {
@@ -123,10 +127,10 @@ impl Grid {
 
 impl fmt::Debug for Grid {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let (Coord(x0, y0), Coord(x1, y1)) = self.get_bounds();
+        let ((x0, y0), (x1, y1)) = self.get_bounds();
         for y in y0..y1 {
             for x in x0..x1 {
-                let c = self.get(Coord(x, y)).unwrap_or(' ');
+                let c = self.get((x, y)).unwrap_or(' ');
                 f.write_char(c)?;
             }
             f.write_char('\n')?;
@@ -148,7 +152,7 @@ mod tests {
         assert_eq!(grid.max_y(), 2);
 
         assert_eq!(grid.find_cell('?'), None);
-        assert_eq!(grid.find_cell('*'), Some(Coord(3, 1)));
-        assert_eq!(grid.find_cells('g'), vec![Coord(1, 2), Coord(2, 2), Coord(3, 2)]);
+        assert_eq!(grid.find_cell('*'), Some((3, 1)));
+        assert_eq!(grid.find_cells('g'), vec![(1, 2), (2, 2), (3, 2)]);
     }
 }

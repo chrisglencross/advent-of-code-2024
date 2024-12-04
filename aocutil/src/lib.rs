@@ -20,5 +20,4 @@ fn load_file(filename: &str) -> String {
     input
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, Ord, PartialOrd)]
-pub struct Coord(i64, i64);
+pub type Coord = (i64, i64);

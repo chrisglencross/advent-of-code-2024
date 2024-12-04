@@ -41,8 +41,8 @@ fn count_x(grid: &Grid) -> usize {
     grid.find_cells('A').iter()
         .filter(|&start|
             [&ne, &nw].iter().all(|d| {
-                let c0 = grid.get(d.step_from(&start)).unwrap_or(' ');
-                let c1 = grid.get(d.reverse().step_from(&start)).unwrap_or(' ');
+                let c0 = grid.get_or(d.step_from(&start), ' ');
+                let c1 = grid.get_or(d.reverse().step_from(&start), ' ');
                 (c0 == 'M' && c1 == 'S') || (c0 == 'S' && c1 == 'M')
             })
         ).count()

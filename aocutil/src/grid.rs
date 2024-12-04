@@ -88,12 +88,12 @@ impl Grid {
         result
     }
 
-    pub fn get(&self, coord: Coord) -> Option<char> {
-        let &c = self.data.get(&coord)?;
+    pub fn get(&self, coord: &Coord) -> Option<char> {
+        let &c = self.data.get(coord)?;
         Some(c)
     }
 
-    pub fn get_or(&self, coord: Coord, default: char) -> char {
+    pub fn get_or(&self, coord: &Coord, default: char) -> char {
         self.get(coord).unwrap_or(default)
     }
 
@@ -130,7 +130,7 @@ impl fmt::Debug for Grid {
         let ((x0, y0), (x1, y1)) = self.get_bounds();
         for y in y0..y1 {
             for x in x0..x1 {
-                let c = self.get((x, y)).unwrap_or(' ');
+                let c = self.get(&(x, y)).unwrap_or(' ');
                 f.write_char(c)?;
             }
             f.write_char('\n')?;

@@ -21,14 +21,16 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-/// Returns false if any page in the update has another page before where a rule states it must be
-/// afterward.
+/// Returns false if any page in the update has a prior page that the rules state must come later.
 fn is_valid_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> bool {
     !update.iter().enumerate().any(|(i, &page)|
-        update[0..i].iter().any(|&before_page| rules.contains(&(page, before_page)))
+        update[0..i].iter().any(|&prior| rules.contains(&(page, prior)))
     )
 }
 
+/// Reorders pages to create a valid update. This works by inserting pages one at a
+/// time into a new list, at a location that keeps the new list valid. This assumes that
+/// there's only one possible valid order, which is implied by the question but not stated.
 fn create_valid_update(pages: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
     let mut result: Vec<i64> = vec![];
     for &page in pages {
@@ -41,6 +43,7 @@ fn create_valid_update(pages: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64
             }
         }
     }
+    assert_eq!(pages.len(), result.len());
     result
 }
 

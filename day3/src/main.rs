@@ -23,8 +23,8 @@ fn process(input: &str, part1: bool) -> i64 {
             "don't" => on = false,
             "mul" => if part1 || on {
                 result += args.split(",")
-                    .filter_map(|n|n.parse::<i64>().ok())
-                    .fold(1, |x,y|x*y)
+                    .filter_map(|n| n.parse::<i64>().ok())
+                    .fold(1, |x, y| x * y)
             }
             _ => panic!("Unknown operator {}", op)
         }

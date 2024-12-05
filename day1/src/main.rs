@@ -1,16 +1,16 @@
 use std::collections::HashMap;
 use std::iter::zip;
+
 use regex::Regex;
 
 const DAY: u8 = 1;
 
 fn main() {
-
     let input = aocutil::load_input(DAY);
     let (col1, col2) = parse_input(&input);
 
     let part1: i64 = zip(&col1, &col2)
-        .map(|pair|(pair.0 - pair.1).abs())
+        .map(|pair| (pair.0 - pair.1).abs())
         .sum();
     println!("Part 1: {part1}");
 
@@ -20,10 +20,9 @@ fn main() {
         *score += c2;
     }
     let part2: i64 = col1.iter()
-        .map(|&c1|*scores.entry(c1).or_default())
+        .map(|&c1| *scores.entry(c1).or_default())
         .sum();
     println!("Part 2: {part2}");
-
 }
 
 fn parse_input(input: &str) -> (Vec<i64>, Vec<i64>) {

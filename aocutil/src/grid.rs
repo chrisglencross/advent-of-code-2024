@@ -1,24 +1,23 @@
-use std::collections::HashMap;
 use std::{fmt, fs};
+use std::collections::HashMap;
 use std::fmt::Write;
+
 use crate::Coord;
 
 #[derive(Clone)]
 pub struct Grid {
-    data: HashMap<Coord, char>
+    data: HashMap<Coord, char>,
 }
 
 impl Grid {
-
     pub fn new() -> Grid {
-        Grid{data: HashMap::new()}
+        Grid { data: HashMap::new() }
     }
     pub fn new_with_data(data: HashMap<Coord, char>) -> Grid {
-        Grid{data}
+        Grid { data }
     }
 
     pub fn load(filename: &str) -> Grid {
-
         let content = fs::read_to_string(filename)
             .expect(&format!("Unable to read file {}", filename));
 
@@ -53,7 +52,7 @@ impl Grid {
     }
 
     pub fn get_bounds(&self) -> (Coord, Coord) {
-        ((self.min_x(), self.min_y()), (self.max_x()+1, self.max_y()+1))
+        ((self.min_x(), self.min_y()), (self.max_x() + 1, self.max_y() + 1))
     }
 
     pub fn get_width(&self) -> i64 {
@@ -64,14 +63,14 @@ impl Grid {
         self.max_y() - self.min_y() + 1
     }
 
-    pub fn get_size(&self) -> Coord  {
+    pub fn get_size(&self) -> Coord {
         (self.get_width(), self.get_height())
     }
 
     pub fn find_cell(&self, find: char) -> Option<Coord> {
         for (&coord, &cell) in self.data.iter().by_ref() {
             if cell == find {
-                return Some(coord)
+                return Some(coord);
             }
         }
         None
@@ -122,7 +121,6 @@ impl Grid {
         }
         result
     }
-
 }
 
 impl fmt::Debug for Grid {

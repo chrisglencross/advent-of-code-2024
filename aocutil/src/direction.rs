@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fmt;
+
 use crate::Coord;
 
 #[derive(Clone)]
@@ -8,7 +9,7 @@ struct DirectionDef {
     delta: (i64, i64),
     left: String,
     right: String,
-    reverse: String
+    reverse: String,
 }
 
 impl DirectionDef {
@@ -18,18 +19,18 @@ impl DirectionDef {
             delta,
             left: String::from(left),
             right: String::from(right),
-            reverse: String::from(reverse)
+            reverse: String::from(reverse),
         }
     }
 }
 
 pub struct Directions {
-    direction_defs: HashMap<String, DirectionDef>
+    direction_defs: HashMap<String, DirectionDef>,
 }
 
 pub struct Direction<'a> {
     direction_def: &'a DirectionDef,
-    directions: &'a Directions
+    directions: &'a Directions,
 }
 
 impl Direction<'_> {
@@ -69,11 +70,11 @@ impl fmt::Debug for Direction<'_> {
 impl Directions {
     pub fn parse(&self, name: &str) -> Direction {
         let direction_def = self.direction_defs.get(&String::from(name)).unwrap();
-        Direction{direction_def, directions: self}
+        Direction { direction_def, directions: self }
     }
     pub fn values(&self) -> Vec<Direction> {
         self.direction_defs.values()
-            .map(|d|Direction{direction_def: d, directions: self})
+            .map(|d| Direction { direction_def: d, directions: self })
             .collect()
     }
 }
@@ -81,21 +82,24 @@ impl Directions {
 
 pub mod compass4 {
     use crate::direction::{DirectionDef, Directions};
+
     pub fn directions() -> Directions {
-        Directions{
+        Directions {
             direction_defs: vec![
                 DirectionDef::new("N", (0, -1), "W", "E", "S"),
                 DirectionDef::new("E", (1, 0), "N", "S", "W"),
                 DirectionDef::new("S", (0, 1), "E", "W", "N"),
                 DirectionDef::new("W", (-1, 0), "S", "N", "E"),
-            ].iter().map(|d|(d.name.clone(), d.clone())).collect()}
+            ].iter().map(|d| (d.name.clone(), d.clone())).collect()
+        }
     }
 }
 
 pub mod compass8 {
     use crate::direction::{DirectionDef, Directions};
+
     pub fn directions() -> Directions {
-        Directions{
+        Directions {
             direction_defs: vec![
                 DirectionDef::new("N", (0, -1), "W", "E", "S"),
                 DirectionDef::new("NE", (1, -1), "W", "E", "SW"),
@@ -105,6 +109,7 @@ pub mod compass8 {
                 DirectionDef::new("SW", (-1, 1), "W", "E", "NE"),
                 DirectionDef::new("W", (-1, 0), "S", "N", "E"),
                 DirectionDef::new("NW", (-1, -1), "S", "N", "SE"),
-            ].iter().map(|d|(d.name.clone(), d.clone())).collect()}
+            ].iter().map(|d| (d.name.clone(), d.clone())).collect()
+        }
     }
 }

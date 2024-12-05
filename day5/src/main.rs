@@ -24,9 +24,9 @@ fn main() {
 /// Returns false if any page in the update has another page before it that is required after it
 fn is_update_valid(update: &Vec<i64>, before_after: &HashMap<i64, Vec<i64>>) -> bool {
     !update.iter().enumerate().any(|(i, page)| {
-        let pages_before = &update[0..i];
+        let before_pages = &update[0..i];
         match before_after.get(page) {
-            Some(required_after) => pages_before.iter().any(|page| required_after.contains(page)),
+            Some(required_after) => before_pages.iter().any(|before_page| required_after.contains(before_page)),
             None => false
         }
     })

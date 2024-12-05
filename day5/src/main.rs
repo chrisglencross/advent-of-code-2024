@@ -26,7 +26,7 @@ fn main() {
 }
 
 fn sort_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
-    update.clone().iter()
+    update.iter()
         .sorted_by(|&a, &b|
             if rules.contains(&(*a, *b)) {
                 Ordering::Less

@@ -1,5 +1,6 @@
 use std::cmp::Ordering;
 use std::collections::HashSet;
+
 use itertools::Itertools;
 
 const DAY: u8 = 5;
@@ -14,7 +15,7 @@ fn main() {
         let sorted_update = sort_update(&update, &rules);
         let mid = sorted_update[sorted_update.len() / 2];
         if sorted_update == update {
-            part1 += mid
+            part1 += mid;
         } else {
             part2 += mid;
         }
@@ -33,7 +34,7 @@ fn sort_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
                 Ordering::Greater
             }
         )
-        .map(|&i|i)
+        .map(|&i| i)
         .collect()
 }
 

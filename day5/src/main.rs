@@ -1,4 +1,6 @@
+use std::cmp::Ordering;
 use std::collections::HashSet;
+use itertools::Itertools;
 
 const DAY: u8 = 5;
 
@@ -9,11 +11,12 @@ fn main() {
     let mut part1 = 0;
     let mut part2 = 0;
     for update in updates {
-        if is_valid_update(&update, &rules) {
-            part1 += update[update.len() / 2]
+        let sorted_update = sort_update(&update, &rules);
+        let mid = sorted_update[sorted_update.len() / 2];
+        if sorted_update == update {
+            part1 += mid
         } else {
-            let valid_update = create_valid_update(&update, &rules);
-            part2 += valid_update[valid_update.len() / 2];
+            part2 += mid;
         }
     }
 
@@ -21,30 +24,17 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-/// Returns false if any page in the update has a prior page that the rules state must come later.
-fn is_valid_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> bool {
-    !update.iter().enumerate().any(|(i, &page)|
-        update[0..i].iter().any(|&prior| rules.contains(&(page, prior)))
-    )
-}
-
-/// Reorders pages to create a valid update. This works by inserting pages one at a
-/// time into a new list, at a location that keeps the new list valid. This assumes that
-/// there's only one possible valid order, which is implied by the question but not stated.
-fn create_valid_update(pages: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
-    let mut result: Vec<i64> = vec![];
-    for &page in pages {
-        for i in 0..result.len() + 1 {
-            let mut test = result.clone();
-            test.insert(i, page);
-            if is_valid_update(&test, rules) {
-                result = test;
-                break;
+fn sort_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
+    update.clone().iter()
+        .sorted_by(|&a, &b|
+            if rules.contains(&(*a, *b)) {
+                Ordering::Less
+            } else {
+                Ordering::Greater
             }
-        }
-    }
-    assert_eq!(pages.len(), result.len());
-    result
+        )
+        .map(|&i|i)
+        .collect()
 }
 
 fn parse_input(input: &str) -> (HashSet<(i64, i64)>, Vec<Vec<i64>>) {

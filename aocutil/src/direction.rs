@@ -1,7 +1,7 @@
 use std::fmt;
 use crate::Coord;
 
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Eq, PartialEq, Hash)]
 pub struct Direction {
     name: &'static str,
     delta: (i64, i64),

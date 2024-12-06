@@ -92,6 +92,10 @@ impl Grid {
         Some(c)
     }
 
+    pub fn set(&mut self, coord: Coord, c: char) {
+        self.data.insert(coord, c);
+    }
+
     pub fn get_or(&self, coord: &Coord, default: char) -> char {
         self.get(coord).unwrap_or(default)
     }

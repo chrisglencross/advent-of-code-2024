@@ -28,12 +28,16 @@ pub struct Directions {
     direction_defs: HashMap<String, DirectionDef>,
 }
 
+#[derive(Clone)]
 pub struct Direction<'a> {
     direction_def: &'a DirectionDef,
     directions: &'a Directions,
 }
 
-impl Direction<'_> {
+impl<'a> Direction<'a> {
+    pub fn name(&self) -> String {
+        self.direction_def.name.clone()
+    }
     pub fn step_from(&self, coord: &Coord) -> Coord {
         self.forward_from(coord, 1)
     }

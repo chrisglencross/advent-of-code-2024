@@ -24,16 +24,17 @@ fn main() {
 
 fn walk_grid(grid: &Grid, start: Coord) -> (HashSet<Coord>, bool) {
     let directions = Compass4::new();
+
+    let mut direction = directions.north();
     let mut location = start;
-    let mut direction = &directions.n;
     let mut locations = HashSet::new();
     let mut states = HashSet::new();
     let mut looped = true;
 
     while !states.contains(&(location, direction.name())) {
         locations.insert(location);
-        let next_location = direction.step_from(&location);
-        let symbol = grid.get(&next_location);
+        let next_location = direction.step(&location);
+        let symbol = grid.get(next_location);
         match symbol {
             Some('#') => {
                 direction = directions.right(direction);

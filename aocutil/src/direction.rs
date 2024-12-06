@@ -17,10 +17,10 @@ impl Direction {
     pub fn delta(&self) -> (i64, i64) {
         self.delta
     }
-    pub fn step_from(&self, coord: &Coord) -> Coord {
-        self.forward_from(coord, 1)
+    pub fn step(&self, coord: &Coord) -> Coord {
+        self.forward(coord, 1)
     }
-    pub fn forward_from(&self, coord: &Coord, distance: i64) -> Coord {
+    pub fn forward(&self, coord: &Coord, distance: i64) -> Coord {
         let (x, y) = self.delta;
         (coord.0 + x * distance, coord.1 + y * distance)
     }
@@ -45,10 +45,10 @@ pub trait Directions {
 }
 
 pub struct Compass4 {
-    pub n: Direction,
-    pub e: Direction,
-    pub s: Direction,
-    pub w: Direction,
+    n: Direction,
+    e: Direction,
+    s: Direction,
+    w: Direction,
 }
 
 impl Directions for Compass4 {
@@ -96,17 +96,29 @@ impl Compass4 {
             w: Direction::new("W", (-1, 0)),
         }
     }
+    pub fn north(&self) -> &Direction {
+        &self.n
+    }
+    pub fn east(&self) -> &Direction {
+        &self.e
+    }
+    pub fn south(&self) -> &Direction {
+        &self.s
+    }
+    pub fn west(&self) -> &Direction {
+        &self.w
+    }
 }
 
 pub struct Compass8 {
     n: Direction,
-    pub ne: Direction,
+    ne: Direction,
     e: Direction,
     se: Direction,
     s: Direction,
     sw: Direction,
     w: Direction,
-    pub nw: Direction,
+    nw: Direction,
 }
 
 impl Directions for Compass8 {
@@ -169,5 +181,29 @@ impl Compass8 {
             w: Direction::new("W", (-1, 0)),
             nw: Direction::new("NW", (-1, -1)),
         }
+    }
+    pub fn north(&self) -> &Direction {
+        &self.n
+    }
+    pub fn northeast(&self) -> &Direction {
+        &self.ne
+    }
+    pub fn east(&self) -> &Direction {
+        &self.e
+    }
+    pub fn southeast(&self) -> &Direction {
+        &self.se
+    }
+    pub fn south(&self) -> &Direction {
+        &self.s
+    }
+    pub fn southwest(&self) -> &Direction {
+        &self.sw
+    }
+    pub fn west(&self) -> &Direction {
+        &self.w
+    }
+    pub fn northwest(&self) -> &Direction {
+        &self.nw
     }
 }

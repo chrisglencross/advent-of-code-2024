@@ -1,15 +1,15 @@
 use std::fmt;
 use crate::Coord;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub struct Direction {
-    name: String,
+    name: &'static str,
     delta: (i64, i64),
 }
 
 impl Direction {
-    fn new(name: &str, delta: (i64, i64)) -> Direction {
-        Direction{name: name.to_string(), delta}
+    fn new(name: &'static str, delta: (i64, i64)) -> Direction {
+        Direction{name, delta}
     }
     pub fn name(&self) -> &str {
         &self.name

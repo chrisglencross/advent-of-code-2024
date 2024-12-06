@@ -22,25 +22,25 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-fn walk_grid(grid: &Grid, start: Coord) -> (Vec<Coord>, bool) {
-    let mut guard = start;
+fn walk_grid(grid: &Grid, start: Coord) -> (HashSet<Coord>, bool) {
     let directions = Compass4::new();
-    let mut direction = directions.parse("N");
-    let mut visited = Vec::new();
+    let mut location = start;
+    let mut direction = &directions.n;
+    let mut locations = HashSet::new();
     let mut states = HashSet::new();
     let mut looped = true;
 
-    while !states.contains(&(guard, direction.name())) {
-        visited.push(guard);
-        let next = direction.step_from(&guard);
-        let cell = grid.get(&next);
-        match cell {
+    while !states.contains(&(location, direction.name())) {
+        locations.insert(location);
+        let next_location = direction.step_from(&location);
+        let symbol = grid.get(&next_location);
+        match symbol {
             Some('#') => {
                 direction = directions.right(direction);
             },
             Some(_) => {
-                states.insert((guard, direction.name()));
-                guard = next;
+                states.insert((location, direction.name()));
+                location = next_location;
             },
             None => {
                 looped = false;  // walked off stage
@@ -48,5 +48,5 @@ fn walk_grid(grid: &Grid, start: Coord) -> (Vec<Coord>, bool) {
             }
         }
     }
-    (visited, looped)
+    (locations, looped)
 }

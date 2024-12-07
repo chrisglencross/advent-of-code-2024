@@ -31,7 +31,7 @@ fn apply_ops(ops: Vec<&&str>, values: &Vec<i64>) -> i64 {
         .fold(values[0], |result, (op, value)| match *op {
             "+" => result + value,
             "*" => result * value,
-            "||" => (result.to_string() + &value.to_string()).parse::<i64>().unwrap(),
+            "||" => result * 10i64.pow(value.ilog10() + 1) + value,
             _ => panic!()
         })
 }

@@ -1,0 +1,9 @@
+[package]
+name = "day7"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aocutil = { workspace = true }
+regex = { workspace = true }
+itertools = { workspace = true }

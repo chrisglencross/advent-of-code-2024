@@ -24,7 +24,7 @@ fn main() {
 }
 
 fn count_locations(masts: &HashMap<char, Vec<Coord>>,
-                   antinode_locations: fn(Coord, Coord, &HashSet<Coord>) -> Vec<(i64, i64)>,
+                   antinode_locations: fn(Coord, Coord, &HashSet<Coord>) -> Vec<Coord>,
                    grid_coords: &HashSet<Coord>) -> usize {
     masts.values()
         .flat_map(|coords| coords.iter().permutations(2)
@@ -36,14 +36,14 @@ fn count_locations(masts: &HashMap<char, Vec<Coord>>,
         .count()
 }
 
-fn locations_part_1(a: Coord, b: Coord, _grid_coords: &HashSet<Coord>) -> Vec<(i64, i64)> {
+fn locations_part_1(a: Coord, b: Coord, _grid_coords: &HashSet<Coord>) -> Vec<Coord> {
     let d = coord::sub(b, a);
     [coord::sub(a, d), coord::add(b, d)].iter()
         .map(|&c| c)
         .collect()
 }
 
-fn locations_part_2(a: Coord, b: Coord, grid_coords: &HashSet<Coord>) -> Vec<(i64, i64)> {
+fn locations_part_2(a: Coord, b: Coord, grid_coords: &HashSet<Coord>) -> Vec<Coord> {
     let d = coord::sub(b, a);
     (0..)
         .map(|i| [coord::sub(a, coord::mul(d, i)), coord::add(b, coord::mul(d, i))])

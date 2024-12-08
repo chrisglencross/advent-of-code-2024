@@ -2,6 +2,7 @@ use std::fs;
 
 pub mod grid;
 pub mod direction;
+pub mod coord;
 
 pub fn load_test_input(day: u8) -> String {
     load_file(&format!("day{day}/test_input.txt"))
@@ -20,4 +21,3 @@ fn load_file(filename: &str) -> String {
     input
 }
 
-pub type Coord = (i64, i64);

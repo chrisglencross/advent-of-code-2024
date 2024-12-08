@@ -1,10 +1,23 @@
 use std::fmt;
-use crate::Coord;
+use std::hash::{Hash, Hasher};
+use crate::coord::Coord;
 
-#[derive(Clone, Debug, Copy, Eq, PartialEq, Hash)]
+#[derive(Clone, Debug, Copy)]
 pub struct Direction {
     name: &'static str,
     delta: (i64, i64),
+}
+
+impl PartialEq for Direction {
+    fn eq(&self, other: &Self) -> bool {
+        self.name.eq(other.name)
+    }
+}
+
+impl Hash for Direction {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.name.hash(state)
+    }
 }
 
 impl Direction {
@@ -40,7 +53,6 @@ pub trait Directions {
     fn left(&self, from: &Direction) -> &Direction;
     fn right(&self, from: &Direction) -> &Direction;
     fn reverse(&self, from: &Direction) -> &Direction;
-
 
 }
 

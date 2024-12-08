@@ -9,11 +9,11 @@ fn main() {
     let input = aocutil::load_input(DAY);
     let data = parse_input(&input);
 
-    println!("Part 1: {}", get_solution(&data, &vec!["+", "*"]));
-    println!("Part 2: {}", get_solution(&data, &vec!["+", "*", "||"]));
+    println!("Part 1: {}", sum_solutions(&data, &vec!["+", "*"]));
+    println!("Part 2: {}", sum_solutions(&data, &vec!["+", "*", "||"]));
 }
 
-fn get_solution(data: &Vec<(i64, Vec<i64>)>, operators: &Vec<&str>) -> i64 {
+fn sum_solutions(data: &Vec<(i64, Vec<i64>)>, operators: &Vec<&str>) -> i64 {
     data.iter()
         .filter(|(target, values)| can_solve(*target, values, operators))
         .map(|(target, _values)| target)

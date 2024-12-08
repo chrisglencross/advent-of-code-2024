@@ -2,7 +2,7 @@ use std::{fmt, fs};
 use std::collections::HashMap;
 use std::fmt::Write;
 
-use crate::Coord;
+use crate::coord::Coord;
 
 #[derive(Clone)]
 pub struct Grid {

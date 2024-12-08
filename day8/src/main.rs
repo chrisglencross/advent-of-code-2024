@@ -27,7 +27,8 @@ fn count_locations(masts: &HashMap<char, Vec<Coord>>,
                    antinode_locations: fn(Coord, Coord, &HashSet<Coord>) -> Vec<Coord>,
                    grid_coords: &HashSet<Coord>) -> usize {
     masts.values()
-        .flat_map(|coords| coords.iter().permutations(2)
+        .flat_map(|coords| coords.iter()
+            .permutations(2)
             .map(|pair| (pair[0], pair[1]))
             .flat_map(|(&c0, &c1)| antinode_locations(c0, c1, grid_coords))
         )

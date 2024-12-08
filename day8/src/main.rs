@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 use itertools;
 use itertools::Itertools;
@@ -14,41 +14,40 @@ fn main() {
     let grid = Grid::parse(&input);
 
     let masts = grid.index_repeating_cells("", ".");
-    let grid_coords = grid.all_coords();
 
-    let part1 = count_locations(&masts, locations_part_1, &grid_coords);
+    let part1 = count_locations(&masts, locations_part_1, &grid);
     println!("Part 1: {part1}");
 
-    let part2 = count_locations(&masts, locations_part_2, &grid_coords);
+    let part2 = count_locations(&masts, locations_part_2, &grid);
     println!("Part 2: {part2}");
 }
 
 fn count_locations(masts: &HashMap<char, Vec<Coord>>,
-                   antinode_locations: fn(Coord, Coord, &HashSet<Coord>) -> Vec<Coord>,
-                   grid_coords: &HashSet<Coord>) -> usize {
+                   antinode_locations: fn(Coord, Coord, &Grid) -> Vec<Coord>,
+                   grid: &Grid) -> usize {
     masts.values()
         .flat_map(|coords| coords.iter()
             .permutations(2)
             .map(|pair| (pair[0], pair[1]))
-            .flat_map(|(&c0, &c1)| antinode_locations(c0, c1, grid_coords))
+            .flat_map(|(&c0, &c1)| antinode_locations(c0, c1, grid))
         )
         .unique()
-        .filter(|c| grid_coords.contains(c))
+        .filter(|&c| grid.contains_coord(c))
         .count()
 }
 
-fn locations_part_1(a: Coord, b: Coord, _grid_coords: &HashSet<Coord>) -> Vec<Coord> {
+fn locations_part_1(a: Coord, b: Coord, _grid: &Grid) -> Vec<Coord> {
     let d = coord::sub(b, a);
     [coord::sub(a, d), coord::add(b, d)].iter()
         .map(|&c| c)
         .collect()
 }
 
-fn locations_part_2(a: Coord, b: Coord, grid_coords: &HashSet<Coord>) -> Vec<Coord> {
+fn locations_part_2(a: Coord, b: Coord, grid: &Grid) -> Vec<Coord> {
     let d = coord::sub(b, a);
     (0..)
         .map(|i| [coord::sub(a, coord::mul(d, i)), coord::add(b, coord::mul(d, i))])
-        .take_while(|cs| cs.iter().any(|c| grid_coords.contains(c)))
+        .take_while(|cs| cs.iter().any(|&c| grid.contains_coord(c)))
         .flat_map(|cs| cs)
         .collect()
 }

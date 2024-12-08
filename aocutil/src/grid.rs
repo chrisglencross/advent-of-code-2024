@@ -104,6 +104,10 @@ impl Grid {
         self.data.keys().map(|&c| c).collect()
     }
 
+    pub fn contains_coord(&self, coord: Coord) -> bool {
+        self.data.contains_key(&coord)
+    }
+
     pub fn index_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Coord> {
         let mut result = HashMap::new();
         for (&coord, &symbol) in self.data.iter().by_ref() {

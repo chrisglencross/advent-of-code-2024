@@ -11,15 +11,15 @@ fn main() {
     let input = aocutil::load_input(DAY);
     let grid = Grid::parse(&input);
 
-    let part1 = count_locations(locations_for_mast_pair_pt1, &grid);
+    let part1 = count_unique_locations(locations_for_mast_pair_pt1, &grid);
     println!("Part 1: {part1}");
 
-    let part2 = count_locations(locations_for_mast_pair_pt2, &grid);
+    let part2 = count_unique_locations(locations_for_mast_pair_pt2, &grid);
     println!("Part 2: {part2}");
 }
 
-fn count_locations(locations_for_mast_pair: fn(Coord, Coord, &Grid) -> Vec<Coord>,
-                   grid: &Grid) -> usize {
+fn count_unique_locations(locations_for_mast_pair: fn(Coord, Coord, &Grid) -> Vec<Coord>,
+                          grid: &Grid) -> usize {
     let masts = grid.index_repeating_cells("", ".");
     masts.values()
         .flat_map(|coords| coords.iter()

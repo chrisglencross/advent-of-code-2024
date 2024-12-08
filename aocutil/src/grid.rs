@@ -1,5 +1,5 @@
 use std::{fmt, fs};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
 
 use crate::coord::Coord;
@@ -100,8 +100,8 @@ impl Grid {
         self.get(coord).unwrap_or(default)
     }
 
-    pub fn all_coords(&self) -> Vec<&Coord> {
-        self.data.keys().collect()
+    pub fn all_coords(&self) -> HashSet<Coord> {
+        self.data.keys().map(|&c| c).collect()
     }
 
     pub fn index_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Coord> {

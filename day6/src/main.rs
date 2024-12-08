@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use aocutil::Coord;
+use aocutil::coord::Coord;
 use aocutil::direction::{Compass4, Directions};
 use aocutil::grid::Grid;
 

@@ -14,7 +14,7 @@ fn main() {
     let grid = Grid::parse(&input);
 
     let masts = grid.index_repeating_cells("", ".");
-    let grid_coords: HashSet<Coord> = grid.all_coords().iter().map(|&c| *c).collect();
+    let grid_coords: HashSet<Coord> = grid.all_coords();
 
     let part1 = count_locations(&masts, locations_part_1, &grid_coords);
     println!("Part 1: {part1}");

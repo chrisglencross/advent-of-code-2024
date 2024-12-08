@@ -1,4 +1,4 @@
-use aocutil::Coord;
+use aocutil::coord::Coord;
 use aocutil::direction::{Compass8, Direction, Directions};
 use aocutil::grid::Grid;
 
@@ -18,7 +18,7 @@ fn main() {
 fn count_xmas(grid: &Grid) -> usize {
     let directions = Compass8::new();
     grid.all_coords().iter()
-        .map(|&start|
+        .map(|start|
             directions.values().iter()
                 .filter(|&direction| is_word_in_line(grid, "XMAS", start, direction))
                 .count())

@@ -87,6 +87,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "day9"
+version = "0.1.0"
+dependencies = [
+ "aocutil",
+ "itertools",
+]
+
+[[package]]
 name = "day99"
 version = "0.1.0"
 dependencies = [

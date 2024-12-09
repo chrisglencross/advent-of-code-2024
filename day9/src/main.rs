@@ -1,47 +1,13 @@
-use std::cmp::min;
-
 use itertools::Itertools;
 
 use crate::BlockRun::{File, Free};
 
 const DAY: u8 = 9;
 
-#[derive(Clone, Copy, Debug)]
-struct FileBlockRun {
-    id: usize,
-    length: u32,
-}
-
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 enum BlockRun {
     Free { length: u32 },
     File { id: usize, length: u32 },
-}
-
-/// Consumes and returns blocks from the end of a run-length encoded list of blocks.
-struct TailConsumer {
-    current: FileBlockRun,
-    current_remaining: u32,
-    rest: Vec<FileBlockRun>,
-}
-
-impl TailConsumer {
-    fn read(&mut self, mut consume_count: u32) -> Vec<FileBlockRun> {
-        let mut result: Vec<FileBlockRun> = vec![];
-        while consume_count >= self.current_remaining {
-            if self.current_remaining > 0 {
-                result.push(FileBlockRun { id: self.current.id, length: self.current_remaining });
-                consume_count -= self.current_remaining;
-            }
-            self.current = self.rest.pop().unwrap();
-            self.current_remaining = self.current.length;
-        }
-        if consume_count > 0 {
-            result.push(FileBlockRun { id: self.current.id, length: consume_count });
-            self.current_remaining -= consume_count;
-        }
-        result
-    }
 }
 
 fn main() {
@@ -53,35 +19,65 @@ fn main() {
 }
 
 fn compact_part1(fs: &Vec<BlockRun>) -> Vec<BlockRun> {
-    let mut head_consumer = fs.iter();
-    let mut tail_consumer = TailConsumer {
-        current: FileBlockRun { id: 0, length: 0 },
-        current_remaining: 0,
-        rest: to_file_block_run(fs),
-    };
-    let mut blocks_remaining = total_file_blocks(&fs);
-    let mut compacted: Vec<BlockRun> = vec![];
-    while blocks_remaining > 0 {
-        let blocks_to_append = match head_consumer.next().unwrap() {
-            File { id, length } => vec![FileBlockRun { id: *id, length: *length }],
-            Free { length } => tail_consumer.read(*length),
-        };
-        for block in blocks_to_append {
-            compacted.push(File { id: block.id, length: min(block.length, blocks_remaining) });
-            blocks_remaining -= min(block.length, blocks_remaining);
+    let mut compacted = fs.clone();
+    let mut i = 0;
+    while i < compacted.len() {
+        if let Free { length: free_length } = compacted[i] {
+            let last = compacted.pop();
+            if let Some(File { id, length }) = last {
+                if length >= free_length {
+                    compacted[i] = File { id: id, length: free_length };
+                    if length - free_length > 0 {
+                        compacted.push(File { id: id, length: length - free_length })
+                    }
+                } else if length > 0 {
+                    compacted[i] = File { id: id, length: length };
+                    if free_length - length > 0 {
+                        compacted.insert(i + 1, Free { length: free_length - length })
+                    }
+                }
+            }
+        } else {
+            i += 1;
         }
     }
     compacted
 }
 
-fn to_file_block_run(fs: &Vec<BlockRun>) -> Vec<FileBlockRun> {
-    fs.iter()
-        .filter_map(|b| match b {
-            Free { length: _ } => None,
-            File { id, length } => Some(FileBlockRun { id: *id, length: *length })
-        })
-        .collect()
+fn compact_part2(fs: &Vec<BlockRun>) -> Vec<BlockRun> {
+    let mut compacted = fs.clone();
+    for &file in fs.iter().rev() {
+        if let File{id: file_id, length: file_length} = file {
+            if let Some((free_index, free_length)) = find_first_free(&compacted, file_length) {
+                let file_index = find_file_index_by_id(&compacted, file_id);
+                if free_index < file_index {
+                    compacted[file_index] = Free { length: file_length };
+                    compacted[free_index] = File { id: file_id, length: file_length };
+                    if free_length > file_length {
+                        compacted.insert(free_index + 1, Free { length: free_length - file_length });
+                    }
+                }
+            }
+        }
+    }
+    compacted
 }
+
+fn find_file_index_by_id(compacted: &Vec<BlockRun>, file_id: usize) -> usize {
+    compacted.iter().find_position(|f| match f {
+        Free { .. } => false,
+        File { id, .. } => *id == file_id
+    }).unwrap().0
+}
+
+fn find_first_free(fs: &Vec<BlockRun>, min_length: u32) -> Option<(usize, u32)> {
+    fs.iter().enumerate()
+        .find_map(|(i, b)| match b {
+            Free { length } => if *length >= min_length { Some((i, *length)) } else { None },
+            File { .. } => None,
+        })
+}
+
 
 fn checksum(blocks: &Vec<BlockRun>) -> usize {
     let mut total: usize = 0;
@@ -98,45 +94,6 @@ fn checksum(blocks: &Vec<BlockRun>) -> usize {
         };
     }
     total
-}
-
-fn total_file_blocks(fs: &Vec<BlockRun>) -> u32 {
-    fs.iter()
-        .map(|b| match b {
-            Free { .. } => 0,
-            File { length, .. } => *length
-        }).sum()
-}
-
-fn compact_part2(fs: &Vec<BlockRun>) -> Vec<BlockRun> {
-    let files: Vec<FileBlockRun> = to_file_block_run(fs);
-
-    let mut compacted = fs.clone();
-    for file in files.iter().rev() {
-        if let Some((to_index, length)) = find_first_free(&compacted, file.length) {
-            let (from_index, _) = compacted.iter().find_position(|f| match f {
-                Free { .. } => false,
-                File { id, .. } => *id == file.id
-            }).unwrap();
-
-            if to_index < from_index {
-                compacted[from_index] = Free { length: file.length };
-                compacted[to_index] = File { id: file.id, length: file.length };
-                if length > file.length {
-                    compacted.insert(to_index + 1, Free { length: length - file.length });
-                }
-            }
-        }
-    }
-    compacted
-}
-
-fn find_first_free(fs: &Vec<BlockRun>, min_length: u32) -> Option<(usize, u32)> {
-    fs.iter().enumerate()
-        .find_map(|(i, b)| match b {
-            Free { length } => if *length >= min_length { Some((i, *length)) } else { None },
-            File { .. } => None,
-        })
 }
 
 fn parse_input(input: &str) -> Vec<BlockRun> {

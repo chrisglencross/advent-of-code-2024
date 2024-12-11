@@ -6,18 +6,18 @@ fn main() {
     let input = aocutil::load_input(DAY);
     let numbers = parse_input(&input);
 
-    let mut cache: HashMap<(i64, i64), usize> = HashMap::new();
+    let mut cache: HashMap<(u64, u32), usize> = HashMap::new();
     println!("Part 1: {}", length_after_iterations(&numbers, 25, &mut cache));
     println!("Part 2: {}", length_after_iterations(&numbers, 75, &mut cache));
 }
 
-fn length_after_iterations(values: &Vec<i64>, iterations: i64, cache: &mut HashMap<(i64, i64), usize>) -> usize {
+fn length_after_iterations(values: &Vec<u64>, iterations: u32, cache: &mut HashMap<(u64, u32), usize>) -> usize {
     values.iter()
         .map(|&value| length_after_iterations1(value, iterations, cache))
         .sum()
 }
 
-fn length_after_iterations1(value: i64, iterations: i64, cache: &mut HashMap<(i64, i64), usize>) -> usize {
+fn length_after_iterations1(value: u64, iterations: u32, cache: &mut HashMap<(u64, u32), usize>) -> usize {
     if iterations == 0 {
         1
     } else {
@@ -32,13 +32,13 @@ fn length_after_iterations1(value: i64, iterations: i64, cache: &mut HashMap<(i6
     }
 }
 
-fn expand(value: i64) -> Vec<i64> {
-    if value == 0i64 {
+fn expand(value: u64) -> Vec<u64> {
+    if value == 0u64 {
         vec![1]
     } else {
         let digits = value.ilog10() + 1;
         if digits % 2 == 0 {
-            let split = 10i64.pow(digits / 2);
+            let split = 10u64.pow(digits / 2);
             vec![value / split, value % split]
         } else {
             vec![value * 2024]
@@ -46,6 +46,6 @@ fn expand(value: i64) -> Vec<i64> {
     }
 }
 
-fn parse_input(input: &str) -> Vec<i64> {
-    input.split_whitespace().map(|n| n.parse::<i64>().unwrap()).collect()
+fn parse_input(input: &str) -> Vec<u64> {
+    input.split_whitespace().map(|n| n.parse::<u64>().unwrap()).collect()
 }

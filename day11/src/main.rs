@@ -13,7 +13,7 @@ fn main() {
 
 fn length_after_iterations(values: &Vec<i64>, iterations: i64, cache: &mut HashMap<(i64, i64), usize>) -> usize {
     values.iter()
-        .map(|&value| length_after_iterations1(value, iterations - 1, cache))
+        .map(|&value| length_after_iterations1(value, iterations, cache))
         .sum()
 }
 
@@ -24,7 +24,7 @@ fn length_after_iterations1(value: i64, iterations: i64, cache: &mut HashMap<(i6
         match cache.get(&(value, iterations)) {
             Some(&length) => length,
             None => {
-                let length = length_after_iterations(&expand(value), iterations, cache);
+                let length = length_after_iterations(&expand(value), iterations - 1, cache);
                 cache.insert((value, iterations), length);
                 length
             }

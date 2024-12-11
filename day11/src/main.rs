@@ -33,7 +33,7 @@ fn length_after_iterations1(value: u64, iterations: u32, cache: &mut HashMap<(u6
 }
 
 fn expand(value: u64) -> Vec<u64> {
-    if value == 0u64 {
+    if value == 0 {
         vec![1]
     } else {
         let digits = value.ilog10() + 1;

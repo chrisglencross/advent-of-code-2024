@@ -123,7 +123,9 @@ impl Grid {
     pub fn index_repeating_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Vec<Coord>> {
         let mut result = HashMap::new();
         for (&coord, &symbol) in self.data.iter().by_ref() {
-            if (symbols != "" && symbols.contains(symbol)) || (not_symbols != "" && !not_symbols.contains(symbol)) {
+            if (symbols != "" && symbols.contains(symbol))
+                || (not_symbols != "" && !not_symbols.contains(symbol))
+                || (symbols == "" && not_symbols == "") {
                 result.entry(symbol).or_insert(vec![]).push(coord);
             }
         }

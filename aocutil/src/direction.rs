@@ -2,7 +2,7 @@ use std::fmt;
 use std::hash::{Hash, Hasher};
 use crate::coord::Coord;
 
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Eq)]
 pub struct Direction {
     name: &'static str,
     delta: (i64, i64),

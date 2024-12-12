@@ -33,7 +33,7 @@ fn search_summits(grid: &Grid, compass: &Compass4, c: char, coord: Coord) -> Vec
     } else {
         let next_char = char::from_digit(c.to_digit(10).unwrap() + 1u32, 10).unwrap();
         compass.values().iter()
-            .map(|d| d.step(&coord))
+            .map(|d| d.step(coord))
             .filter(|&next_coord| grid.get_or(next_coord, '.') == next_char)
             .flat_map(|next_coord| search_summits(grid, compass, next_char, next_coord))
             .collect()

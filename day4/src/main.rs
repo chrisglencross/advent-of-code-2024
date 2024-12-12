@@ -18,14 +18,14 @@ fn main() {
 fn count_xmas(grid: &Grid) -> usize {
     let directions = Compass8::new();
     grid.all_coords().iter()
-        .map(|start|
+        .map(|&start|
             directions.values().iter()
                 .filter(|&direction| is_word_in_line(grid, "XMAS", start, direction))
                 .count())
         .sum()
 }
 
-fn is_word_in_line(grid: &Grid, word: &str, start: &Coord, direction: &Direction) -> bool {
+fn is_word_in_line(grid: &Grid, word: &str, start: Coord, direction: &Direction) -> bool {
     word.chars().enumerate().all(|(index, letter)| {
         let steps = i64::try_from(index).unwrap();
         let grid_cell = grid.get_or(direction.forward(start, steps), ' ');
@@ -37,10 +37,10 @@ fn is_word_in_line(grid: &Grid, word: &str, start: &Coord, direction: &Direction
 fn count_x(grid: &Grid) -> usize {
     let compass8 = Compass8::new();
     grid.find_cells('A').iter()
-        .filter(|&start|
+        .filter(|&&start|
             [compass8.northeast(), compass8.northwest()].iter().all(|d| {
-                let c0 = grid.get_or(d.step(&start), ' ');
-                let c1 = grid.get_or(compass8.reverse(d).step(&start), ' ');
+                let c0 = grid.get_or(d.step(start), ' ');
+                let c1 = grid.get_or(compass8.reverse(d).step(start), ' ');
                 (c0 == 'M' && c1 == 'S') || (c0 == 'S' && c1 == 'M')
             })
         ).count()

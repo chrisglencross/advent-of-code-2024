@@ -30,12 +30,12 @@ impl Direction {
     pub fn delta(&self) -> (i64, i64) {
         self.delta
     }
-    pub fn step(&self, coord: &Coord) -> Coord {
+    pub fn step(&self, coord: Coord) -> Coord {
         self.forward(coord, 1)
     }
-    pub fn forward(&self, coord: &Coord, distance: i64) -> Coord {
+    pub fn forward(&self, (start_x, start_y): Coord, distance: i64) -> Coord {
         let (x, y) = self.delta;
-        (coord.0 + x * distance, coord.1 + y * distance)
+        (start_x + x * distance, start_y + y * distance)
     }
 }
 

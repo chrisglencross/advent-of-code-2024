@@ -17,10 +17,10 @@ fn main() {
     let mut remaining = grid.all_coords().clone();
     while !remaining.is_empty() {
         let coord = *remaining.iter().next().unwrap();
-        let cell = grid.get(coord).unwrap();
+        let symbol = grid.get(coord).unwrap();
 
-        let area = get_area(&grid, cell, coord, &directions);
-        let perimeter = get_perimeter(&grid, cell, &area, &directions);
+        let area = get_area(&grid, symbol, coord, &directions);
+        let perimeter = get_perimeter(&grid, symbol, &area, &directions);
         let sides = count_perimeter_sides(&perimeter, &directions);
 
         part1 += area.len() * perimeter.len();
@@ -33,24 +33,25 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-fn get_area(grid: &Grid, cell: char, coord: Coord, directions: &Compass4) -> HashSet<Coord> {
+fn get_area(grid: &Grid, symbol: char, coord: Coord, directions: &Compass4) -> HashSet<Coord> {
     let mut area = HashSet::new();
-    collect_area(grid, cell, coord, directions, &mut area);
+    collect_area(grid, symbol, coord, directions, &mut area);
     area
 }
 
-fn collect_area(grid: &Grid, cell: char, coord: Coord, directions: &Compass4, area: &mut HashSet<Coord>) {
-    if grid.get_or(coord, '?') == cell && !area.contains(&coord) {
+fn collect_area(grid: &Grid, symbol: char, coord: Coord, directions: &Compass4, area: &mut HashSet<Coord>) {
+    if grid.get(coord) == Some(symbol) && !area.contains(&coord) {
         area.insert(coord);
-        directions.values().iter().map(|d| d.step(&coord))
-            .for_each(|neighbour| collect_area(grid, cell, neighbour, directions, area));
+        for d in directions.values() {
+            collect_area(grid, symbol, d.step(coord), directions, area);
+        }
     }
 }
 
-fn get_perimeter(grid: &Grid, cell: char, area: &HashSet<Coord>, directions: &Compass4) -> HashSet<(Coord, Direction)> {
+fn get_perimeter(grid: &Grid, symbol: char, area: &HashSet<Coord>, directions: &Compass4) -> HashSet<(Coord, Direction)> {
     area.iter()
-        .flat_map(|&c| directions.values().iter().map(|&d| (c, *d)).collect::<Vec<(Coord, Direction)>>())
-        .filter(|(c, d): &(Coord, Direction)| grid.get_or(d.step(&c), '.') != cell)
+        .flat_map(|&coord| directions.values().iter().map(|&direction| (coord, *direction)).collect::<Vec<(Coord, Direction)>>())
+        .filter(|(coord, direction)| grid.get(direction.step(*coord)) != Some(symbol))
         .collect()
 }
 
@@ -72,8 +73,8 @@ fn remove_side_from_perimeter(mut perimeter: &mut HashSet<(Coord, Direction)>, s
 }
 
 fn remove_side_from_perimeter_in_direction(perimeter: &mut HashSet<(Coord, Direction)>, (coord, direction): (Coord, Direction), move_direction: &Direction) {
-    let mut next_coord = move_direction.step(&coord);
+    let mut next_coord = move_direction.step(coord);
     while perimeter.remove(&(next_coord, direction)) {
-        next_coord = move_direction.step(&next_coord);
+        next_coord = move_direction.step(next_coord);
     }
 }

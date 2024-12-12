@@ -33,7 +33,7 @@ fn walk_grid(grid: &Grid, start: Coord) -> (HashSet<Coord>, bool) {
 
     while !states.contains(&(location, direction.name())) {
         locations.insert(location);
-        let next_location = direction.step(&location);
+        let next_location = direction.step(location);
         let symbol = grid.get(next_location);
         match symbol {
             Some('#') => {

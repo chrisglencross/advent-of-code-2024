@@ -17,8 +17,7 @@ fn main() {
     let mut part2 = 0;
 
     let mut remaining_coords = grid.all_coords().clone();
-    while !remaining_coords.is_empty() {
-        let coord = *remaining_coords.iter().next().unwrap();
+    while let Some(&coord) = remaining_coords.iter().next() {
         let symbol = grid.get(coord).unwrap();
 
         let area_coords = get_area(&grid, symbol, coord, &compass);
@@ -60,13 +59,10 @@ fn get_perimeter(grid: &Grid, symbol: char, area: &HashSet<Coord>, compass: &Com
 fn count_perimeter_sides(perimeter_edges: &HashSet<Edge>, compass: &Compass4) -> usize {
     let mut side_count = 0;
     let mut perimeter_edges_remaining = perimeter_edges.clone();
-    while !perimeter_edges_remaining.is_empty() {
-        side_count += 1;
-
-        let start_edge = perimeter_edges_remaining.iter().next().unwrap().clone();
+    while let Some(&start_edge) = perimeter_edges_remaining.iter().next() {
         let side_edges = side_edges(perimeter_edges, start_edge, compass);
-
         side_edges.iter().for_each(|e| { perimeter_edges_remaining.remove(e); } );
+        side_count += 1;
     }
     side_count
 }

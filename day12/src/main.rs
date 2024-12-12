@@ -28,7 +28,7 @@ fn main() {
         part1 += area_coords.len() * perimeter_edges.len();
         part2 += area_coords.len() * perimeter_sides;
 
-        remaining_coords = remaining_coords.difference(&area_coords).copied().collect();
+        area_coords.iter().for_each(|c| { remaining_coords.remove(c); } );
     }
 
     println!("Part 1: {part1}");
@@ -62,9 +62,11 @@ fn count_perimeter_sides(perimeter_edges: &HashSet<Edge>, compass: &Compass4) ->
     let mut perimeter_edges_remaining = perimeter_edges.clone();
     while !perimeter_edges_remaining.is_empty() {
         side_count += 1;
+
         let start_edge = perimeter_edges_remaining.iter().next().unwrap().clone();
         let side_edges = side_edges(perimeter_edges, start_edge, compass);
-        perimeter_edges_remaining = perimeter_edges_remaining.difference(&side_edges).copied().collect();
+
+        side_edges.iter().for_each(|e| { perimeter_edges_remaining.remove(e); } );
     }
     side_count
 }

@@ -66,10 +66,10 @@ fn count_perimeter_sides(perimeter: &HashSet<(Coord, Direction)>, directions: &C
     sides
 }
 
-fn remove_side_from_perimeter(mut perimeter: &mut HashSet<(Coord, Direction)>, segment: (Coord, Direction), directions: &Compass4) {
+fn remove_side_from_perimeter(perimeter: &mut HashSet<(Coord, Direction)>, segment: (Coord, Direction), directions: &Compass4) {
     perimeter.remove(&segment);
-    remove_side_from_perimeter_in_direction(&mut perimeter, segment, directions.right(&segment.1));
-    remove_side_from_perimeter_in_direction(&mut perimeter, segment, directions.left(&segment.1));
+    remove_side_from_perimeter_in_direction(perimeter, segment, directions.right(&segment.1));
+    remove_side_from_perimeter_in_direction(perimeter, segment, directions.left(&segment.1));
 }
 
 fn remove_side_from_perimeter_in_direction(perimeter: &mut HashSet<(Coord, Direction)>, (coord, direction): (Coord, Direction), move_direction: &Direction) {

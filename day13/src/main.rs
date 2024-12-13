@@ -29,21 +29,17 @@ fn min_score1((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> 
 
 fn min_score2((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> {
 
-    // Gradients of lines
-    let ma = (ay as f64) / (ax as f64);
-    let mb = (by as f64) / (bx as f64);
-
     // We don't handle the case where the lines have the same gradient (YAGNI)
-    // Modular arithmetic may be required to find the best solution?
-    assert_ne!(ma, mb);
+    // Modular arithmetic may be required to find the best solution in this case?
+    assert_ne!(ay * bx, ax * by);
 
-    // Solve equations of lines to find intersection I
-    let ix = ((ty as f64) - mb * (tx as f64)) / (ma - mb);
-    let iy = ma * ix;
+    // Solve equations of lines to find x coordinate of intersection I
+    // This should be a precise integer for actual solutions, otherwise rounded junk
+    let ix = ax * (bx * ty - by * tx) / (ay * bx - ax * by);
 
-    // Find rounded integer approximations of a and b (numbers of button presses)
-    let a = (iy / (ay as f64)).round() as i64;
-    let b = (((ty as f64) - iy) / (by as f64)).round() as i64;
+    // Find integer approximations of a and b (numbers of button presses)
+    let a = ix / ax;
+    let b = (tx - ix) / bx;
 
     // Confirm that a and b integer solutions are correct, otherwise not possible
     if (ax * a + bx * b, ay * a + by * b) == (tx, ty) {

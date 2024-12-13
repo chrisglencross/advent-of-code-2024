@@ -36,11 +36,11 @@ fn min_score2((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> 
     let ix = ((ty as f64) - mb * (tx as f64)) / (ma - mb);
     let iy = ma * ix;
 
-    // Find rounded approximations of a and b (numbers of button presses)
+    // Find rounded integer approximations of a and b (numbers of button presses)
     let a = (iy / (ay as f64)).round() as i64;
     let b = (((ty as f64) - iy) / (by as f64)).round() as i64;
 
-    // Confirm that a and b integers are correct solutions, otherwise no solution
+    // Confirm that a and b integer solutions are correct, otherwise not possible
     if ax * a + bx * b == tx && ay * a + by * b == ty {
         Some(3 * a + b)
     } else {

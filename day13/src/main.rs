@@ -41,7 +41,7 @@ fn min_score2((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> 
     let b = (((ty as f64) - iy) / (by as f64)).round() as i64;
 
     // Confirm that a and b integer solutions are correct, otherwise not possible
-    if ax * a + bx * b == tx && ay * a + by * b == ty {
+    if (ax * a + bx * b, ay * a + by * b) == (tx, ty) {
         Some(3 * a + b)
     } else {
         None

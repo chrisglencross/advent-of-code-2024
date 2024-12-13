@@ -28,9 +28,14 @@ fn min_score1((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> 
 }
 
 fn min_score2((ax, ay): Coord, (bx, by): Coord, (tx, ty): Coord) -> Option<i64> {
+
     // Gradients of lines
     let ma = (ay as f64) / (ax as f64);
     let mb = (by as f64) / (bx as f64);
+
+    // We don't handle the case where the lines have the same gradient (YAGNI)
+    // Modular arithmetic may be required to find the best solution?
+    assert_ne!(ma, mb);
 
     // Solve equations of lines to find intersection I
     let ix = ((ty as f64) - mb * (tx as f64)) / (ma - mb);

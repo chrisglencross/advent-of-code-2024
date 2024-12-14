@@ -41,7 +41,7 @@ fn robot_position_after(p: Coord, v: Coord, ticks: i64) -> Coord {
 }
 
 fn quadrant_score(robots: &Vec<Coord>) -> i64 {
-    let qs: HashMap<i64, i64> = robots.iter()
+    let qs: HashMap<(bool, bool), i64> = robots.iter()
         .filter_map(|&c| quadrant(c))
         .fold(HashMap::new(), |mut acc, c| {
             *acc.entry(c).or_insert(0) += 1;
@@ -51,17 +51,12 @@ fn quadrant_score(robots: &Vec<Coord>) -> i64 {
     qs.values().fold(1, |x, y| x * y)
 }
 
-fn quadrant(c: Coord) -> Option<i64> {
-    let left = c.0 < WIDTH / 2;
-    let right = c.0 > WIDTH / 2;
-    let top = c.1 < HEIGHT / 2;
-    let bottom = c.1 > HEIGHT / 2;
-
-    if top && left { Some(0) }
-    else if top && right { Some(1) }
-    else if bottom && left { Some(2) }
-    else if bottom && right { Some(3) }
-    else { None }
+fn quadrant(c: Coord) -> Option<(bool, bool)> {
+    if c.0 == WIDTH / 2 || c.1 == HEIGHT / 2 {
+        None
+    } else {
+        Some(( c.0 > WIDTH / 2, c.1 > HEIGHT / 2))
+    }
 }
 
 fn print(robots: &Vec<Coord>) {

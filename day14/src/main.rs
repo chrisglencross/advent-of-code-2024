@@ -13,16 +13,19 @@ fn main() {
     let part1 = quadrant_score_after(&robots, 100);
     println!("Part 1: {part1}");
 
-    // This required a bit of experimentation to find the picture. For my test data
-    // it happens to tbe the one with lowest score calculated in part 1 (robots least
-    // evenly distributed across quadrants).
-    // Now I know what the picture looks like, there are more reliable ways to identify it
-    // e.g. maximum number of adjacent robots.
-    let min_score_ticks = (0..WIDTH * HEIGHT)
-        .min_by_key(|&i| quadrant_score_after(&robots, i))
+    let max_interesting_ticks = (0..WIDTH * HEIGHT)
+        .max_by_key(|&i| interesting_score_after(&robots, i))
         .unwrap();
-    println!("Part 2: {min_score_ticks}");
-    print(&robot_positions_after(&robots, min_score_ticks));
+    println!("Part 2: {max_interesting_ticks}");
+    print(&robot_positions_after(&robots, max_interesting_ticks));
+}
+
+fn interesting_score_after(start: &Vec<(Coord, Coord)>, ticks: i64) -> usize {
+    let robots = robot_positions_after(start, ticks);
+    let coords: HashSet<_> = robots.iter().collect();
+    robots.iter()
+        .filter(|&(x, y)| coords.contains(&(x+1, y+0)) )
+        .count()
 }
 
 fn quadrant_score_after(start: &Vec<(Coord, Coord)>, ticks: i64) -> i64 {

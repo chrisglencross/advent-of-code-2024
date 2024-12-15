@@ -16,7 +16,10 @@ impl Grid {
     pub fn new_with_data(data: HashMap<Coord, char>) -> Grid {
         Grid { data }
     }
-
+    pub fn new_with_coords(data: &HashSet<Coord>, c: char) -> Grid {
+        let map: HashMap<Coord, char> = data.iter().map(|&coord| (coord, c)).collect();
+        Self::new_with_data(map)
+    }
     pub fn load(filename: &str) -> Grid {
         let content = fs::read_to_string(filename)
             .expect(&format!("Unable to read file {}", filename));
@@ -131,6 +134,10 @@ impl Grid {
         }
         result
     }
+
+    pub fn print(&self) {
+        println!("{:?}", self);
+    }
 }
 
 impl fmt::Debug for Grid {
@@ -138,7 +145,7 @@ impl fmt::Debug for Grid {
         let ((x0, y0), (x1, y1)) = self.get_bounds();
         for y in y0..y1 {
             for x in x0..x1 {
-                let c = self.get((x, y)).unwrap_or(' ');
+                let c = self.get((x, y)).unwrap_or('.');
                 f.write_char(c)?;
             }
             f.write_char('\n')?;

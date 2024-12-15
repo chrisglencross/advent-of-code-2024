@@ -1,6 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use regex::Regex;
 use aocutil::coord::Coord;
+use aocutil::grid::Grid;
 
 const DAY: u8 = 14;
 const WIDTH: i64 = 101;
@@ -64,14 +65,8 @@ fn quadrant(c: Coord) -> Option<(bool, bool)> {
 
 fn print(robots: &Vec<Coord>) {
     let coords: HashSet<Coord> = robots.iter().map(|&(x, y)| (x, y)).collect();
-    for y in 0..HEIGHT {
-        let mut line = String::new();
-        for x in 0..WIDTH {
-            line += if coords.contains(&(x, y)) { "*" } else { " " };
-        }
-        println!("{}", line);
-    }
-    println!();
+    let grid = Grid::new_with_coords(&coords, '*');
+    grid.print();
 }
 
 fn parse_input(input: &str) -> Vec<(Coord, Coord)> {

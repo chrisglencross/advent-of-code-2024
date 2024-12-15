@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 use aocutil::coord::Coord;
-use aocutil::direction::{Compass4, Directions};
+use aocutil::direction::{COMPASS, Directions};
 use aocutil::grid::Grid;
 
 const DAY: u8 = 6;
@@ -23,9 +23,7 @@ fn main() {
 }
 
 fn walk_grid(grid: &Grid, start: Coord) -> (HashSet<Coord>, bool) {
-    let directions = Compass4::new();
-
-    let mut direction = directions.north();
+    let mut direction = COMPASS.north();
     let mut location = start;
     let mut locations = HashSet::new();
     let mut states = HashSet::new();
@@ -37,7 +35,7 @@ fn walk_grid(grid: &Grid, start: Coord) -> (HashSet<Coord>, bool) {
         let symbol = grid.get(next_location);
         match symbol {
             Some('#') => {
-                direction = directions.right(direction);
+                direction = COMPASS.right(direction);
             },
             Some(_) => {
                 states.insert((location, direction.name()));

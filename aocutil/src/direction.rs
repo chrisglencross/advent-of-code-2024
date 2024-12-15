@@ -2,6 +2,9 @@ use std::fmt;
 use std::hash::{Hash, Hasher};
 use crate::coord::Coord;
 
+pub static COMPASS: &Compass = &Compass::new();
+pub static COMPASS8: &Compass8 = &Compass8::new();
+
 #[derive(Clone, Debug, Copy, Eq)]
 pub struct Direction {
     name: &'static str,
@@ -21,7 +24,7 @@ impl Hash for Direction {
 }
 
 impl Direction {
-    fn new(name: &'static str, delta: (i64, i64)) -> Direction {
+    const fn new(name: &'static str, delta: (i64, i64)) -> Direction {
         Direction{name, delta}
     }
     pub fn name(&self) -> &str {
@@ -46,9 +49,9 @@ impl fmt::Display for Direction {
 }
 
 pub trait Directions {
-    fn values(&self) -> Vec<&Direction>;
+    fn directions(&self) -> Vec<&Direction>;
     fn parse(&self, name: &str) -> &Direction {
-        self.values().iter().find(|&d| d.name == name).unwrap()
+        self.directions().iter().find(|&d| d.name == name).unwrap()
     }
     fn left(&self, from: &Direction) -> &Direction;
     fn right(&self, from: &Direction) -> &Direction;
@@ -56,15 +59,15 @@ pub trait Directions {
 
 }
 
-pub struct Compass4 {
+pub struct Compass {
     n: Direction,
     e: Direction,
     s: Direction,
     w: Direction,
 }
 
-impl Directions for Compass4 {
-    fn values(&self) -> Vec<&Direction> {
+impl Directions for Compass {
+    fn directions(&self) -> Vec<&Direction> {
         vec![&self.n, &self.e, &self.s, &self.w]
     }
 
@@ -99,9 +102,9 @@ impl Directions for Compass4 {
     }
 }
 
-impl Compass4 {
-    pub fn new() -> Compass4 {
-        Compass4 {
+impl Compass {
+    const fn new() -> Compass {
+        Compass {
             n: Direction::new("N", (0, -1)),
             e: Direction::new("E", (1, 0)),
             s: Direction::new("S", (0, 1)),
@@ -134,7 +137,7 @@ pub struct Compass8 {
 }
 
 impl Directions for Compass8 {
-    fn values(&self) -> Vec<&Direction> {
+    fn directions(&self) -> Vec<&Direction> {
         vec![&self.n, &self.ne, &self.e, &self.se, &self.s, &self.sw, &self.w, &self.nw]
     }
 
@@ -182,7 +185,7 @@ impl Directions for Compass8 {
 }
 
 impl Compass8 {
-    pub fn new() -> Compass8 {
+    pub const fn new() -> Compass8 {
         Compass8 {
             n: Direction::new("N", (0, -1)),
             ne: Direction::new("NE", (1, -1)),

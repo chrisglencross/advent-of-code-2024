@@ -77,11 +77,11 @@ fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &Vec<Node>, no
     if !&solutions.is_empty() && node.score > solutions[0].score {
         false
     } else {
-    match best_scores.get(&node.position) {
-        None => true,
-        Some(&prev) => node.score <= prev
-    }
+        match best_scores.get(&node.position) {
+            None => true,
+            Some(&prev) => node.score <= prev
         }
+    }
 }
 
 fn get_next_nodes(grid: &Grid, path: &Node) -> Vec<Node> {

@@ -84,22 +84,22 @@ fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &Vec<Node>, no
     }
 }
 
-fn get_next_nodes(grid: &Grid, path: &Node) -> Vec<Node> {
+fn get_next_nodes(grid: &Grid, node: &Node) -> Vec<Node> {
     let mut result = vec![];
-    let (coord, direction) = path.position;
+    let (coord, direction) = node.position;
     if can_step(grid, coord, direction) {
         let next_coord = direction.step(coord);
-        let mut new_path = path.path.clone();
+        let mut new_path = node.path.clone();
         new_path.push(next_coord);
-        result.push(Node { position: (next_coord, direction), score: path.score + 1, path: new_path });
+        result.push(Node { position: (next_coord, direction), score: node.score + 1, path: new_path });
     }
     let left = COMPASS.left(direction);
     if can_step(grid, coord, left) {
-        result.push(Node { position: (coord, left), score: path.score + 1000, path: path.path.clone() });
+        result.push(Node { position: (coord, left), score: node.score + 1000, path: node.path.clone() });
     }
     let right = COMPASS.right(direction);
     if can_step(grid, coord, right) {
-        result.push(Node { position: (coord, right), score: path.score + 1000, path: path.path.clone() });
+        result.push(Node { position: (coord, right), score: node.score + 1000, path: node.path.clone() });
     }
     result
 }

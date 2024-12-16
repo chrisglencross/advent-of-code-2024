@@ -79,7 +79,7 @@ fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &Vec<Node>, no
     } else {
         match best_scores.get(&node.position) {
             None => true,
-            Some(&prev) => node.score <= prev
+            Some(&best_score) => node.score <= best_score
         }
     }
 }

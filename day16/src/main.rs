@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 use aocutil::coord::Coord;
 use aocutil::direction::{COMPASS, Direction, Directions};
@@ -6,64 +7,99 @@ use aocutil::grid::Grid;
 
 const DAY: u8 = 16;
 
-type Location = (Coord, &'static Direction);
+type Position = (Coord, &'static Direction);
+
+#[derive(Clone, Eq, PartialEq)]
+struct Node {
+    position: Position,
+    score: i64,
+    path: Vec<Coord>,
+}
+
+impl Ord for Node {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.score.cmp(&self.score)
+    }
+}
+
+impl PartialOrd for Node {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
 
 fn main() {
     let input = aocutil::load_input(DAY);
     let grid = Grid::parse(&input);
 
-    let start = grid.find_cell('S').unwrap();
-    let end = grid.find_cell('E').unwrap();
+    let solutions = get_solutions(&grid);
 
-    let start_state = (start, COMPASS.east());
-    let mut bests: HashMap<Location, i64> = HashMap::new();
-    bests.insert(start_state, 0);
+    println!("Part 1: {}", solutions[0].score);
 
-    let mut result = -1;
-    let mut queue: Vec<(Location, i64)> = vec![(start_state, 0)];
-    loop {
-        if let Some((location, score)) = queue.pop() {
-            let (coord, _) = location;
-            if coord == end {
-                result = score;
-                break;
-            }
-            let next_items: Vec<(Location, i64)> = next_locations(&grid, location, score)
-                .into_iter()
-                .filter(|(l, score)| match bests.get(l) {
-                    None => true,
-                    Some(prev) => score < prev
-                })
-                .collect();
-            next_items.iter().for_each(|&(location, score)| {
-                bests.insert(location, score);
-            });
-            queue.extend(next_items);
-        } else {
-            break;
-        }
-        queue.sort_by_key(|(location, score)| 0 - score);
-    }
-
-    let part1: i64 = result;
-    println!("Part 1: {part1}");
-
-    let part2: i64 = 0; // TODO
-    println!("Part 2: {part2}");
+    let solution_coords: HashSet<_> = solutions.iter()
+        .flat_map(|Node { path: coords, .. }| coords)
+        .collect();
+    println!("Part 2: {}", solution_coords.len());
 }
 
-fn next_locations(grid: &Grid, (coord, direction): Location, score: i64) -> Vec<(Location, i64)> {
+fn get_solutions(grid: &Grid) -> Vec<Node> {
+    let start = grid.find_cell('S').unwrap();
+    let end = grid.find_cell('E').unwrap();
+    let start_position = (start, COMPASS.east());
+
+    let mut best_scores: HashMap<Position, i64> = HashMap::new();
+    best_scores.insert(start_position, 0);
+
+    let mut priority_queue: BinaryHeap<Node> = BinaryHeap::new();
+    priority_queue.push(Node { position: start_position, score: 0, path: vec![start] });
+
+    let mut solutions: Vec<Node> = vec![];
+    while let Some(node) = priority_queue.pop() {
+        if !is_best_score(&best_scores, &solutions, &node) {
+            continue;
+        } else if node.position.0 == end {
+            solutions.push(node.clone());
+        } else {
+            let next_nodes: Vec<Node> = get_next_nodes(&grid, &node).into_iter()
+                .filter(|n| is_best_score(&best_scores, &solutions, n))
+                .collect();
+            for &Node { position, score, .. } in &next_nodes {
+                best_scores.insert(position, score);
+            }
+            priority_queue.extend(next_nodes);
+        }
+    }
+
+    solutions
+}
+
+fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &Vec<Node>, node: &Node) -> bool {
+    if !&solutions.is_empty() && node.score > solutions[0].score {
+        false
+    } else {
+    match best_scores.get(&node.position) {
+        None => true,
+        Some(&prev) => node.score <= prev
+    }
+        }
+}
+
+fn get_next_nodes(grid: &Grid, path: &Node) -> Vec<Node> {
     let mut result = vec![];
+    let (coord, direction) = path.position;
     if can_step(grid, coord, direction) {
-        result.push(((direction.step(coord), direction), score + 1));
+        let next_coord = direction.step(coord);
+        let mut new_path = path.path.clone();
+        new_path.push(next_coord);
+        result.push(Node { position: (next_coord, direction), score: path.score + 1, path: new_path });
     }
     let left = COMPASS.left(direction);
     if can_step(grid, coord, left) {
-        result.push(((coord, left), score + 1000));
+        result.push(Node { position: (coord, left), score: path.score + 1000, path: path.path.clone() });
     }
     let right = COMPASS.right(direction);
     if can_step(grid, coord, right) {
-        result.push(((coord, right), score + 1000));
+        result.push(Node { position: (coord, right), score: path.score + 1000, path: path.path.clone() });
     }
     result
 }
@@ -71,4 +107,3 @@ fn next_locations(grid: &Grid, (coord, direction): Location, score: i64) -> Vec<
 fn can_step(grid: &Grid, coord: Coord, direction: &Direction) -> bool {
     grid.get_or(direction.step(coord), '#') != '#'
 }
-

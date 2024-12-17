@@ -86,9 +86,12 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
     let mut counter = 0;
     loop {
 
-        // Up to 10 bits of input register a can be used to derive the next digit of output. Try
-        // them all (4 octal digits) using a counter until we find something that works and keeps
-        // the previous digits correct.
+        // Each digit of output is derived from up to 10 bits of the input register `a`, with
+        // the most significant bits of `a` affecting the final digits of output.
+
+        // Conversely, the first octal digit of `a` contributes to the final 4 output digits (0 to 3 from the end).
+        // First and second octal digits of `a` may contribute to output digits 1 to 4 from the end, etc.
+        // We therefore need to find the first octal digit of `a` before we try to find the second digit.
 
         // Solve first for the most significant digits of input, which generate the last digits of output.
         octal_a[correct_octal_digits + 0] = (counter >> 9) % 8;
@@ -108,13 +111,13 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
             return a
         }
 
-        // Check if we found any more digits of correct output
+        // Check if we found any more digits of correct output.
         let output_rev: Vec<i64> = output.iter().rev().map(|n| *n).collect();
         if output_rev[correct_octal_digits..=correct_octal_digits + 3] == program_rev[correct_octal_digits..=correct_octal_digits + 3] {
             correct_octal_digits += 1;
             counter = 0;
         } else {
-            counter += 1;
+            counter += 1                                    ;
         }
 
     }

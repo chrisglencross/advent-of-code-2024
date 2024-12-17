@@ -91,7 +91,9 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
 
         // Conversely, the first octal digit of `a` contributes to the final 4 output digits (0 to 3 from the end).
         // First and second octal digits of `a` may contribute to output digits 1 to 4 from the end, etc.
-        // We therefore need to find the first octal digit of `a` before we try to find the second digit.
+        // We therefore need to find the value of the first octal digit of `a` before we try to find the second digit,
+        // and in general discover the most significant digits first. As we discover the correct most
+        // significant digit values, more correct digits of output will appear at the end.
 
         // Solve first for the most significant digits of input, which generate the last digits of output.
         octal_a[correct_octal_digits + 0] = (counter >> 9) % 8;
@@ -111,7 +113,7 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
             return a
         }
 
-        // Check if we found any more digits of correct output.
+        // Check if we found any more digits of correct output at the end.
         let output_rev: Vec<i64> = output.iter().rev().map(|n| *n).collect();
         if output_rev[correct_octal_digits..=correct_octal_digits + 3] == program_rev[correct_octal_digits..=correct_octal_digits + 3] {
             correct_octal_digits += 1;

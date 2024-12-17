@@ -56,10 +56,11 @@ fn combo(op: i64, a: i64, b: i64, c: i64) -> i64 {
     }
 }
 
-/// Decompiled the input manually. This function is not used in the solution.
-/// The main takeaway from decompiling is that each digit of output is derived from the least
+/// Decompiled `input.txt` manually. This function is not used in the solution.
+/// The main takeaway from decompiling is that each value of output is derived from the least
 /// significant remaining 10 bits of register `a`, and the bottom 3 bits of `a` are thrown away on
-/// each iteration. 3 bit chunks mean they can be considered octal digits.
+/// each iteration. 3 bit chunks mean they can be considered octal digits, with 4 octal digits
+/// affecting each output value.
 ///
 /// This is useful to know for part 2.
 #[allow(dead_code)]
@@ -86,16 +87,18 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
     let mut counter = 0;
     loop {
 
-        // Each digit of output is derived from up to 10 bits of the input register `a`, with
-        // the most significant bits of `a` affecting the final digits of output.
+        // As discovered from reverse engineering input.txt:
+        //
+        // Each value of output is derived from up to 10 bits of the input register `a`, with
+        // the most significant bits of `a` affecting the last values of output.
+        //
+        // Conversely, the first octal digit of `a` contributes to the final 4 output values (0 to 3 from the end).
+        // First and second octal digits of `a` may contribute to output values 1 to 4 from the end, etc.
+        //
+        // We therefore need to find the first octal digit of `a` before we try to find the second digit,
+        // and in general discover the most significant digits first. This also helps ensure that we find
+        // the lowest possible solution value.
 
-        // Conversely, the first octal digit of `a` contributes to the final 4 output digits (0 to 3 from the end).
-        // First and second octal digits of `a` may contribute to output digits 1 to 4 from the end, etc.
-        // We therefore need to find the value of the first octal digit of `a` before we try to find the second digit,
-        // and in general discover the most significant digits first. As we discover the correct most
-        // significant digit values, more correct digits of output will appear at the end.
-
-        // Solve first for the most significant digits of input, which generate the last digits of output.
         octal_a[correct_octal_digits + 0] = (counter >> 9) % 8;
         octal_a[correct_octal_digits + 1] = (counter >> 6) % 8;
         octal_a[correct_octal_digits + 2] = (counter >> 3) % 8;
@@ -113,7 +116,8 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
             return a
         }
 
-        // Check if we found any more digits of correct output at the end.
+        // Check if we found any more digits of correct output at the end. Each octal digit can
+        // contribute towards 4 values of output.
         let output_rev: Vec<i64> = output.iter().rev().map(|n| *n).collect();
         if output_rev[correct_octal_digits..=correct_octal_digits + 3] == program_rev[correct_octal_digits..=correct_octal_digits + 3] {
             correct_octal_digits += 1;

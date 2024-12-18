@@ -1,4 +1,5 @@
 use std::{fmt, fs};
+use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
 
@@ -7,14 +8,15 @@ use crate::coord::Coord;
 #[derive(Clone)]
 pub struct Grid {
     data: HashMap<Coord, char>,
+    bounds: RefCell<Option<(Coord, Coord)>>
 }
 
 impl Grid {
     pub fn new() -> Grid {
-        Grid { data: HashMap::new() }
+        Grid { data: HashMap::new(), bounds: RefCell::new(None) }
     }
     pub fn new_with_data(data: HashMap<Coord, char>) -> Grid {
-        Grid { data }
+        Grid { data, bounds: RefCell::new(None) }
     }
     pub fn new_with_coords<'a, T: Iterator<Item=&'a Coord>>(data: T, c: char) -> Grid {
         Self::new_with_data(data.map(|&coord| (coord, c)).collect())
@@ -37,32 +39,64 @@ impl Grid {
         Grid::new_with_data(data)
     }
 
+
     pub fn min_x(&self) -> i64 {
-        self.data.keys().min_by_key(|(x, _y)| x).expect("grid is empty").0
+        let ((lo_x, _lo_y), (_hi_x, _hi_y)) = self.get_bounds();
+        lo_x
     }
 
     pub fn max_x(&self) -> i64 {
-        self.data.keys().max_by_key(|(x, _y)| x).expect("grid is empty").0
+        let ((_lo_x, _lo_y), (hi_x, _hi_y)) = self.get_bounds();
+        hi_x - 1
     }
 
     pub fn min_y(&self) -> i64 {
-        self.data.keys().min_by_key(|(_x, y)| y).expect("grid is empty").1
+        let ((_lo_x, lo_y), (_hi_x, _hi_y)) = self.get_bounds();
+        lo_y
     }
 
     pub fn max_y(&self) -> i64 {
-        self.data.keys().max_by_key(|(_x, y)| y).expect("grid is empty").1
+        let ((_lo_x, _lo_y), (_hi_x, hi_y)) = self.get_bounds();
+        hi_y - 1
     }
 
     pub fn get_bounds(&self) -> (Coord, Coord) {
-        ((self.min_x(), self.min_y()), (self.max_x() + 1, self.max_y() + 1))
+        self.get_cached_bounds()
+    }
+
+    pub fn is_in_bounds(&self, (x, y): Coord) -> bool {
+        let ((lo_x, lo_y), (hi_x, hi_y)) = self.get_bounds();
+        x >= lo_x && x < hi_x && y >= lo_y && y < hi_y
+    }
+
+    fn invalidate_cached_bounds(&self) {
+        *self.bounds.borrow_mut() = None
+    }
+
+    fn get_cached_bounds(&self) -> (Coord, Coord){
+        let mut cached_bounds = self.bounds.borrow_mut();
+        match *cached_bounds {
+            None => {
+                let lo_x = *self.data.keys().map(|(x, _y)| x).min().unwrap_or(&0);
+                let lo_y = *self.data.keys().map(|(_x, y)| y).min().unwrap_or(&0);
+                let hi_x = *self.data.keys().map(|(x, _y)| x).max().unwrap_or(&(lo_x - 1)) + 1;
+                let hi_y = *self.data.keys().map(|(_x, y)| y).max().unwrap_or(&(lo_y - 1)) + 1;
+                let bounds = ((lo_x, lo_y), (hi_x, hi_y));
+                *cached_bounds = Some(bounds);
+                bounds
+            }
+            Some(bounds) => bounds
+        }
     }
 
     pub fn get_width(&self) -> i64 {
-        self.max_x() - self.min_x() + 1
+        let ((lo_x, _lo_y), (hi_x, _hi_y)) = self.get_bounds();
+        hi_x - lo_x
     }
 
     pub fn get_height(&self) -> i64 {
-        self.max_y() - self.min_y() + 1
+        let ((_lo_x, lo_y), (_hi_x, hi_y)) = self.get_bounds();
+        hi_y - lo_y
     }
 
     pub fn get_size(&self) -> Coord {
@@ -96,6 +130,7 @@ impl Grid {
 
     pub fn set(&mut self, coord: Coord, c: char) {
         self.data.insert(coord, c);
+        self.invalidate_cached_bounds();
     }
 
     pub fn get_or(&self, coord: Coord, default: char) -> char {

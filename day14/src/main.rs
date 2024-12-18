@@ -64,8 +64,7 @@ fn quadrant(c: Coord) -> Option<(bool, bool)> {
 }
 
 fn print(robots: &Vec<Coord>) {
-    let coords: HashSet<Coord> = robots.iter().map(|&(x, y)| (x, y)).collect();
-    let grid = Grid::new_with_coords(&coords, '*');
+    let grid = Grid::new_with_coords(robots.iter(), '*');
     grid.print();
 }
 

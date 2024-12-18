@@ -16,9 +16,8 @@ impl Grid {
     pub fn new_with_data(data: HashMap<Coord, char>) -> Grid {
         Grid { data }
     }
-    pub fn new_with_coords(data: &HashSet<Coord>, c: char) -> Grid {
-        let map: HashMap<Coord, char> = data.iter().map(|&coord| (coord, c)).collect();
-        Self::new_with_data(map)
+    pub fn new_with_coords<'a, T: Iterator<Item=&'a Coord>>(data: T, c: char) -> Grid {
+        Self::new_with_data(data.map(|&coord| (coord, c)).collect())
     }
     pub fn load(filename: &str) -> Grid {
         let content = fs::read_to_string(filename)

@@ -38,11 +38,11 @@ fn main() {
     let part1= shortest_route(&grid, start, end).unwrap();
     println!("Part 1: {}", part1.ticks);
 
-    let part2 = part2(&mut grid, start, end, byte_coords.clone().into_iter().skip(part1_ticks).collect());
+    let part2 = add_coords_until_no_route(&mut grid, start, end, byte_coords.clone().into_iter().skip(part1_ticks).collect());
     println!("Part 2: {},{}", part2.0, part2.1);
 }
 
-fn part2(grid: &mut Grid, start: Coord, end: Coord, remaining_coords: Vec<Coord>) -> Coord {
+fn add_coords_until_no_route(grid: &mut Grid, start: Coord, end: Coord, remaining_coords: Vec<Coord>) -> Coord {
     let mut current_route = shortest_route(&grid, start, end).unwrap().path;
     for coord in remaining_coords {
         grid.set(coord, '#');

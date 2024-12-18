@@ -43,12 +43,12 @@ fn main() {
 }
 
 fn part2(grid: &mut Grid, start: Coord, end: Coord, remaining_coords: Vec<Coord>) -> Coord {
-    let mut route = shortest_route(&grid, start, end).unwrap().path;
+    let mut current_route = shortest_route(&grid, start, end).unwrap().path;
     for coord in remaining_coords {
         grid.set(coord, '#');
-        if route.contains(&coord) {
+        if current_route.contains(&coord) {
             match shortest_route(&grid, (0, 0), end) {
-                Some(node) => route = node.path,
+                Some(node) => current_route = node.path,
                 None => return coord
             }
         }

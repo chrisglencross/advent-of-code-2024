@@ -7,4 +7,3 @@ edition = "2021"
 aocutil = { workspace = true }
 regex = { workspace = true }
 pathfinding = { workspace = true }
-itertools = "0.13.0"

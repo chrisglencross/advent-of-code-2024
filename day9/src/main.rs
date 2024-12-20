@@ -82,7 +82,7 @@ fn checksum(blocks: &Vec<Blocks>) -> usize {
             Blocks::Free { length } => length,
             Blocks::File { length, id } => {
                 for j in i..length + i {
-                    total += usize::try_from(j).unwrap() * id;
+                    total += j as usize * id;
                 }
                 length
             }

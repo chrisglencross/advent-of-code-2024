@@ -26,7 +26,7 @@ fn count_xmas(grid: &Grid) -> usize {
 
 fn is_word_in_line(grid: &Grid, word: &str, start: Coord, direction: &Direction) -> bool {
     word.chars().enumerate().all(|(index, letter)| {
-        let steps = i64::try_from(index).unwrap();
+        let steps = index as i64;
         let grid_cell = grid.get_or(direction.forward(start, steps), ' ');
         letter == grid_cell
     })

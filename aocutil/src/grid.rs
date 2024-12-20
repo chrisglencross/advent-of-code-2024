@@ -33,12 +33,11 @@ impl Grid {
         let mut data = HashMap::new();
         for (y, row) in rows.enumerate() {
             for (x, cell) in row.chars().enumerate() {
-                data.insert((i64::try_from(x).unwrap(), i64::try_from(y).unwrap()), cell);
+                data.insert((x as i64, y as i64), cell);
             }
         }
         Grid::new_with_data(data)
     }
-
 
     pub fn min_x(&self) -> i64 {
         let ((lo_x, _lo_y), (_hi_x, _hi_y)) = self.get_bounds();

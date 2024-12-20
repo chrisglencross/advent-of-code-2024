@@ -1,5 +1,3 @@
-use pathfinding::prelude::bfs;
-
 use aocutil::coord::{Coord, manhattan_distance};
 use aocutil::direction::{COMPASS, Directions};
 use aocutil::grid::Grid;
@@ -12,13 +10,13 @@ fn main() {
 
     let start = grid.find_cell('S').unwrap();
     let end = grid.find_cell('E').unwrap();
+    let route = route(&grid, start, end);
 
-    let route = shortest_route(&grid, start, end);
-    println!("Part 1: {}", cheats_saving_at_least_100(&route, 2));
-    println!("Part 2: {}", cheats_saving_at_least_100(&route, 20));
+    println!("Part 1: {}", shortcuts_saving_at_least_100(&route, 2));
+    println!("Part 2: {}", shortcuts_saving_at_least_100(&route, 20));
 }
 
-fn cheats_saving_at_least_100(route: &Vec<Coord>, max_shortcut_distance: i64) -> i64 {
+fn shortcuts_saving_at_least_100(route: &[Coord], max_shortcut_distance: i64) -> i64 {
     let mut count = 0;
     for (d0, &c0) in route.iter().enumerate() {
         for (route_distance, &c1) in route[d0..].iter().enumerate() {
@@ -31,8 +29,8 @@ fn cheats_saving_at_least_100(route: &Vec<Coord>, max_shortcut_distance: i64) ->
     count
 }
 
-fn shortest_route(grid: &Grid, start: Coord, end: Coord) -> Vec<Coord> {
-    bfs(&start, |p| successors(grid, p), |p| *p == end).unwrap()
+fn route(grid: &Grid, start: Coord, end: Coord) -> Vec<Coord> {
+    pathfinding::prelude::bfs(&start, |coord| successors(grid, coord), |p| *p == end).unwrap()
 }
 
 fn successors(grid: &Grid, coord: &Coord) -> Vec<Coord> {

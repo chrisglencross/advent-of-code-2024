@@ -35,7 +35,7 @@ fn run(registers: (i64, i64, i64), program: &Vec<i64>) -> Vec<i64> {
             ADV => a = a >> combo(arg, a, b, c),
             BXL => b ^= arg,
             BST => b = combo(arg, a, b, c) % 8,
-            JNZ => if a != 0 { pc = usize::try_from(arg).unwrap(); },
+            JNZ => if a != 0 { pc = arg as usize; },
             BXC => b = b ^ c,
             OUT => output.push(combo(arg, a, b, c) % 8),
             BDV => b = a >> combo(arg, a, b, c),

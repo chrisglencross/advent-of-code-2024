@@ -1,0 +1,10 @@
+[package]
+name = "day20"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aocutil = { workspace = true }
+regex = { workspace = true }
+pathfinding = { workspace = true }
+itertools = "0.13.0"

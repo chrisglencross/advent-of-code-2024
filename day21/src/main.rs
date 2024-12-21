@@ -83,7 +83,7 @@ fn key_presses_to_move(start: Coord, end: Coord, avoid: Coord) -> Vec<char> {
         output(&v, &h)
     } else if start.0 == avoid.0 && end.1 == avoid.1 {
         output(&h, &v)
-    // preference for >/^/v/< arrows in that order, so we are near the buttons to reach 'A' in the top right
+    // preference for >/^/v/< arrows in that order, so we finish near the buttons to reach 'A' in the top right
     } else if h.ends_with(&vec!['>']) {
         output(&v, &h)
     } else {

@@ -24,16 +24,19 @@ fn numeric_value(line: &str) -> i64 {
 }
 
 fn button_presses_for_code(code: &str, directional_keypad_count: i64) -> i64 {
-    let numerical_keypad =
-        Grid::parse("789\n456\n123\n.0A").index_cells("", "");
-    let directional_keypad =
-        Grid::parse(".^A\n<v>").index_cells("", "");
 
     let mut keypad_moves = chars_to_keypad_moves(&code.chars().collect());
+
+    let numerical_keypad =
+        Grid::parse("789\n456\n123\n.0A").index_cells("", "");
     keypad_moves = use_keypad(&numerical_keypad, &keypad_moves);
+
+    let directional_keypad =
+        Grid::parse(".^A\n<v>").index_cells("", "");
     for _ in 0..directional_keypad_count {
         keypad_moves = use_keypad(&directional_keypad, &keypad_moves);
     }
+
     return keypad_moves.values().sum();
 }
 

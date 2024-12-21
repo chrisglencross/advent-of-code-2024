@@ -73,14 +73,16 @@ fn direction_buttons_to_move(start: &Coord, end: &Coord, avoid: &Coord) -> Vec<c
         if start.1 > end.1 { ['^'].repeat(distance) } else { ['v'].repeat(distance) }
     };
 
+    // We can either move horizontally then vertically, or vertically then horizontally,
+    // but we need to avoid the empty space.
     if v.is_empty() || h.is_empty() {
         output(&h, &v)
     } else if start.1 == avoid.1 && end.0 == avoid.0 {
         output(&v, &h)
     } else if start.0 == avoid.0 && end.1 == avoid.1 {
         output(&h, &v)
-    // if there are multiple possibilities, we have a preference for finishing the sequence with
-    // >/^/v/< arrows in that order so that we finish near the top-right buttons to type 'A'.
+    // If we still have both possibilities, finish the sequence with one of '>', '^', 'v' or '<',
+    // in that order of preference, so that we end up near the top-right to type the final 'A'.
     } else if h.ends_with(&vec!['>']) {
         output(&v, &h)
     } else {

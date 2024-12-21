@@ -147,7 +147,7 @@ impl Grid {
     pub fn index_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Coord> {
         let mut result = HashMap::new();
         for (&coord, &symbol) in self.data.iter().by_ref() {
-            if (symbols != "" && symbols.contains(symbol)) || (not_symbols != "" && !not_symbols.contains(symbol)) {
+            if Self::index_symbol(symbol, symbols, not_symbols) {
                 if result.insert(symbol, coord).is_some() {
                     panic!("Symbol '{}' should not appear more than once in the grid. Use 'index_repeating_cells' to fine multiple instances.", symbol);
                 }
@@ -159,13 +159,17 @@ impl Grid {
     pub fn index_repeating_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Vec<Coord>> {
         let mut result = HashMap::new();
         for (&coord, &symbol) in self.data.iter().by_ref() {
-            if (symbols != "" && symbols.contains(symbol))
-                || (not_symbols != "" && !not_symbols.contains(symbol))
-                || (symbols == "" && not_symbols == "") {
+            if Self::index_symbol(symbol, symbols, not_symbols) {
                 result.entry(symbol).or_insert(vec![]).push(coord);
             }
         }
         result
+    }
+
+    fn index_symbol(symbol: char, symbols: &str, not_symbols: &str) -> bool {
+        (symbols != "" && symbols.contains(symbol))
+            || (not_symbols != "" && !not_symbols.contains(symbol))
+            || (symbols == "" && not_symbols == "")
     }
 
     pub fn print(&self) {

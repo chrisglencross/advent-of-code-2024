@@ -1,9 +1,9 @@
 [package]
-name = "day22"
+name = "day23"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 aocutil = { workspace = true }
 regex = { workspace = true }
-itertools = { workspace = true }
+itertools = "0.13.0"

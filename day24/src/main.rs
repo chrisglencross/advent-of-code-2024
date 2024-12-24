@@ -17,7 +17,7 @@ fn main() -> std::io::Result<()> {
     println!("Part 1: {part1}");
 
     let path = generate_diagram(&gates)?;
-    println!("Part 2: See diagram at {path}");
+    println!("Part 2: See diagram at {path}. Inspect regions highlighted in red (or just above) to work out which connections to swap. The errors are localised.");
 
     return Ok(());
 }
@@ -169,7 +169,7 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
             Some(GateInfo:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "black"),
             Some(GateInfo::ERROR(message)) => (String::from(format!("{op}: {message}")), "red"),
         };
-        writeln!(output, "\t{gate}[color=\"{color}\" label=\"{label}\\n{gate}\"];\n")?;
+        writeln!(output, "\t{gate}[color=\"{color}\" label=\"{label}\\n{op} {gate}\"];\n")?;
     }
     writeln!(output, "}}")?;
 

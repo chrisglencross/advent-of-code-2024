@@ -22,18 +22,19 @@ fn main() -> std::io::Result<()> {
     return Ok(());
 }
 
+/// Draw a graph of the gates, highlighting errors in red where this is not a standard full adder.
 fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::io::Result<String> {
 
-    enum AdderGate {
+    enum GateInfo {
         XOR1(u8),
         XOR2(u8),
         AND1(u8),
         AND2(u8),
-        OR(u8),  // Carry out
+        OR(u8), // aka. "Carry out"
         ERROR(String)
     }
 
-    let mut labels: HashMap<&String, AdderGate> = HashMap::new();
+    let mut labels: HashMap<&String, GateInfo> = HashMap::new();
 
     // Identify XOR1 and AND1 gates connected to inputs
     for (gate, (i1, op, i2)) in gates {
@@ -43,16 +44,16 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
             let xbit = &x[1..];
             let ybit= &y[1..];
             if xbit != ybit {
-                labels.insert(gate, AdderGate::ERROR(String::from(format!("Input connections for different bits {x} and {y}"))));
+                labels.insert(gate, GateInfo::ERROR(String::from(format!("Input connections for different bits {x} and {y}"))));
             } else if op == "XOR" {
-                labels.insert(gate, AdderGate::XOR1(xbit.parse().unwrap()));
+                labels.insert(gate, GateInfo::XOR1(xbit.parse().unwrap()));
             } else if op == "AND" {
-                labels.insert(gate, AdderGate::AND1(xbit.parse().unwrap()));
+                labels.insert(gate, GateInfo::AND1(xbit.parse().unwrap()));
             } else {
-                labels.insert(gate, AdderGate::ERROR(String::from(format!("Inputs should be connected to AND and XOR, not {op}"))));
+                labels.insert(gate, GateInfo::ERROR(String::from(format!("Inputs should be connected to AND and XOR, not {op}"))));
             }
         } else if x.is_some() || y.is_some() {
-            labels.insert(gate, AdderGate::ERROR(String::from("Single input connection")));
+            labels.insert(gate, GateInfo::ERROR(String::from("Single input connection")));
         }
     }
 
@@ -62,23 +63,23 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         let label = labels.get(gate);
         if label.is_none() {
             // AND2 should have XOR1 and OR(bit-1) as inputs
-            let bit = if let Some(AdderGate::XOR1(input_bit)) = labels.get(i1) {
+            let bit = if let Some(GateInfo::XOR1(input_bit)) = labels.get(i1) {
                 Some(*input_bit)
-            } else if let Some(AdderGate::XOR1(input_bit)) = labels.get(i2) {
+            } else if let Some(GateInfo::XOR1(input_bit)) = labels.get(i2) {
                 Some(*input_bit)
             } else {
                 None
             };
             if let Some(bit) = bit {
                 if op == "AND" {
-                    labels.insert(gate, AdderGate::AND2(bit));
+                    labels.insert(gate, GateInfo::AND2(bit));
                 } else if op == "XOR" {
-                    labels.insert(gate, AdderGate::XOR2(bit));
+                    labels.insert(gate, GateInfo::XOR2(bit));
                 } else {
-                    labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate has unexpected input from XOR1"))));
+                    labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate has unexpected input from XOR1"))));
                 }
             } else if op == "AND" || op == "XOR" {
-                labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate should have an input from XOR1"))));
+                labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate should have an input from XOR1"))));
             }
         }
     }
@@ -88,44 +89,44 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         let label = labels.get(gate);
         if label.is_none() {
             // OR should have AND1 as inputs
-            let and1_bit = if let Some(AdderGate::AND1(input_bit)) = labels.get(i1) {
+            let and1_bit = if let Some(GateInfo::AND1(input_bit)) = labels.get(i1) {
                 Some(*input_bit)
-            } else if let Some(AdderGate::AND1(input_bit)) = labels.get(i2) {
+            } else if let Some(GateInfo::AND1(input_bit)) = labels.get(i2) {
                 Some(*input_bit)
             } else {
                 None
             };
-            let and2_bit = if let Some(AdderGate::AND2(input_bit)) = labels.get(i1) {
+            let and2_bit = if let Some(GateInfo::AND2(input_bit)) = labels.get(i1) {
                 Some(*input_bit)
-            } else if let Some(AdderGate::AND2(input_bit)) = labels.get(i2) {
+            } else if let Some(GateInfo::AND2(input_bit)) = labels.get(i2) {
                 Some(*input_bit)
             } else {
                 None
             };
             if op == "OR" {
                 if and1_bit.is_none() || and2_bit.is_none() {
-                    labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate should have an input from both AND1 and AND2"))));
+                    labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate should have an input from both AND1 and AND2"))));
                 } else {
-                    labels.insert(gate, AdderGate::OR(and2_bit.unwrap()));
+                    labels.insert(gate, GateInfo::OR(and2_bit.unwrap()));
                 }
             } else {
-                labels.insert(gate, AdderGate::ERROR(String::from(format!("Unrecognised gate"))));
+                labels.insert(gate, GateInfo::ERROR(String::from(format!("Unrecognised gate"))));
             }
         }
     }
 
     // Verify that XOR2 and AND2 both have inputs from carry OR(bit-1)
     for (gate, (i1, _, i2)) in gates {
-        let self_bit = if let Some(AdderGate::XOR2(input_bit)) = labels.get(gate) {
+        let self_bit = if let Some(GateInfo::XOR2(input_bit)) = labels.get(gate) {
             Some(*input_bit)
-        } else if let Some(AdderGate::AND2(input_bit)) = labels.get(gate) {
+        } else if let Some(GateInfo::AND2(input_bit)) = labels.get(gate) {
             Some(*input_bit)
         } else {
             None
         };
-        let or_bit = if let Some(AdderGate::OR(input_bit)) = labels.get(i1) {
+        let or_bit = if let Some(GateInfo::OR(input_bit)) = labels.get(i1) {
             Some(*input_bit)
-        } else if let Some(AdderGate::OR(input_bit)) = labels.get(i2) {
+        } else if let Some(GateInfo::OR(input_bit)) = labels.get(i2) {
             Some(*input_bit)
         } else {
             None
@@ -133,10 +134,10 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         if let Some(self_bit) = self_bit {
             if let Some(or_bit) = or_bit {
                 if self_bit != or_bit + 1 {
-                    labels.insert(gate, AdderGate::ERROR(String::from("Carry bit input is from incorrect preceding adder")));
+                    labels.insert(gate, GateInfo::ERROR(String::from("Carry bit input is from incorrect preceding adder")));
                 }
             } else if self_bit > 1 {
-                labels.insert(gate, AdderGate::ERROR(String::from("Expected carry bit input from previous adder")));
+                labels.insert(gate, GateInfo::ERROR(String::from("Expected carry bit input from previous adder")));
             }
         }
     }
@@ -144,12 +145,12 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
     // Verify that 'z' output bits are XOR2
     for (gate, _) in gates {
         let is_output = gate.starts_with("z");
-        if let Some(AdderGate::XOR2(_)) = labels.get(gate) {
+        if let Some(GateInfo::XOR2(_)) = labels.get(gate) {
             if !is_output {
-                labels.insert(gate, AdderGate::ERROR(String::from("XOR2 gates should be named with a 'z'")));
+                labels.insert(gate, GateInfo::ERROR(String::from("XOR2 gates should be named with a 'z'")));
             }
         } else if is_output && gate != "z00" && gate != "z01" {
-            labels.insert(gate, AdderGate::ERROR(String::from(format!("Output gate {gate} named with a 'z' should be XOR2"))));
+            labels.insert(gate, GateInfo::ERROR(String::from(format!("Output gate {gate} named with a 'z' should be XOR2"))));
         }
     }
 
@@ -161,12 +162,12 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         writeln!(output, "\t{i2} -> {gate};")?;
         let (label, color) = match labels.get(gate) {
             None => (String::from("UNRECOGNIZED"), "red"),
-            Some(AdderGate:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black"),
-            Some(AdderGate:: XOR2(bit)) => (String::from(format!("XOR2 bit {bit}")), "black"),
-            Some(AdderGate:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black"),
-            Some(AdderGate:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black"),
-            Some(AdderGate:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "black"),
-            Some(AdderGate::ERROR(message)) => (String::from(format!("{op}: {message}")), "red"),
+            Some(GateInfo:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black"),
+            Some(GateInfo:: XOR2(bit)) => (String::from(format!("XOR2 bit {bit}")), "black"),
+            Some(GateInfo:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black"),
+            Some(GateInfo:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black"),
+            Some(GateInfo:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "black"),
+            Some(GateInfo::ERROR(message)) => (String::from(format!("{op}: {message}")), "red"),
         };
         writeln!(output, "\t{gate}[color=\"{color}\" label=\"{label}\\n{gate}\"];\n")?;
     }

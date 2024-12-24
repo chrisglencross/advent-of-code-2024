@@ -1,5 +1,6 @@
 use std::collections::HashMap;
-use std::fmt::format;
+use std::fs::File;
+use std::io::Write;
 use std::ops::Deref;
 
 use itertools;
@@ -7,7 +8,7 @@ use itertools::Itertools;
 
 const DAY: u8 = 24;
 
-fn main() {
+fn main() -> std::io::Result<()> {
     let input = aocutil::load_input(DAY);
     let (inputs, gates) = parse_input(&input);
 
@@ -15,128 +16,163 @@ fn main() {
         .fold(0, |acc, gate| (acc << 1) + evaluate(gate, &gates, &inputs));
     println!("Part 1: {part1}");
 
-    // let mut inputs = HashMap::new();
-    // for i in 0u8..45u8 {
-    //     inputs.insert(format!("x{i:02}"), 1);
-    //     inputs.insert(format!("y{i:02}"), 0);
-    // }
+    let path = generate_diagram(&gates)?;
+    println!("Part 2: See diagram at {path}");
 
-    // let part1 = u64::from_str_radix(&z_gates.iter().map(|(_, b)| b.to_string()).join(""), 2).unwrap();
-    // println!("Part 1: {part1}");
+    return Ok(());
+}
 
+fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::io::Result<String> {
 
-    // for gate in gates.keys() {
-    //     if gate.starts_with("z") {
-    //         let value = evaluate(gate, &gates, &inputs);
-    //         z_gates.push((gate, value));
-    //     }
-    // }
-    // z_gates.sort();
-    // z_gates.reverse();
-    // let part1 = u64::from_str_radix(&z_gates.iter().map(|(_, b)| b.to_string()).join(""), 2).unwrap();
-    // println!("Part 1: {part1}");
+    enum AdderGate {
+        XOR1(u8),
+        XOR2(u8),
+        AND1(u8),
+        AND2(u8),
+        OR(u8),  // Carry out
+        ERROR(String)
+    }
 
-    let mut labels: HashMap<&String, String> = HashMap::new();
-    for (gate, (i1, op, i2)) in &gates {
-        if (i1.starts_with("x") && i2.starts_with("y")) || (i1.starts_with("y") && i2.starts_with("x")) {
-            let bit1 = &i1[1..];
-            let bit2 = &i2[1..];
-            if bit1 != bit2 {
-                panic!();
-            }
-            if op == "AND" {
-                labels.insert(gate, format!("{bit1}: Input AND"));
+    let mut labels: HashMap<&String, AdderGate> = HashMap::new();
+
+    // Identify XOR1 and AND1 gates connected to inputs
+    for (gate, (i1, op, i2)) in gates {
+        let x = [i1, i2].into_iter().find(|g| g.starts_with("x"));
+        let y = [i1, i2].into_iter().find(|g| g.starts_with("y"));
+        if let (Some(x), Some(y)) = (x, y) {
+            let xbit = &x[1..];
+            let ybit= &y[1..];
+            if xbit != ybit {
+                labels.insert(gate, AdderGate::ERROR(String::from(format!("Input connections for different bits {x} and {y}"))));
             } else if op == "XOR" {
-                if gate.starts_with("z") {
-                    // First is only a half adder
-                    labels.insert(gate, format!("{bit1}: Output XOR"));
+                labels.insert(gate, AdderGate::XOR1(xbit.parse().unwrap()));
+            } else if op == "AND" {
+                labels.insert(gate, AdderGate::AND1(xbit.parse().unwrap()));
+            } else {
+                labels.insert(gate, AdderGate::ERROR(String::from(format!("Inputs should be connected to AND and XOR, not {op}"))));
+            }
+        } else if x.is_some() || y.is_some() {
+            labels.insert(gate, AdderGate::ERROR(String::from("Single input connection")));
+        }
+    }
+
+    // Find XOR and AND gates not labelled as XOR1 AND AND1
+    // Assume these are XOR2 and AND2 and are wired up with inputs from those
+    for (gate, (i1, op, i2)) in gates {
+        let label = labels.get(gate);
+        if label.is_none() {
+            // AND2 should have XOR1 and OR(bit-1) as inputs
+            let bit = if let Some(AdderGate::XOR1(input_bit)) = labels.get(i1) {
+                Some(*input_bit)
+            } else if let Some(AdderGate::XOR1(input_bit)) = labels.get(i2) {
+                Some(*input_bit)
+            } else {
+                None
+            };
+            if let Some(bit) = bit {
+                if op == "AND" {
+                    labels.insert(gate, AdderGate::AND2(bit));
+                } else if op == "XOR" {
+                    labels.insert(gate, AdderGate::XOR2(bit));
                 } else {
-                    labels.insert(gate, format!("{bit1}: Input XOR"));
+                    labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate has unexpected input from XOR1"))));
+                }
+            } else if op == "AND" || op == "XOR" {
+                labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate should have an input from XOR1"))));
+            }
+        }
+    }
+
+    // Find OR gates and label, also checking that inputs are from AND1 and AND2
+    for (gate, (i1, op, i2)) in gates {
+        let label = labels.get(gate);
+        if label.is_none() {
+            // OR should have AND1 as inputs
+            let and1_bit = if let Some(AdderGate::AND1(input_bit)) = labels.get(i1) {
+                Some(*input_bit)
+            } else if let Some(AdderGate::AND1(input_bit)) = labels.get(i2) {
+                Some(*input_bit)
+            } else {
+                None
+            };
+            let and2_bit = if let Some(AdderGate::AND2(input_bit)) = labels.get(i1) {
+                Some(*input_bit)
+            } else if let Some(AdderGate::AND2(input_bit)) = labels.get(i2) {
+                Some(*input_bit)
+            } else {
+                None
+            };
+            if op == "OR" {
+                if and1_bit.is_none() || and2_bit.is_none() {
+                    labels.insert(gate, AdderGate::ERROR(String::from(format!("Gate should have an input from both AND1 and AND2"))));
+                } else {
+                    labels.insert(gate, AdderGate::OR(and2_bit.unwrap()));
                 }
             } else {
-                panic!();
+                labels.insert(gate, AdderGate::ERROR(String::from(format!("Unrecognised gate"))));
             }
-        } else if i1.starts_with("x") || i2.starts_with("x") {
-            panic!();
-        } else if i1.starts_with("y") || i2.starts_with("y") {
-            panic!();
         }
     }
 
-    for (gate, (i1, op, i2)) in &gates {
-        if let Some(label) = labels.get(i1) {
-            let label = String::from(label);
-            if op == "XOR" && label.ends_with(": Input XOR") {
-                let bit = label.split_once(":").unwrap().0;
-                labels.insert(gate, format!("{bit}: Output XOR"));
-                if !labels.contains_key(i2) {
-                    let previous_bit = bit.parse::<u8>().unwrap() - 1;
-                    let previous_op = &gates.get(i2).unwrap().1;
-                    if previous_op != "OR" {
-                        println!("Error: carry out signal {i2} from {previous_bit} is an {previous_op} gate. Should be OR");
-                    }
-                    labels.insert(i2, format!("{previous_bit}: Carry Out {previous_op}"));
+    // Verify that XOR2 and AND2 both have inputs from carry OR(bit-1)
+    for (gate, (i1, _, i2)) in gates {
+        let self_bit = if let Some(AdderGate::XOR2(input_bit)) = labels.get(gate) {
+            Some(*input_bit)
+        } else if let Some(AdderGate::AND2(input_bit)) = labels.get(gate) {
+            Some(*input_bit)
+        } else {
+            None
+        };
+        let or_bit = if let Some(AdderGate::OR(input_bit)) = labels.get(i1) {
+            Some(*input_bit)
+        } else if let Some(AdderGate::OR(input_bit)) = labels.get(i2) {
+            Some(*input_bit)
+        } else {
+            None
+        };
+        if let Some(self_bit) = self_bit {
+            if let Some(or_bit) = or_bit {
+                if self_bit != or_bit + 1 {
+                    labels.insert(gate, AdderGate::ERROR(String::from("Carry bit input is from incorrect preceding adder")));
                 }
-            } else if op == "AND" && label.ends_with(": Input XOR") {
-                let bit = label.split_once(":").unwrap().0;
-                labels.insert(gate, format!("{bit}: Output AND"));
-            }
-        }
-        if let Some(label) = labels.get(i2) {
-            let label = String::from(label);
-            if op == "XOR" && label.ends_with(": Input XOR") {
-                let bit = label.split_once(":").unwrap().0;
-                labels.insert(gate, format!("{bit}: Output XOR"));
-                if !labels.contains_key(i1) {
-                    let previous_bit = bit.parse::<u8>().unwrap() - 1;
-                    let previous_op = &gates.get(i1).unwrap().1;
-                    if previous_op != "OR" {
-                        println!("Error: carry out signal {i1} from {previous_bit} is an {previous_op} gate. Should be OR");
-                    }
-                    labels.insert(i1, format!("{previous_bit}: Carry Out {previous_op}"));
-                }
-            } else if op == "AND" && label.ends_with(": Input XOR") {
-                let bit = label.split_once(":").unwrap().0;
-                labels.insert(gate, format!("{bit}: Output AND"));
+            } else if self_bit > 1 {
+                labels.insert(gate, AdderGate::ERROR(String::from("Expected carry bit input from previous adder")));
             }
         }
     }
 
-    for (gate, (i1, op, i2)) in &gates {
-        if op == "OR" {
-            if let Some(label1) = labels.get(i1) {
-                let label1 = String::from(label1);
-                if let Some(label2) = labels.get(i2) {
-                    let label2 = String::from(label2);
-                    let bit1 = label1.split_once(":").unwrap().0;
-                    let bit2 = label2.split_once(":").unwrap().0;
-                    if bit1 != bit2 {
-                        panic!();
-                    }
-                    labels.insert(gate, format!("{bit1}: Carry Out OR"));
-                } else {
-                    println!("No label found for {i2}");
-                }
-            } else {
-                println!("No label found for {i1}");
+    // Verify that 'z' output bits are XOR2
+    for (gate, _) in gates {
+        let is_output = gate.starts_with("z");
+        if let Some(AdderGate::XOR2(_)) = labels.get(gate) {
+            if !is_output {
+                labels.insert(gate, AdderGate::ERROR(String::from("XOR2 gates should be named with a 'z'")));
             }
+        } else if is_output && gate != "z00" && gate != "z01" {
+            labels.insert(gate, AdderGate::ERROR(String::from(format!("Output gate {gate} named with a 'z' should be XOR2"))));
         }
     }
 
-    println!("digraph G {{");
-    for (gate, (i1, op, i2)) in &gates {
-        println!("\t{i1} -> {gate};");
-        println!("\t{i2} -> {gate};");
-        let unknown = String::from(format!("UNKNOWN {}", op));
-        let label = labels.get(&gate).unwrap_or(&unknown);
-        println!("\t{gate}[label=\"{label}\\n{gate}\"];\n");
+    let path = "day24/graphviz.dot";
+    let mut output = File::create(path)?;
+    writeln!(output, "digraph G {{")?;
+    for (gate, (i1, op, i2)) in gates {
+        writeln!(output, "\t{i1} -> {gate};")?;
+        writeln!(output, "\t{i2} -> {gate};")?;
+        let (label, color) = match labels.get(gate) {
+            None => (String::from("UNRECOGNIZED"), "red"),
+            Some(AdderGate:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black"),
+            Some(AdderGate:: XOR2(bit)) => (String::from(format!("XOR2 bit {bit}")), "black"),
+            Some(AdderGate:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black"),
+            Some(AdderGate:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black"),
+            Some(AdderGate:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "black"),
+            Some(AdderGate::ERROR(message)) => (String::from(format!("{op}: {message}")), "red"),
+        };
+        writeln!(output, "\t{gate}[color=\"{color}\" label=\"{label}\\n{gate}\"];\n")?;
     }
+    writeln!(output, "}}")?;
 
-    println!("}}");
-
-
-        let part2: i64 = 0;
-    println!("Part 2: {part2}");
+    Ok(String::from(path))
 }
 
 fn evaluate(gate: &String, gates: &HashMap<String, (String, String, String)>, inputs: &HashMap<String, u8>) -> u64 {

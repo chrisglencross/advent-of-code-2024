@@ -1,247 +1,451 @@
 digraph G {
-	ckj -> z24;
-	jjh -> z24;
-	z24[color="black" label="XOR2 bit 24\nXOR z24"];
-
-	x21 -> swk;
-	y21 -> swk;
-	swk[color="black" label="AND1 bit 21\nAND swk"];
-
-	kvv -> scp;
-	shs -> scp;
-	scp[color="black" label="CARRY bit 29\nOR scp"];
-
-	y24 -> ccq;
-	x24 -> ccq;
-	ccq[color="black" label="AND1 bit 24\nAND ccq"];
-
-	fkq -> dkn;
-	qfs -> dkn;
-	dkn[color="black" label="CARRY bit 10\nOR dkn"];
-
-	mpm -> z21;
-	gtn -> z21;
-	z21[color="black" label="XOR2 bit 21\nXOR z21"];
-
-	x01 -> wcd;
-	y01 -> wcd;
-	wcd[color="black" label="AND1 bit 1\nAND wcd"];
-
-	jrd -> hrm;
-	qmc -> hrm;
-	hrm[color="black" label="CARRY bit 13\nOR hrm"];
-
-	hsq -> pfh;
-	fgq -> pfh;
-	pfh[color="black" label="CARRY bit 34\nOR pfh"];
-
-	msd -> nnk;
-	tfr -> nnk;
-	nnk[color="black" label="AND2 bit 42\nAND nnk"];
-
-	x15 -> jfh;
-	y15 -> jfh;
-	jfh[color="black" label="XOR1 bit 15\nXOR jfh"];
-
-	gsv -> z01;
-	qtg -> z01;
-	z01[color="black" label="XOR2 bit 1\nXOR z01"];
-
-	nct -> gtn;
-	mmk -> gtn;
-	gtn[color="black" label="CARRY bit 20\nOR gtn"];
-
-	x17 -> pjm;
-	y17 -> pjm;
-	pjm[color="black" label="AND1 bit 17\nAND pjm"];
+	msd -> z42;
+	tfr -> z42;
+	z42[color="black" label="XOR2 bit 42\nXOR z42"];
 
 	ctp -> nqv;
 	mdt -> nqv;
 	nqv[color="black" label="CARRY bit 25\nOR nqv"];
 
-	kdn -> z29;
-	fvk -> z29;
-	z29[color="black" label="XOR2 bit 29\nXOR z29"];
+	kmb -> qfs;
+	vjd -> qfs;
+	qfs[color="black" label="AND2 bit 10\nAND qfs"];
 
-	pwm -> z20;
-	cjh -> z20;
-	z20[color="black" label="XOR2 bit 20\nXOR z20"];
+	qfv -> wdg;
+	hjk -> wdg;
+	wdg[color="black" label="CARRY bit 2\nOR wdg"];
 
-	gbg -> z02;
-	vgg -> z02;
-	z02[color="black" label="XOR2 bit 2\nXOR z02"];
+	y36 -> jwh;
+	x36 -> jwh;
+	jwh[color="black" label="AND1 bit 36\nAND jwh"];
 
-	x06 -> kcg;
-	y06 -> kcg;
-	kcg[color="black" label="AND1 bit 6\nAND kcg"];
+	x40 -> kqh;
+	y40 -> kqh;
+	kqh[color="black" label="AND1 bit 40\nAND kqh"];
 
-	dmv -> z12;
-	wvt -> z12;
-	z12[color="black" label="XOR2 bit 12\nXOR z12"];
+	y13 -> qmc;
+	x13 -> qmc;
+	qmc[color="black" label="AND1 bit 13\nAND qmc"];
 
-	msp -> dqc;
-	shq -> dqc;
-	dqc[color="black" label="AND2 bit 28\nAND dqc"];
+	y24 -> jjh;
+	x24 -> jjh;
+	jjh[color="black" label="XOR1 bit 24\nXOR jjh"];
 
-	btq -> kmb;
-	kgf -> kmb;
-	kmb[color="black" label="CARRY bit 9\nOR kmb"];
+	y09 -> btq;
+	x09 -> btq;
+	btq[color="black" label="AND1 bit 9\nAND btq"];
 
-	hqw -> z27;
-	jmq -> z27;
-	z27[color="black" label="XOR2 bit 27\nXOR z27"];
+	tkw -> gtm;
+	jhb -> gtm;
+	gtm[color="black" label="AND2 bit 41\nAND gtm"];
 
-	y39 -> gtf;
-	x39 -> gtf;
-	gtf[color="black" label="AND1 bit 39\nAND gtf"];
-
-	x02 -> hjk;
-	y02 -> hjk;
-	hjk[color="black" label="AND1 bit 2\nAND hjk"];
-
-	x00 -> z00;
-	y00 -> z00;
-	z00[color="black" label="XOR1 bit 0\nXOR z00"];
-
-	y19 -> mgr;
-	x19 -> mgr;
-	mgr[color="black" label="XOR1 bit 19\nXOR mgr"];
-
-	vjb -> gbg;
-	wcd -> gbg;
-	gbg[color="black" label="CARRY bit 1\nOR gbg"];
-
-	crw -> wvt;
-	bbv -> wvt;
-	wvt[color="black" label="CARRY bit 11\nOR wvt"];
-
-	x12 -> dmv;
-	y12 -> dmv;
-	dmv[color="black" label="XOR1 bit 12\nXOR dmv"];
-
-	x07 -> hhm;
-	y07 -> hhm;
-	hhm[color="black" label="AND1 bit 7\nAND hhm"];
-
-	gjd -> bjj;
-	jfh -> bjj;
-	bjj[color="black" label="AND2 bit 15\nAND bjj"];
-
-	x32 -> pqv;
-	y32 -> pqv;
-	pqv[color="black" label="XOR1 bit 32\nXOR pqv"];
-
-	y05 -> vfm;
-	x05 -> vfm;
-	vfm[color="black" label="AND1 bit 5\nAND vfm"];
-
-	gfm -> z33;
-	shg -> z33;
-	z33[color="red" label="XOR: Output gate z33 named with a 'z' should be XOR2\nXOR z33"];
-
-	y16 -> btj;
-	x16 -> btj;
-	btj[color="black" label="XOR1 bit 16\nXOR btj"];
-
-	dkn -> z11;
-	mws -> z11;
-	z11[color="black" label="XOR2 bit 11\nXOR z11"];
-
-	y08 -> z08;
-	x08 -> z08;
-	z08[color="red" label="AND: Output gate z08 named with a 'z' should be XOR2\nAND z08"];
-
-	fgk -> z06;
-	jbp -> z06;
-	z06[color="black" label="XOR2 bit 6\nXOR z06"];
-
-	swk -> tjh;
-	dgd -> tjh;
-	tjh[color="black" label="CARRY bit 21\nOR tjh"];
-
-	ccq -> vdt;
-	hns -> vdt;
-	vdt[color="black" label="CARRY bit 24\nOR vdt"];
-
-	wkh -> z17;
-	fhk -> z17;
-	z17[color="red" label="XOR: Output gate z17 named with a 'z' should be XOR2\nXOR z17"];
-
-	wdg -> z03;
-	fbp -> z03;
-	z03[color="black" label="XOR2 bit 3\nXOR z03"];
-
-	jhb -> z41;
-	tkw -> z41;
-	z41[color="black" label="XOR2 bit 41\nXOR z41"];
-
-	y31 -> tnf;
-	x31 -> tnf;
-	tnf[color="black" label="AND1 bit 31\nAND tnf"];
-
-	stp -> cjh;
-	fvd -> cjh;
-	cjh[color="black" label="CARRY bit 19\nOR cjh"];
-
-	x33 -> shg;
-	y33 -> shg;
-	shg[color="black" label="XOR1 bit 33\nXOR shg"];
-
-	jpj -> z18;
-	brn -> z18;
-	z18[color="black" label="XOR2 bit 18\nXOR z18"];
-
-	kcv -> gfm;
-	pqv -> gfm;
-	gfm[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR gfm"];
-
-	dmv -> tkv;
-	wvt -> tkv;
-	tkv[color="black" label="AND2 bit 12\nAND tkv"];
-
-	skt -> pnr;
-	cdj -> pnr;
-	pnr[color="red" label="OR: Gate should have an input from both AND1 and AND2\nOR pnr"];
-
-	sdn -> cgp;
-	hrm -> cgp;
-	cgp[color="black" label="AND2 bit 14\nAND cgp"];
-
-	spg -> z44;
-	bfw -> z44;
-	z44[color="black" label="XOR2 bit 44\nXOR z44"];
-
-	y10 -> fkq;
-	x10 -> fkq;
-	fkq[color="black" label="AND1 bit 10\nAND fkq"];
-
-	fvk -> kvv;
-	kdn -> kvv;
-	kvv[color="black" label="AND2 bit 29\nAND kvv"];
-
-	nqv -> z26;
-	stc -> z26;
-	z26[color="black" label="XOR2 bit 26\nXOR z26"];
+	y14 -> sdn;
+	x14 -> sdn;
+	sdn[color="black" label="XOR1 bit 14\nXOR sdn"];
 
 	x23 -> crb;
 	y23 -> crb;
 	crb[color="black" label="XOR1 bit 23\nXOR crb"];
 
-	jqm -> z36;
-	fjc -> z36;
-	z36[color="black" label="XOR2 bit 36\nXOR z36"];
+	x38 -> qjd;
+	y38 -> qjd;
+	qjd[color="black" label="AND1 bit 38\nAND qjd"];
 
-	dkn -> crw;
-	mws -> crw;
-	crw[color="black" label="AND2 bit 11\nAND crw"];
+	dbc -> tkw;
+	kqh -> tkw;
+	tkw[color="black" label="CARRY bit 40\nOR tkw"];
+
+	kph -> jrd;
+	jsr -> jrd;
+	jrd[color="black" label="AND2 bit 13\nAND jrd"];
+
+	jrd -> hrm;
+	qmc -> hrm;
+	hrm[color="black" label="CARRY bit 13\nOR hrm"];
+
+	bmh -> mhs;
+	tqj -> mhs;
+	mhs[color="black" label="CARRY bit 3\nOR mhs"];
+
+	x12 -> knv;
+	y12 -> knv;
+	knv[color="black" label="AND1 bit 12\nAND knv"];
+
+	y29 -> kdn;
+	x29 -> kdn;
+	kdn[color="black" label="XOR1 bit 29\nXOR kdn"];
+
+	tnr -> rtp;
+	hhm -> rtp;
+	rtp[color="black" label="CARRY bit 7\nOR rtp"];
+
+	qjd -> bgj;
+	kvn -> bgj;
+	bgj[color="red" label="AND: Gate should have an input from XOR1\nAND bgj"];
+
+	x42 -> gqq;
+	y42 -> gqq;
+	gqq[color="black" label="AND1 bit 42\nAND gqq"];
+
+	btq -> kmb;
+	kgf -> kmb;
+	kmb[color="black" label="CARRY bit 9\nOR kmb"];
 
 	wdg -> bmh;
 	fbp -> bmh;
 	bmh[color="black" label="AND2 bit 3\nAND bmh"];
 
+	x22 -> hcv;
+	y22 -> hcv;
+	hcv[color="black" label="AND1 bit 22\nAND hcv"];
+
+	tdc -> z30;
+	scp -> z30;
+	z30[color="black" label="XOR2 bit 30\nXOR z30"];
+
+	qpq -> mhm;
+	vqw -> mhm;
+	mhm[color="black" label="CARRY bit 33\nOR mhm"];
+
+	jqm -> ktw;
+	fjc -> ktw;
+	ktw[color="black" label="AND2 bit 36\nAND ktw"];
+
+	x00 -> z00;
+	y00 -> z00;
+	z00[color="black" label="XOR1 bit 0\nXOR z00"];
+
+	y34 -> fgq;
+	x34 -> fgq;
+	fgq[color="black" label="AND1 bit 34\nAND fgq"];
+
+	y41 -> jhb;
+	x41 -> jhb;
+	jhb[color="black" label="XOR1 bit 41\nXOR jhb"];
+
+	dkn -> z11;
+	mws -> z11;
+	z11[color="black" label="XOR2 bit 11\nXOR z11"];
+
+	mbc -> z31;
+	sjk -> z31;
+	z31[color="black" label="XOR2 bit 31\nXOR z31"];
+
+	rjv -> mdt;
+	vdt -> mdt;
+	mdt[color="black" label="AND2 bit 25\nAND mdt"];
+
+	stv -> z43;
+	vfw -> z43;
+	z43[color="black" label="XOR2 bit 43\nXOR z43"];
+
+	x15 -> jfh;
+	y15 -> jfh;
+	jfh[color="black" label="XOR1 bit 15\nXOR jfh"];
+
+	jpj -> z18;
+	brn -> z18;
+	z18[color="black" label="XOR2 bit 18\nXOR z18"];
+
+	x09 -> ghk;
+	y09 -> ghk;
+	ghk[color="black" label="XOR1 bit 9\nXOR ghk"];
+
+	y11 -> bbv;
+	x11 -> bbv;
+	bbv[color="black" label="AND1 bit 11\nAND bbv"];
+
+	gsv -> z01;
+	qtg -> z01;
+	z01[color="black" label="XOR2 bit 1\nXOR z01"];
+
+	sdn -> cgp;
+	hrm -> cgp;
+	cgp[color="black" label="AND2 bit 14\nAND cgp"];
+
+	x20 -> mmk;
+	y20 -> mmk;
+	mmk[color="black" label="AND1 bit 20\nAND mmk"];
+
+	x20 -> pwm;
+	y20 -> pwm;
+	pwm[color="black" label="XOR1 bit 20\nXOR pwm"];
+
+	vfw -> nfk;
+	stv -> nfk;
+	nfk[color="black" label="AND2 bit 43\nAND nfk"];
+
+	cgp -> gjd;
+	vjh -> gjd;
+	gjd[color="black" label="CARRY bit 14\nOR gjd"];
+
 	y32 -> jbc;
 	x32 -> jbc;
 	jbc[color="black" label="AND1 bit 32\nAND jbc"];
+
+	bqf -> jjt;
+	vnc -> jjt;
+	jjt[color="red" label="AND: Expected carry bit input from previous adder\nAND jjt"];
+
+	cpp -> kcv;
+	tnf -> kcv;
+	kcv[color="black" label="CARRY bit 31\nOR kcv"];
+
+	y36 -> fjc;
+	x36 -> fjc;
+	fjc[color="black" label="XOR1 bit 36\nXOR fjc"];
+
+	x28 -> mdr;
+	y28 -> mdr;
+	mdr[color="black" label="AND1 bit 28\nAND mdr"];
+
+	y16 -> dwj;
+	x16 -> dwj;
+	dwj[color="black" label="AND1 bit 16\nAND dwj"];
+
+	hsq -> pfh;
+	fgq -> pfh;
+	pfh[color="black" label="CARRY bit 34\nOR pfh"];
+
+	fkq -> dkn;
+	qfs -> dkn;
+	dkn[color="black" label="CARRY bit 10\nOR dkn"];
+
+	pbn -> z04;
+	mhs -> z04;
+	z04[color="black" label="XOR2 bit 4\nXOR z04"];
+
+	gsv -> vjb;
+	qtg -> vjb;
+	vjb[color="black" label="AND2 bit 1\nAND vjb"];
+
+	hwf -> qmd;
+	ftt -> qmd;
+	qmd[color="black" label="AND2 bit 37\nAND qmd"];
+
+	x00 -> gsv;
+	y00 -> gsv;
+	gsv[color="black" label="AND1 bit 0\nAND gsv"];
+
+	y21 -> mpm;
+	x21 -> mpm;
+	mpm[color="black" label="XOR1 bit 21\nXOR mpm"];
+
+	rpq -> bdd;
+	pfh -> bdd;
+	bdd[color="black" label="AND2 bit 35\nAND bdd"];
+
+	x01 -> wcd;
+	y01 -> wcd;
+	wcd[color="black" label="AND1 bit 1\nAND wcd"];
+
+	gtf -> dfv;
+	jjt -> dfv;
+	dfv[color="black" label="CARRY bit 39\nOR dfv"];
+
+	x37 -> ftt;
+	y37 -> ftt;
+	ftt[color="black" label="XOR1 bit 37\nXOR ftt"];
+
+	y03 -> tqj;
+	x03 -> tqj;
+	tqj[color="black" label="AND1 bit 3\nAND tqj"];
+
+	jhb -> z41;
+	tkw -> z41;
+	z41[color="black" label="XOR2 bit 41\nXOR z41"];
+
+	kvn -> z38;
+	qjd -> z38;
+	z38[color="red" label="XOR: Output gate z38 named with a 'z' should be XOR2\nXOR z38"];
+
+	rtp -> skt;
+	dnc -> skt;
+	skt[color="black" label="AND2 bit 8\nAND skt"];
+
+	y23 -> jmr;
+	x23 -> jmr;
+	jmr[color="black" label="AND1 bit 23\nAND jmr"];
+
+	rbm -> tmm;
+	bjj -> tmm;
+	tmm[color="black" label="CARRY bit 15\nOR tmm"];
+
+	dpv -> z19;
+	mgr -> z19;
+	z19[color="black" label="XOR2 bit 19\nXOR z19"];
+
+	x17 -> pjm;
+	y17 -> pjm;
+	pjm[color="black" label="AND1 bit 17\nAND pjm"];
+
+	x25 -> rjv;
+	y25 -> rjv;
+	rjv[color="black" label="XOR1 bit 25\nXOR rjv"];
+
+	x26 -> stc;
+	y26 -> stc;
+	stc[color="black" label="XOR1 bit 26\nXOR stc"];
+
+	fvk -> kvv;
+	kdn -> kvv;
+	kvv[color="black" label="AND2 bit 29\nAND kvv"];
+
+	y24 -> ccq;
+	x24 -> ccq;
+	ccq[color="black" label="AND1 bit 24\nAND ccq"];
+
+	y17 -> fhk;
+	x17 -> fhk;
+	fhk[color="black" label="XOR1 bit 17\nXOR fhk"];
+
+	fgk -> rdf;
+	jbp -> rdf;
+	rdf[color="black" label="AND2 bit 6\nAND rdf"];
+
+	bqf -> z39;
+	vnc -> z39;
+	z39[color="red" label="XOR: Output gate z39 named with a 'z' should be XOR2\nXOR z39"];
+
+	ktw -> hwf;
+	jwh -> hwf;
+	hwf[color="black" label="CARRY bit 36\nOR hwf"];
+
+	x10 -> vjd;
+	y10 -> vjd;
+	vjd[color="black" label="XOR1 bit 10\nXOR vjd"];
+
+	fgk -> z06;
+	jbp -> z06;
+	z06[color="black" label="XOR2 bit 6\nXOR z06"];
+
+	x12 -> dmv;
+	y12 -> dmv;
+	dmv[color="black" label="XOR1 bit 12\nXOR dmv"];
+
+	x15 -> rbm;
+	y15 -> rbm;
+	rbm[color="black" label="AND1 bit 15\nAND rbm"];
+
+	x18 -> mjf;
+	y18 -> mjf;
+	mjf[color="black" label="AND1 bit 18\nAND mjf"];
+
+	crw -> wvt;
+	bbv -> wvt;
+	wvt[color="black" label="CARRY bit 11\nOR wvt"];
+
+	y08 -> dnc;
+	x08 -> dnc;
+	dnc[color="black" label="XOR1 bit 8\nXOR dnc"];
+
+	wdg -> z03;
+	fbp -> z03;
+	z03[color="black" label="XOR2 bit 3\nXOR z03"];
+
+	y19 -> stp;
+	x19 -> stp;
+	stp[color="black" label="AND1 bit 19\nAND stp"];
+
+	dwj -> wkh;
+	mrb -> wkh;
+	wkh[color="red" label="OR: Gate should have an input from both AND1 and AND2\nOR wkh"];
+
+	y05 -> vfm;
+	x05 -> vfm;
+	vfm[color="black" label="AND1 bit 5\nAND vfm"];
+
+	x44 -> jdh;
+	y44 -> jdh;
+	jdh[color="black" label="AND1 bit 44\nAND jdh"];
+
+	y25 -> ctp;
+	x25 -> ctp;
+	ctp[color="black" label="AND1 bit 25\nAND ctp"];
+
+	vpv -> jpj;
+	pjm -> jpj;
+	jpj[color="black" label="CARRY bit 17\nOR jpj"];
+
+	crb -> fpk;
+	gqd -> fpk;
+	fpk[color="black" label="AND2 bit 23\nAND fpk"];
+
+	y07 -> stn;
+	x07 -> stn;
+	stn[color="black" label="XOR1 bit 7\nXOR stn"];
+
+	x41 -> mqp;
+	y41 -> mqp;
+	mqp[color="black" label="AND1 bit 41\nAND mqp"];
+
+	y13 -> kph;
+	x13 -> kph;
+	kph[color="black" label="XOR1 bit 13\nXOR kph"];
+
+	stp -> cjh;
+	fvd -> cjh;
+	cjh[color="black" label="CARRY bit 19\nOR cjh"];
+
+	jfh -> z15;
+	gjd -> z15;
+	z15[color="black" label="XOR2 bit 15\nXOR z15"];
+
+	pnr -> kgf;
+	ghk -> kgf;
+	kgf[color="red" label="AND: Expected carry bit input from previous adder\nAND kgf"];
+
+	jbc -> z32;
+	mnv -> z32;
+	z32[color="red" label="OR: Output gate z32 named with a 'z' should be XOR2\nOR z32"];
+
+	fpk -> ckj;
+	jmr -> ckj;
+	ckj[color="black" label="CARRY bit 23\nOR ckj"];
+
+	y27 -> hqw;
+	x27 -> hqw;
+	hqw[color="black" label="XOR1 bit 27\nXOR hqw"];
+
+	x02 -> hjk;
+	y02 -> hjk;
+	hjk[color="black" label="AND1 bit 2\nAND hjk"];
+
+	dnc -> cdj;
+	rtp -> cdj;
+	cdj[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR cdj"];
+
+	x05 -> pjv;
+	y05 -> pjv;
+	pjv[color="black" label="XOR1 bit 5\nXOR pjv"];
+
+	y35 -> rkm;
+	x35 -> rkm;
+	rkm[color="black" label="AND1 bit 35\nAND rkm"];
+
+	x35 -> rpq;
+	y35 -> rpq;
+	rpq[color="black" label="XOR1 bit 35\nXOR rpq"];
+
+	pqv -> mnv;
+	kcv -> mnv;
+	mnv[color="black" label="AND2 bit 32\nAND mnv"];
+
+	gnn -> kvn;
+	qmd -> kvn;
+	kvn[color="black" label="CARRY bit 37\nOR kvn"];
+
+	tqg -> z40;
+	dfv -> z40;
+	z40[color="black" label="XOR2 bit 40\nXOR z40"];
+
+	rdf -> ffg;
+	kcg -> ffg;
+	ffg[color="black" label="CARRY bit 6\nOR ffg"];
+
+	rkm -> jqm;
+	bdd -> jqm;
+	jqm[color="black" label="CARRY bit 35\nOR jqm"];
 
 	x01 -> qtg;
 	y01 -> qtg;
@@ -251,461 +455,221 @@ digraph G {
 	jjh -> hns;
 	hns[color="black" label="AND2 bit 24\nAND hns"];
 
-	x18 -> brn;
-	y18 -> brn;
-	brn[color="black" label="XOR1 bit 18\nXOR brn"];
-
-	ffg -> z07;
-	stn -> z07;
-	z07[color="black" label="XOR2 bit 7\nXOR z07"];
-
-	gqq -> stv;
-	nnk -> stv;
-	stv[color="black" label="CARRY bit 42\nOR stv"];
-
-	x18 -> mjf;
-	y18 -> mjf;
-	mjf[color="black" label="AND1 bit 18\nAND mjf"];
-
-	x04 -> wmc;
-	y04 -> wmc;
-	wmc[color="black" label="AND1 bit 4\nAND wmc"];
-
-	mhm -> z34;
-	mhc -> z34;
-	z34[color="black" label="XOR2 bit 34\nXOR z34"];
-
-	shg -> vqw;
-	gfm -> vqw;
-	vqw[color="red" label="AND: Expected carry bit input from previous adder\nAND vqw"];
-
-	tdc -> z30;
-	scp -> z30;
-	z30[color="black" label="XOR2 bit 30\nXOR z30"];
-
-	wmc -> bhn;
-	whd -> bhn;
-	bhn[color="black" label="CARRY bit 4\nOR bhn"];
-
-	hwf -> qmd;
-	ftt -> qmd;
-	qmd[color="black" label="AND2 bit 37\nAND qmd"];
-
-	y39 -> vnc;
-	x39 -> vnc;
-	vnc[color="black" label="XOR1 bit 39\nXOR vnc"];
-
-	gtn -> dgd;
-	mpm -> dgd;
-	dgd[color="black" label="AND2 bit 21\nAND dgd"];
-
-	x43 -> dkq;
-	y43 -> dkq;
-	dkq[color="black" label="AND1 bit 43\nAND dkq"];
-
-	mhm -> hsq;
-	mhc -> hsq;
-	hsq[color="black" label="AND2 bit 34\nAND hsq"];
-
-	x28 -> mdr;
-	y28 -> mdr;
-	mdr[color="black" label="AND1 bit 28\nAND mdr"];
-
-	dhm -> bqf;
-	bgj -> bqf;
-	bqf[color="red" label="OR: Gate has unexpected input from XOR1\nOR bqf"];
-
-	jnn -> jbp;
-	vfm -> jbp;
-	jbp[color="black" label="CARRY bit 5\nOR jbp"];
-
-	x11 -> mws;
-	y11 -> mws;
-	mws[color="black" label="XOR1 bit 11\nXOR mws"];
-
-	y27 -> hqw;
-	x27 -> hqw;
-	hqw[color="black" label="XOR1 bit 27\nXOR hqw"];
-
-	y30 -> tdc;
-	x30 -> tdc;
-	tdc[color="black" label="XOR1 bit 30\nXOR tdc"];
-
-	y29 -> kdn;
-	x29 -> kdn;
-	kdn[color="black" label="XOR1 bit 29\nXOR kdn"];
-
-	vjd -> z10;
-	kmb -> z10;
-	z10[color="black" label="XOR2 bit 10\nXOR z10"];
-
-	y36 -> fjc;
-	x36 -> fjc;
-	fjc[color="black" label="XOR1 bit 36\nXOR fjc"];
-
-	x40 -> kqh;
-	y40 -> kqh;
-	kqh[color="black" label="AND1 bit 40\nAND kqh"];
-
-	crb -> fpk;
-	gqd -> fpk;
-	fpk[color="black" label="AND2 bit 23\nAND fpk"];
-
-	y03 -> fbp;
-	x03 -> fbp;
-	fbp[color="black" label="XOR1 bit 3\nXOR fbp"];
-
-	ktw -> hwf;
-	jwh -> hwf;
-	hwf[color="black" label="CARRY bit 36\nOR hwf"];
-
-	stv -> z43;
-	vfw -> z43;
-	z43[color="black" label="XOR2 bit 43\nXOR z43"];
-
-	stn -> tnr;
-	ffg -> tnr;
-	tnr[color="black" label="AND2 bit 7\nAND tnr"];
-
-	x12 -> knv;
-	y12 -> knv;
-	knv[color="black" label="AND1 bit 12\nAND knv"];
-
-	ghk -> z09;
-	pnr -> z09;
-	z09[color="red" label="XOR: Output gate z09 named with a 'z' should be XOR2\nXOR z09"];
-
-	gsv -> vjb;
-	qtg -> vjb;
-	vjb[color="black" label="AND2 bit 1\nAND vjb"];
-
-	msp -> z28;
-	shq -> z28;
-	z28[color="black" label="XOR2 bit 28\nXOR z28"];
-
-	qjd -> bgj;
-	kvn -> bgj;
-	bgj[color="red" label="AND: Gate should have an input from XOR1\nAND bgj"];
-
-	sdn -> z14;
-	hrm -> z14;
-	z14[color="black" label="XOR2 bit 14\nXOR z14"];
-
-	x42 -> msd;
-	y42 -> msd;
-	msd[color="black" label="XOR1 bit 42\nXOR msd"];
-
-	x27 -> wqf;
-	y27 -> wqf;
-	wqf[color="black" label="AND1 bit 27\nAND wqf"];
-
-	y41 -> jhb;
-	x41 -> jhb;
-	jhb[color="black" label="XOR1 bit 41\nXOR jhb"];
-
-	jvj -> jmq;
-	bch -> jmq;
-	jmq[color="black" label="CARRY bit 26\nOR jmq"];
-
-	y17 -> fhk;
-	x17 -> fhk;
-	fhk[color="black" label="XOR1 bit 17\nXOR fhk"];
-
-	knv -> jsr;
-	tkv -> jsr;
-	jsr[color="black" label="CARRY bit 12\nOR jsr"];
-
-	mjf -> dpv;
-	srr -> dpv;
-	dpv[color="black" label="CARRY bit 18\nOR dpv"];
-
-	qpq -> mhm;
-	vqw -> mhm;
-	mhm[color="black" label="CARRY bit 33\nOR mhm"];
-
-	x25 -> rjv;
-	y25 -> rjv;
-	rjv[color="black" label="XOR1 bit 25\nXOR rjv"];
-
-	pjv -> jnn;
-	bhn -> jnn;
-	jnn[color="black" label="AND2 bit 5\nAND jnn"];
-
-	x22 -> hcv;
-	y22 -> hcv;
-	hcv[color="black" label="AND1 bit 22\nAND hcv"];
-
-	y30 -> nmd;
-	x30 -> nmd;
-	nmd[color="black" label="AND1 bit 30\nAND nmd"];
-
-	y23 -> jmr;
-	x23 -> jmr;
-	jmr[color="black" label="AND1 bit 23\nAND jmr"];
-
-	y11 -> bbv;
-	x11 -> bbv;
-	bbv[color="black" label="AND1 bit 11\nAND bbv"];
-
-	pbn -> z04;
-	mhs -> z04;
-	z04[color="black" label="XOR2 bit 4\nXOR z04"];
-
-	y13 -> qmc;
-	x13 -> qmc;
-	qmc[color="black" label="AND1 bit 13\nAND qmc"];
-
-	kmb -> qfs;
-	vjd -> qfs;
-	qfs[color="black" label="AND2 bit 10\nAND qfs"];
-
-	x26 -> jvj;
-	y26 -> jvj;
-	jvj[color="black" label="AND1 bit 26\nAND jvj"];
-
-	x20 -> mmk;
-	y20 -> mmk;
-	mmk[color="black" label="AND1 bit 20\nAND mmk"];
-
-	y24 -> jjh;
-	x24 -> jjh;
-	jjh[color="black" label="XOR1 bit 24\nXOR jjh"];
-
-	y44 -> spg;
-	x44 -> spg;
-	spg[color="black" label="XOR1 bit 44\nXOR spg"];
-
-	pjv -> z05;
-	bhn -> z05;
-	z05[color="black" label="XOR2 bit 5\nXOR z05"];
-
-	x00 -> gsv;
-	y00 -> gsv;
-	gsv[color="black" label="AND1 bit 0\nAND gsv"];
-
-	jqm -> ktw;
-	fjc -> ktw;
-	ktw[color="black" label="AND2 bit 36\nAND ktw"];
-
-	x35 -> rpq;
-	y35 -> rpq;
-	rpq[color="black" label="XOR1 bit 35\nXOR rpq"];
-
-	mdr -> fvk;
-	dqc -> fvk;
-	fvk[color="black" label="CARRY bit 28\nOR fvk"];
-
-	y16 -> dwj;
-	x16 -> dwj;
-	dwj[color="black" label="AND1 bit 16\nAND dwj"];
-
-	dwj -> wkh;
-	mrb -> wkh;
-	wkh[color="red" label="OR: Gate should have an input from both AND1 and AND2\nOR wkh"];
-
-	x02 -> vgg;
-	y02 -> vgg;
-	vgg[color="black" label="XOR1 bit 2\nXOR vgg"];
-
-	x05 -> pjv;
-	y05 -> pjv;
-	pjv[color="black" label="XOR1 bit 5\nXOR pjv"];
-
-	x20 -> pwm;
-	y20 -> pwm;
-	pwm[color="black" label="XOR1 bit 20\nXOR pwm"];
-
-	y09 -> btq;
-	x09 -> btq;
-	btq[color="black" label="AND1 bit 9\nAND btq"];
-
-	jdh -> z45;
-	qrw -> z45;
-	z45[color="red" label="OR: Output gate z45 named with a 'z' should be XOR2\nOR z45"];
-
-	gtm -> tfr;
-	mqp -> tfr;
-	tfr[color="black" label="CARRY bit 41\nOR tfr"];
-
-	qfv -> wdg;
-	hjk -> wdg;
-	wdg[color="black" label="CARRY bit 2\nOR wdg"];
-
-	rtp -> skt;
-	dnc -> skt;
-	skt[color="black" label="AND2 bit 8\nAND skt"];
-
-	y25 -> ctp;
-	x25 -> ctp;
-	ctp[color="black" label="AND1 bit 25\nAND ctp"];
-
-	tnr -> rtp;
-	hhm -> rtp;
-	rtp[color="black" label="CARRY bit 7\nOR rtp"];
-
-	nmd -> sjk;
-	pkv -> sjk;
-	sjk[color="black" label="CARRY bit 30\nOR sjk"];
-
-	x29 -> shs;
-	y29 -> shs;
-	shs[color="black" label="AND1 bit 29\nAND shs"];
-
-	x10 -> vjd;
-	y10 -> vjd;
-	vjd[color="black" label="XOR1 bit 10\nXOR vjd"];
-
-	mhs -> whd;
-	pbn -> whd;
-	whd[color="black" label="AND2 bit 4\nAND whd"];
-
-	msd -> z42;
-	tfr -> z42;
-	z42[color="black" label="XOR2 bit 42\nXOR z42"];
-
-	bqf -> z39;
-	vnc -> z39;
-	z39[color="red" label="XOR: Output gate z39 named with a 'z' should be XOR2\nXOR z39"];
-
-	y03 -> tqj;
-	x03 -> tqj;
-	tqj[color="black" label="AND1 bit 3\nAND tqj"];
-
-	x41 -> mqp;
-	y41 -> mqp;
-	mqp[color="black" label="AND1 bit 41\nAND mqp"];
-
-	x15 -> rbm;
-	y15 -> rbm;
-	rbm[color="black" label="AND1 bit 15\nAND rbm"];
-
-	jfh -> z15;
-	gjd -> z15;
-	z15[color="black" label="XOR2 bit 15\nXOR z15"];
-
-	fpk -> ckj;
-	jmr -> ckj;
-	ckj[color="black" label="CARRY bit 23\nOR ckj"];
-
-	y14 -> sdn;
-	x14 -> sdn;
-	sdn[color="black" label="XOR1 bit 14\nXOR sdn"];
-
-	rbm -> tmm;
-	bjj -> tmm;
-	tmm[color="black" label="CARRY bit 15\nOR tmm"];
-
-	x09 -> ghk;
-	y09 -> ghk;
-	ghk[color="black" label="XOR1 bit 9\nXOR ghk"];
-
-	x37 -> ftt;
-	y37 -> ftt;
-	ftt[color="black" label="XOR1 bit 37\nXOR ftt"];
-
-	x44 -> jdh;
-	y44 -> jdh;
-	jdh[color="black" label="AND1 bit 44\nAND jdh"];
-
-	x28 -> shq;
-	y28 -> shq;
-	shq[color="black" label="XOR1 bit 28\nXOR shq"];
-
-	y31 -> mbc;
-	x31 -> mbc;
-	mbc[color="black" label="XOR1 bit 31\nXOR mbc"];
-
-	rpq -> z35;
-	pfh -> z35;
-	z35[color="black" label="XOR2 bit 35\nXOR z35"];
-
-	x40 -> tqg;
-	y40 -> tqg;
-	tqg[color="black" label="XOR1 bit 40\nXOR tqg"];
-
-	dpv -> z19;
-	mgr -> z19;
-	z19[color="black" label="XOR2 bit 19\nXOR z19"];
-
-	bmh -> mhs;
-	tqj -> mhs;
-	mhs[color="black" label="CARRY bit 3\nOR mhs"];
-
-	y35 -> rkm;
-	x35 -> rkm;
-	rkm[color="black" label="AND1 bit 35\nAND rkm"];
-
-	tkw -> gtm;
-	jhb -> gtm;
-	gtm[color="black" label="AND2 bit 41\nAND gtm"];
-
-	vfw -> nfk;
-	stv -> nfk;
-	nfk[color="black" label="AND2 bit 43\nAND nfk"];
-
-	stc -> bch;
-	nqv -> bch;
-	bch[color="black" label="AND2 bit 26\nAND bch"];
-
-	pqv -> mnv;
-	kcv -> mnv;
-	mnv[color="black" label="AND2 bit 32\nAND mnv"];
-
-	vpv -> jpj;
-	pjm -> jpj;
-	jpj[color="black" label="CARRY bit 17\nOR jpj"];
-
-	dbc -> tkw;
-	kqh -> tkw;
-	tkw[color="black" label="CARRY bit 40\nOR tkw"];
-
-	sjk -> cpp;
-	mbc -> cpp;
-	cpp[color="black" label="AND2 bit 31\nAND cpp"];
-
-	pwm -> nct;
-	cjh -> nct;
-	nct[color="black" label="AND2 bit 20\nAND nct"];
-
-	x42 -> gqq;
-	y42 -> gqq;
-	gqq[color="black" label="AND1 bit 42\nAND gqq"];
+	x33 -> shg;
+	y33 -> shg;
+	shg[color="black" label="XOR1 bit 33\nXOR shg"];
 
 	hrj -> wfs;
 	tjh -> wfs;
 	wfs[color="black" label="AND2 bit 22\nAND wfs"];
 
-	rpq -> bdd;
-	pfh -> bdd;
-	bdd[color="black" label="AND2 bit 35\nAND bdd"];
+	gtn -> dgd;
+	mpm -> dgd;
+	dgd[color="black" label="AND2 bit 21\nAND dgd"];
+
+	y03 -> fbp;
+	x03 -> fbp;
+	fbp[color="black" label="XOR1 bit 3\nXOR fbp"];
+
+	vjd -> z10;
+	kmb -> z10;
+	z10[color="black" label="XOR2 bit 10\nXOR z10"];
+
+	crb -> z23;
+	gqd -> z23;
+	z23[color="black" label="XOR2 bit 23\nXOR z23"];
+
+	y30 -> nmd;
+	x30 -> nmd;
+	nmd[color="black" label="AND1 bit 30\nAND nmd"];
+
+	nmd -> sjk;
+	pkv -> sjk;
+	sjk[color="black" label="CARRY bit 30\nOR sjk"];
+
+	jqm -> z36;
+	fjc -> z36;
+	z36[color="black" label="XOR2 bit 36\nXOR z36"];
+
+	ftt -> z37;
+	hwf -> z37;
+	z37[color="black" label="XOR2 bit 37\nXOR z37"];
+
+	jvj -> jmq;
+	bch -> jmq;
+	jmq[color="black" label="CARRY bit 26\nOR jmq"];
+
+	x04 -> wmc;
+	y04 -> wmc;
+	wmc[color="black" label="AND1 bit 4\nAND wmc"];
 
 	djd -> msp;
 	wqf -> msp;
 	msp[color="black" label="CARRY bit 27\nOR msp"];
 
-	dpv -> fvd;
-	mgr -> fvd;
-	fvd[color="black" label="AND2 bit 19\nAND fvd"];
+	ccq -> vdt;
+	hns -> vdt;
+	vdt[color="black" label="CARRY bit 24\nOR vdt"];
 
-	y19 -> stp;
-	x19 -> stp;
-	stp[color="black" label="AND1 bit 19\nAND stp"];
+	msp -> z28;
+	shq -> z28;
+	z28[color="black" label="XOR2 bit 28\nXOR z28"];
 
-	rjv -> mdt;
-	vdt -> mdt;
-	mdt[color="black" label="AND2 bit 25\nAND mdt"];
+	gbg -> z02;
+	vgg -> z02;
+	z02[color="black" label="XOR2 bit 2\nXOR z02"];
 
-	x34 -> mhc;
-	y34 -> mhc;
-	mhc[color="black" label="XOR1 bit 34\nXOR mhc"];
+	x21 -> swk;
+	y21 -> swk;
+	swk[color="black" label="AND1 bit 21\nAND swk"];
 
-	y08 -> dnc;
-	x08 -> dnc;
-	dnc[color="black" label="XOR1 bit 8\nXOR dnc"];
+	mjf -> dpv;
+	srr -> dpv;
+	dpv[color="black" label="CARRY bit 18\nOR dpv"];
 
-	y13 -> kph;
-	x13 -> kph;
-	kph[color="black" label="XOR1 bit 13\nXOR kph"];
+	pjv -> jnn;
+	bhn -> jnn;
+	jnn[color="black" label="AND2 bit 5\nAND jnn"];
+
+	jnn -> jbp;
+	vfm -> jbp;
+	jbp[color="black" label="CARRY bit 5\nOR jbp"];
+
+	dkn -> crw;
+	mws -> crw;
+	crw[color="black" label="AND2 bit 11\nAND crw"];
+
+	x06 -> fgk;
+	y06 -> fgk;
+	fgk[color="black" label="XOR1 bit 6\nXOR fgk"];
+
+	y44 -> spg;
+	x44 -> spg;
+	spg[color="black" label="XOR1 bit 44\nXOR spg"];
+
+	gjd -> bjj;
+	jfh -> bjj;
+	bjj[color="black" label="AND2 bit 15\nAND bjj"];
+
+	tjh -> z22;
+	hrj -> z22;
+	z22[color="black" label="XOR2 bit 22\nXOR z22"];
+
+	spg -> z44;
+	bfw -> z44;
+	z44[color="black" label="XOR2 bit 44\nXOR z44"];
+
+	mhm -> hsq;
+	mhc -> hsq;
+	hsq[color="black" label="AND2 bit 34\nAND hsq"];
+
+	x43 -> dkq;
+	y43 -> dkq;
+	dkq[color="black" label="AND1 bit 43\nAND dkq"];
+
+	y22 -> hrj;
+	x22 -> hrj;
+	hrj[color="black" label="XOR1 bit 22\nXOR hrj"];
+
+	btj -> mrb;
+	tmm -> mrb;
+	mrb[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR mrb"];
+
+	mpm -> z21;
+	gtn -> z21;
+	z21[color="black" label="XOR2 bit 21\nXOR z21"];
+
+	y31 -> mbc;
+	x31 -> mbc;
+	mbc[color="black" label="XOR1 bit 31\nXOR mbc"];
+
+	x18 -> brn;
+	y18 -> brn;
+	brn[color="black" label="XOR1 bit 18\nXOR brn"];
+
+	pwm -> nct;
+	cjh -> nct;
+	nct[color="black" label="AND2 bit 20\nAND nct"];
+
+	kvv -> scp;
+	shs -> scp;
+	scp[color="black" label="CARRY bit 29\nOR scp"];
+
+	jdh -> z45;
+	qrw -> z45;
+	z45[color="red" label="OR: Output gate z45 named with a 'z' should be XOR2\nOR z45"];
+
+	stn -> tnr;
+	ffg -> tnr;
+	tnr[color="black" label="AND2 bit 7\nAND tnr"];
+
+	ghk -> z09;
+	pnr -> z09;
+	z09[color="red" label="XOR: Output gate z09 named with a 'z' should be XOR2\nXOR z09"];
+
+	x07 -> hhm;
+	y07 -> hhm;
+	hhm[color="black" label="AND1 bit 7\nAND hhm"];
+
+	hcv -> gqd;
+	wfs -> gqd;
+	gqd[color="black" label="CARRY bit 22\nOR gqd"];
+
+	hqw -> djd;
+	jmq -> djd;
+	djd[color="black" label="AND2 bit 27\nAND djd"];
+
+	vdt -> z25;
+	rjv -> z25;
+	z25[color="black" label="XOR2 bit 25\nXOR z25"];
+
+	ckj -> z24;
+	jjh -> z24;
+	z24[color="black" label="XOR2 bit 24\nXOR z24"];
+
+	y10 -> fkq;
+	x10 -> fkq;
+	fkq[color="black" label="AND1 bit 10\nAND fkq"];
+
+	shg -> vqw;
+	gfm -> vqw;
+	vqw[color="red" label="AND: Expected carry bit input from previous adder\nAND vqw"];
+
+	hqw -> z27;
+	jmq -> z27;
+	z27[color="black" label="XOR2 bit 27\nXOR z27"];
+
+	y39 -> vnc;
+	x39 -> vnc;
+	vnc[color="black" label="XOR1 bit 39\nXOR vnc"];
+
+	x37 -> gnn;
+	y37 -> gnn;
+	gnn[color="black" label="AND1 bit 37\nAND gnn"];
+
+	nfk -> bfw;
+	dkq -> bfw;
+	bfw[color="black" label="CARRY bit 43\nOR bfw"];
+
+	gbg -> qfv;
+	vgg -> qfv;
+	qfv[color="black" label="AND2 bit 2\nAND qfv"];
+
+	gfm -> z33;
+	shg -> z33;
+	z33[color="red" label="XOR: Output gate z33 named with a 'z' should be XOR2\nXOR z33"];
+
+	mhs -> whd;
+	pbn -> whd;
+	whd[color="black" label="AND2 bit 4\nAND whd"];
+
+	y39 -> gtf;
+	x39 -> gtf;
+	gtf[color="black" label="AND1 bit 39\nAND gtf"];
+
+	y08 -> z08;
+	x08 -> z08;
+	z08[color="red" label="AND: Output gate z08 named with a 'z' should be XOR2\nAND z08"];
 
 	tqg -> dbc;
 	dfv -> dbc;
@@ -715,176 +679,212 @@ digraph G {
 	tmm -> z16;
 	z16[color="red" label="AND: Output gate z16 named with a 'z' should be XOR2\nAND z16"];
 
-	spg -> qrw;
-	bfw -> qrw;
-	qrw[color="black" label="AND2 bit 44\nAND qrw"];
-
-	ftt -> z37;
-	hwf -> z37;
-	z37[color="black" label="XOR2 bit 37\nXOR z37"];
-
-	dnc -> cdj;
-	rtp -> cdj;
-	cdj[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR cdj"];
-
-	nfk -> bfw;
-	dkq -> bfw;
-	bfw[color="black" label="CARRY bit 43\nOR bfw"];
-
-	x37 -> gnn;
-	y37 -> gnn;
-	gnn[color="black" label="AND1 bit 37\nAND gnn"];
-
-	gtf -> dfv;
-	jjt -> dfv;
-	dfv[color="black" label="CARRY bit 39\nOR dfv"];
-
-	y21 -> mpm;
-	x21 -> mpm;
-	mpm[color="black" label="XOR1 bit 21\nXOR mpm"];
-
-	jsr -> z13;
-	kph -> z13;
-	z13[color="black" label="XOR2 bit 13\nXOR z13"];
-
-	fhk -> vpv;
-	wkh -> vpv;
-	vpv[color="red" label="AND: Expected carry bit input from previous adder\nAND vpv"];
-
-	y34 -> fgq;
-	x34 -> fgq;
-	fgq[color="black" label="AND1 bit 34\nAND fgq"];
-
-	gbg -> qfv;
-	vgg -> qfv;
-	qfv[color="black" label="AND2 bit 2\nAND qfv"];
-
-	tjh -> z22;
-	hrj -> z22;
-	z22[color="black" label="XOR2 bit 22\nXOR z22"];
-
-	x38 -> qjd;
-	y38 -> qjd;
-	qjd[color="black" label="AND1 bit 38\nAND qjd"];
-
-	pnr -> kgf;
-	ghk -> kgf;
-	kgf[color="red" label="AND: Expected carry bit input from previous adder\nAND kgf"];
-
-	cpp -> kcv;
-	tnf -> kcv;
-	kcv[color="black" label="CARRY bit 31\nOR kcv"];
-
-	hqw -> djd;
-	jmq -> djd;
-	djd[color="black" label="AND2 bit 27\nAND djd"];
-
-	fgk -> rdf;
-	jbp -> rdf;
-	rdf[color="black" label="AND2 bit 6\nAND rdf"];
-
-	crb -> z23;
-	gqd -> z23;
-	z23[color="black" label="XOR2 bit 23\nXOR z23"];
-
 	y04 -> pbn;
 	x04 -> pbn;
 	pbn[color="black" label="XOR1 bit 4\nXOR pbn"];
 
-	rdf -> ffg;
-	kcg -> ffg;
-	ffg[color="black" label="CARRY bit 6\nOR ffg"];
+	dhm -> bqf;
+	bgj -> bqf;
+	bqf[color="red" label="OR: Gate has unexpected input from XOR1\nOR bqf"];
 
-	gnn -> kvn;
-	qmd -> kvn;
-	kvn[color="black" label="CARRY bit 37\nOR kvn"];
+	mdr -> fvk;
+	dqc -> fvk;
+	fvk[color="black" label="CARRY bit 28\nOR fvk"];
 
-	hcv -> gqd;
-	wfs -> gqd;
-	gqd[color="black" label="CARRY bit 22\nOR gqd"];
+	dmv -> tkv;
+	wvt -> tkv;
+	tkv[color="black" label="AND2 bit 12\nAND tkv"];
 
-	kph -> jrd;
-	jsr -> jrd;
-	jrd[color="black" label="AND2 bit 13\nAND jrd"];
+	y31 -> tnf;
+	x31 -> tnf;
+	tnf[color="black" label="AND1 bit 31\nAND tnf"];
 
-	jbc -> z32;
-	mnv -> z32;
-	z32[color="red" label="OR: Output gate z32 named with a 'z' should be XOR2\nOR z32"];
+	x42 -> msd;
+	y42 -> msd;
+	msd[color="black" label="XOR1 bit 42\nXOR msd"];
 
-	tqg -> z40;
-	dfv -> z40;
-	z40[color="black" label="XOR2 bit 40\nXOR z40"];
-
-	kvn -> z38;
-	qjd -> z38;
-	z38[color="red" label="XOR: Output gate z38 named with a 'z' should be XOR2\nXOR z38"];
-
-	x26 -> stc;
-	y26 -> stc;
-	stc[color="black" label="XOR1 bit 26\nXOR stc"];
-
-	vdt -> z25;
-	rjv -> z25;
-	z25[color="black" label="XOR2 bit 25\nXOR z25"];
-
-	x38 -> dhm;
-	y38 -> dhm;
-	dhm[color="black" label="XOR1 bit 38\nXOR dhm"];
-
-	x06 -> fgk;
-	y06 -> fgk;
-	fgk[color="black" label="XOR1 bit 6\nXOR fgk"];
-
-	rkm -> jqm;
-	bdd -> jqm;
-	jqm[color="black" label="CARRY bit 35\nOR jqm"];
-
-	y07 -> stn;
-	x07 -> stn;
-	stn[color="black" label="XOR1 bit 7\nXOR stn"];
-
-	mbc -> z31;
-	sjk -> z31;
-	z31[color="black" label="XOR2 bit 31\nXOR z31"];
-
-	y22 -> hrj;
-	x22 -> hrj;
-	hrj[color="black" label="XOR1 bit 22\nXOR hrj"];
-
-	cgp -> gjd;
-	vjh -> gjd;
-	gjd[color="black" label="CARRY bit 14\nOR gjd"];
+	stc -> bch;
+	nqv -> bch;
+	bch[color="black" label="AND2 bit 26\nAND bch"];
 
 	y43 -> vfw;
 	x43 -> vfw;
 	vfw[color="black" label="XOR1 bit 43\nXOR vfw"];
 
-	bqf -> jjt;
-	vnc -> jjt;
-	jjt[color="red" label="AND: Expected carry bit input from previous adder\nAND jjt"];
+	kdn -> z29;
+	fvk -> z29;
+	z29[color="black" label="XOR2 bit 29\nXOR z29"];
 
 	y14 -> vjh;
 	x14 -> vjh;
 	vjh[color="black" label="AND1 bit 14\nAND vjh"];
 
+	ffg -> z07;
+	stn -> z07;
+	z07[color="black" label="XOR2 bit 7\nXOR z07"];
+
+	y33 -> qpq;
+	x33 -> qpq;
+	qpq[color="black" label="AND1 bit 33\nAND qpq"];
+
+	x02 -> vgg;
+	y02 -> vgg;
+	vgg[color="black" label="XOR1 bit 2\nXOR vgg"];
+
+	nqv -> z26;
+	stc -> z26;
+	z26[color="black" label="XOR2 bit 26\nXOR z26"];
+
+	x28 -> shq;
+	y28 -> shq;
+	shq[color="black" label="XOR1 bit 28\nXOR shq"];
+
+	x11 -> mws;
+	y11 -> mws;
+	mws[color="black" label="XOR1 bit 11\nXOR mws"];
+
+	gtm -> tfr;
+	mqp -> tfr;
+	tfr[color="black" label="CARRY bit 41\nOR tfr"];
+
+	wmc -> bhn;
+	whd -> bhn;
+	bhn[color="black" label="CARRY bit 4\nOR bhn"];
+
+	fhk -> vpv;
+	wkh -> vpv;
+	vpv[color="red" label="AND: Expected carry bit input from previous adder\nAND vpv"];
+
+	msp -> dqc;
+	shq -> dqc;
+	dqc[color="black" label="AND2 bit 28\nAND dqc"];
+
+	pwm -> z20;
+	cjh -> z20;
+	z20[color="black" label="XOR2 bit 20\nXOR z20"];
+
+	skt -> pnr;
+	cdj -> pnr;
+	pnr[color="red" label="OR: Gate should have an input from both AND1 and AND2\nOR pnr"];
+
+	sdn -> z14;
+	hrm -> z14;
+	z14[color="black" label="XOR2 bit 14\nXOR z14"];
+
+	kcv -> gfm;
+	pqv -> gfm;
+	gfm[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR gfm"];
+
+	knv -> jsr;
+	tkv -> jsr;
+	jsr[color="black" label="CARRY bit 12\nOR jsr"];
+
+	nct -> gtn;
+	mmk -> gtn;
+	gtn[color="black" label="CARRY bit 20\nOR gtn"];
+
+	rpq -> z35;
+	pfh -> z35;
+	z35[color="black" label="XOR2 bit 35\nXOR z35"];
+
+	jsr -> z13;
+	kph -> z13;
+	z13[color="black" label="XOR2 bit 13\nXOR z13"];
+
+	dmv -> z12;
+	wvt -> z12;
+	z12[color="black" label="XOR2 bit 12\nXOR z12"];
+
+	x32 -> pqv;
+	y32 -> pqv;
+	pqv[color="black" label="XOR1 bit 32\nXOR pqv"];
+
+	sjk -> cpp;
+	mbc -> cpp;
+	cpp[color="black" label="AND2 bit 31\nAND cpp"];
+
+	x06 -> kcg;
+	y06 -> kcg;
+	kcg[color="black" label="AND1 bit 6\nAND kcg"];
+
+	y19 -> mgr;
+	x19 -> mgr;
+	mgr[color="black" label="XOR1 bit 19\nXOR mgr"];
+
+	y30 -> tdc;
+	x30 -> tdc;
+	tdc[color="black" label="XOR1 bit 30\nXOR tdc"];
+
+	msd -> nnk;
+	tfr -> nnk;
+	nnk[color="black" label="AND2 bit 42\nAND nnk"];
+
+	vjb -> gbg;
+	wcd -> gbg;
+	gbg[color="black" label="CARRY bit 1\nOR gbg"];
+
 	brn -> srr;
 	jpj -> srr;
 	srr[color="black" label="AND2 bit 18\nAND srr"];
 
-	btj -> mrb;
-	tmm -> mrb;
-	mrb[color="red" label="XOR: XOR2 gates should be named with a 'z'\nXOR mrb"];
+	spg -> qrw;
+	bfw -> qrw;
+	qrw[color="black" label="AND2 bit 44\nAND qrw"];
 
-	y36 -> jwh;
-	x36 -> jwh;
-	jwh[color="black" label="AND1 bit 36\nAND jwh"];
+	swk -> tjh;
+	dgd -> tjh;
+	tjh[color="black" label="CARRY bit 21\nOR tjh"];
+
+	y16 -> btj;
+	x16 -> btj;
+	btj[color="black" label="XOR1 bit 16\nXOR btj"];
+
+	pjv -> z05;
+	bhn -> z05;
+	z05[color="black" label="XOR2 bit 5\nXOR z05"];
+
+	gqq -> stv;
+	nnk -> stv;
+	stv[color="black" label="CARRY bit 42\nOR stv"];
+
+	dpv -> fvd;
+	mgr -> fvd;
+	fvd[color="black" label="AND2 bit 19\nAND fvd"];
+
+	mhm -> z34;
+	mhc -> z34;
+	z34[color="black" label="XOR2 bit 34\nXOR z34"];
+
+	x38 -> dhm;
+	y38 -> dhm;
+	dhm[color="black" label="XOR1 bit 38\nXOR dhm"];
+
+	x27 -> wqf;
+	y27 -> wqf;
+	wqf[color="black" label="AND1 bit 27\nAND wqf"];
+
+	x29 -> shs;
+	y29 -> shs;
+	shs[color="black" label="AND1 bit 29\nAND shs"];
 
 	scp -> pkv;
 	tdc -> pkv;
 	pkv[color="black" label="AND2 bit 30\nAND pkv"];
 
-	y33 -> qpq;
-	x33 -> qpq;
-	qpq[color="black" label="AND1 bit 33\nAND qpq"];
+	x40 -> tqg;
+	y40 -> tqg;
+	tqg[color="black" label="XOR1 bit 40\nXOR tqg"];
+
+	x34 -> mhc;
+	y34 -> mhc;
+	mhc[color="black" label="XOR1 bit 34\nXOR mhc"];
+
+	wkh -> z17;
+	fhk -> z17;
+	z17[color="red" label="XOR: Output gate z17 named with a 'z' should be XOR2\nXOR z17"];
+
+	x26 -> jvj;
+	y26 -> jvj;
+	jvj[color="black" label="AND1 bit 26\nAND jvj"];
 
 }

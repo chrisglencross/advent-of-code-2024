@@ -18,6 +18,12 @@ fn main() -> std::io::Result<()> {
 
     let path = generate_diagram(&gates)?;
     println!("Part 2: See diagram at {path}. Inspect regions highlighted in red (or just above) to work out which connections to swap. The errors are localised.");
+    println!("For each single bit adder with an error confirm that:");
+    println!("  1. (x, y) -> XOR1");
+    println!("  2. (x, y) -> AND1");
+    println!("  3. (XOR1, Carry In)) -> XOR2 (aka. Output)");
+    println!("  4. (XOR1, Carry In)) -> AND2");
+    println!("  5. (AND1, AND2) -> OR (aka. Carry Out)");
 
     return Ok(());
 }

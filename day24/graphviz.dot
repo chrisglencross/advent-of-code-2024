@@ -1,0 +1,891 @@
+
+digraph G {
+gjd -> bjj;
+jfh -> bjj;
+bjj[label="15: Output AND\nbjj"];
+
+gqq -> stv;
+nnk -> stv;
+stv[label="42: Carry Out OR\nstv"];
+
+ctp -> nqv;
+mdt -> nqv;
+nqv[label="25: Carry Out OR\nnqv"];
+
+x01 -> wcd;
+y01 -> wcd;
+wcd[label="01: Input AND\nwcd"];
+
+scp -> pkv;
+tdc -> pkv;
+pkv[label="30: Output AND\npkv"];
+
+x43 -> dkq;
+y43 -> dkq;
+dkq[label="43: Input AND\ndkq"];
+
+x09 -> ghk;
+y09 -> ghk;
+ghk[label="09: Input XOR\nghk"];
+
+y21 -> mpm;
+x21 -> mpm;
+mpm[label="21: Input XOR\nmpm"];
+
+kmb -> qfs;
+vjd -> qfs;
+qfs[label="10: Output AND\nqfs"];
+
+x29 -> shs;
+y29 -> shs;
+shs[label="29: Input AND\nshs"];
+
+x40 -> kqh;
+y40 -> kqh;
+kqh[label="40: Input AND\nkqh"];
+
+y39 -> gtf;
+x39 -> gtf;
+gtf[label="39: Input AND\ngtf"];
+
+y23 -> jmr;
+x23 -> jmr;
+jmr[label="23: Input AND\njmr"];
+
+y24 -> jjh;
+x24 -> jjh;
+jjh[label="24: Input XOR\njjh"];
+
+dmv -> z12;
+wvt -> z12;
+z12[label="12: Output XOR\nz12"];
+
+y34 -> fgq;
+x34 -> fgq;
+fgq[label="34: Input AND\nfgq"];
+
+y13 -> qmc;
+x13 -> qmc;
+qmc[label="13: Input AND\nqmc"];
+
+hqw -> djd;
+jmq -> djd;
+djd[label="27: Output AND\ndjd"];
+
+gnn -> kvn;
+qmd -> kvn;
+kvn[label="37: Carry Out OR\nkvn"];
+
+tjh -> z22;
+hrj -> z22;
+z22[label="22: Output XOR\nz22"];
+
+msp -> z28;
+shq -> z28;
+z28[label="28: Output XOR\nz28"];
+
+y16 -> btj;
+x16 -> btj;
+btj[label="16: Input XOR\nbtj"];
+
+pbn -> z04;
+mhs -> z04;
+z04[label="04: Output XOR\nz04"];
+
+djd -> msp;
+wqf -> msp;
+msp[label="27: Carry Out OR\nmsp"];
+
+y17 -> fhk;
+x17 -> fhk;
+fhk[label="17: Input XOR\nfhk"];
+
+rpq -> z35;
+pfh -> z35;
+z35[label="35: Output XOR\nz35"];
+
+cgp -> gjd;
+vjh -> gjd;
+gjd[label="14: Carry Out OR\ngjd"];
+
+y44 -> spg;
+x44 -> spg;
+spg[label="44: Input XOR\nspg"];
+
+x44 -> jdh;
+y44 -> jdh;
+jdh[label="44: Input AND\njdh"];
+
+btj -> z16;
+tmm -> z16;
+z16[label="16: Output AND\nz16"];
+
+sjk -> cpp;
+mbc -> cpp;
+cpp[label="31: Output AND\ncpp"];
+
+swk -> tjh;
+dgd -> tjh;
+tjh[label="21: Carry Out OR\ntjh"];
+
+hcv -> gqd;
+wfs -> gqd;
+gqd[label="22: Carry Out OR\ngqd"];
+
+nct -> gtn;
+mmk -> gtn;
+gtn[label="20: Carry Out OR\ngtn"];
+
+dwj -> wkh;
+mrb -> wkh;
+wkh[label="16: Carry Out OR\nwkh"];
+
+x37 -> gnn;
+y37 -> gnn;
+gnn[label="37: Input AND\ngnn"];
+
+x38 -> qjd;
+y38 -> qjd;
+qjd[label="38: Input AND\nqjd"];
+
+vfw -> nfk;
+stv -> nfk;
+nfk[label="43: Output AND\nnfk"];
+
+kvn -> z38;
+qjd -> z38;
+z38[label="UNKNOWN XOR\nz38"];
+
+btj -> mrb;
+tmm -> mrb;
+mrb[label="16: Output XOR\nmrb"];
+
+sdn -> cgp;
+hrm -> cgp;
+cgp[label="14: Output AND\ncgp"];
+
+sdn -> z14;
+hrm -> z14;
+z14[label="14: Output XOR\nz14"];
+
+y16 -> dwj;
+x16 -> dwj;
+dwj[label="16: Input AND\ndwj"];
+
+kph -> jrd;
+jsr -> jrd;
+jrd[label="13: Output AND\njrd"];
+
+rdf -> ffg;
+kcg -> ffg;
+ffg[label="06: Carry Out OR\nffg"];
+
+dpv -> z19;
+mgr -> z19;
+z19[label="19: Output XOR\nz19"];
+
+y10 -> fkq;
+x10 -> fkq;
+fkq[label="10: Input AND\nfkq"];
+
+y33 -> qpq;
+x33 -> qpq;
+qpq[label="33: Input AND\nqpq"];
+
+y30 -> tdc;
+x30 -> tdc;
+tdc[label="30: Input XOR\ntdc"];
+
+x26 -> jvj;
+y26 -> jvj;
+jvj[label="26: Input AND\njvj"];
+
+x06 -> kcg;
+y06 -> kcg;
+kcg[label="06: Input AND\nkcg"];
+
+gsv -> z01;
+qtg -> z01;
+z01[label="01: Output XOR\nz01"];
+
+gbg -> z02;
+vgg -> z02;
+z02[label="02: Output XOR\nz02"];
+
+jqm -> z36;
+fjc -> z36;
+z36[label="36: Output XOR\nz36"];
+
+dbc -> tkw;
+kqh -> tkw;
+tkw[label="40: Carry Out OR\ntkw"];
+
+shg -> vqw;
+gfm -> vqw;
+vqw[label="33: Output AND\nvqw"];
+
+rbm -> tmm;
+bjj -> tmm;
+tmm[label="15: Carry Out OR\ntmm"];
+
+dkn -> crw;
+mws -> crw;
+crw[label="11: Output AND\ncrw"];
+
+x11 -> mws;
+y11 -> mws;
+mws[label="11: Input XOR\nmws"];
+
+y30 -> nmd;
+x30 -> nmd;
+nmd[label="30: Input AND\nnmd"];
+
+y19 -> stp;
+x19 -> stp;
+stp[label="19: Input AND\nstp"];
+
+vdt -> z25;
+rjv -> z25;
+z25[label="25: Output XOR\nz25"];
+
+x07 -> hhm;
+y07 -> hhm;
+hhm[label="07: Input AND\nhhm"];
+
+jdh -> z45;
+qrw -> z45;
+z45[label="44: Carry Out OR\nz45"];
+
+x32 -> pqv;
+y32 -> pqv;
+pqv[label="32: Input XOR\npqv"];
+
+x42 -> gqq;
+y42 -> gqq;
+gqq[label="42: Input AND\ngqq"];
+
+brn -> srr;
+jpj -> srr;
+srr[label="18: Output AND\nsrr"];
+
+y09 -> btq;
+x09 -> btq;
+btq[label="09: Input AND\nbtq"];
+
+y32 -> jbc;
+x32 -> jbc;
+jbc[label="32: Input AND\njbc"];
+
+tkw -> gtm;
+jhb -> gtm;
+gtm[label="41: Output AND\ngtm"];
+
+x12 -> dmv;
+y12 -> dmv;
+dmv[label="12: Input XOR\ndmv"];
+
+x33 -> shg;
+y33 -> shg;
+shg[label="33: Input XOR\nshg"];
+
+pnr -> kgf;
+ghk -> kgf;
+kgf[label="09: Output AND\nkgf"];
+
+y39 -> vnc;
+x39 -> vnc;
+vnc[label="39: Input XOR\nvnc"];
+
+pwm -> nct;
+cjh -> nct;
+nct[label="20: Output AND\nnct"];
+
+x20 -> pwm;
+y20 -> pwm;
+pwm[label="20: Input XOR\npwm"];
+
+rjv -> mdt;
+vdt -> mdt;
+mdt[label="25: Output AND\nmdt"];
+
+x15 -> rbm;
+y15 -> rbm;
+rbm[label="15: Input AND\nrbm"];
+
+kvv -> scp;
+shs -> scp;
+scp[label="29: Carry Out OR\nscp"];
+
+btq -> kmb;
+kgf -> kmb;
+kmb[label="09: Carry Out OR\nkmb"];
+
+vjd -> z10;
+kmb -> z10;
+z10[label="10: Output XOR\nz10"];
+
+x15 -> jfh;
+y15 -> jfh;
+jfh[label="15: Input XOR\njfh"];
+
+dmv -> tkv;
+wvt -> tkv;
+tkv[label="12: Output AND\ntkv"];
+
+fgk -> rdf;
+jbp -> rdf;
+rdf[label="06: Output AND\nrdf"];
+
+jqm -> ktw;
+fjc -> ktw;
+ktw[label="36: Output AND\nktw"];
+
+qfv -> wdg;
+hjk -> wdg;
+wdg[label="02: Carry Out OR\nwdg"];
+
+dhm -> bqf;
+bgj -> bqf;
+bqf[label="38: Carry Out OR\nbqf"];
+
+y03 -> tqj;
+x03 -> tqj;
+tqj[label="03: Input AND\ntqj"];
+
+x02 -> hjk;
+y02 -> hjk;
+hjk[label="02: Input AND\nhjk"];
+
+gbg -> qfv;
+vgg -> qfv;
+qfv[label="02: Output AND\nqfv"];
+
+x18 -> mjf;
+y18 -> mjf;
+mjf[label="18: Input AND\nmjf"];
+
+vpv -> jpj;
+pjm -> jpj;
+jpj[label="17: Carry Out OR\njpj"];
+
+msd -> nnk;
+tfr -> nnk;
+nnk[label="42: Output AND\nnnk"];
+
+y29 -> kdn;
+x29 -> kdn;
+kdn[label="29: Input XOR\nkdn"];
+
+dkn -> z11;
+mws -> z11;
+z11[label="11: Output XOR\nz11"];
+
+hqw -> z27;
+jmq -> z27;
+z27[label="27: Output XOR\nz27"];
+
+y36 -> jwh;
+x36 -> jwh;
+jwh[label="36: Input AND\njwh"];
+
+nmd -> sjk;
+pkv -> sjk;
+sjk[label="30: Carry Out OR\nsjk"];
+
+jhb -> z41;
+tkw -> z41;
+z41[label="41: Output XOR\nz41"];
+
+crb -> z23;
+gqd -> z23;
+z23[label="23: Output XOR\nz23"];
+
+crb -> fpk;
+gqd -> fpk;
+fpk[label="23: Output AND\nfpk"];
+
+y22 -> hrj;
+x22 -> hrj;
+hrj[label="22: Input XOR\nhrj"];
+
+y31 -> mbc;
+x31 -> mbc;
+mbc[label="31: Input XOR\nmbc"];
+
+tdc -> z30;
+scp -> z30;
+z30[label="30: Output XOR\nz30"];
+
+x28 -> mdr;
+y28 -> mdr;
+mdr[label="28: Input AND\nmdr"];
+
+stc -> bch;
+nqv -> bch;
+bch[label="26: Output AND\nbch"];
+
+ftt -> z37;
+hwf -> z37;
+z37[label="37: Output XOR\nz37"];
+
+y31 -> tnf;
+x31 -> tnf;
+tnf[label="31: Input AND\ntnf"];
+
+qpq -> mhm;
+vqw -> mhm;
+mhm[label="33: Carry Out OR\nmhm"];
+
+jsr -> z13;
+kph -> z13;
+z13[label="13: Output XOR\nz13"];
+
+y43 -> vfw;
+x43 -> vfw;
+vfw[label="43: Input XOR\nvfw"];
+
+y08 -> dnc;
+x08 -> dnc;
+dnc[label="08: Input XOR\ndnc"];
+
+x22 -> hcv;
+y22 -> hcv;
+hcv[label="22: Input AND\nhcv"];
+
+gfm -> z33;
+shg -> z33;
+z33[label="33: Output XOR\nz33"];
+
+pwm -> z20;
+cjh -> z20;
+z20[label="20: Output XOR\nz20"];
+
+x01 -> qtg;
+y01 -> qtg;
+qtg[label="01: Input XOR\nqtg"];
+
+y11 -> bbv;
+x11 -> bbv;
+bbv[label="11: Input AND\nbbv"];
+
+x38 -> dhm;
+y38 -> dhm;
+dhm[label="38: Input XOR\ndhm"];
+
+y27 -> hqw;
+x27 -> hqw;
+hqw[label="27: Input XOR\nhqw"];
+
+fvk -> kvv;
+kdn -> kvv;
+kvv[label="29: Output AND\nkvv"];
+
+x12 -> knv;
+y12 -> knv;
+knv[label="12: Input AND\nknv"];
+
+x35 -> rpq;
+y35 -> rpq;
+rpq[label="35: Input XOR\nrpq"];
+
+x21 -> swk;
+y21 -> swk;
+swk[label="21: Input AND\nswk"];
+
+y03 -> fbp;
+x03 -> fbp;
+fbp[label="03: Input XOR\nfbp"];
+
+bmh -> mhs;
+tqj -> mhs;
+mhs[label="03: Carry Out OR\nmhs"];
+
+stn -> tnr;
+ffg -> tnr;
+tnr[label="07: Output AND\ntnr"];
+
+x37 -> ftt;
+y37 -> ftt;
+ftt[label="37: Input XOR\nftt"];
+
+jrd -> hrm;
+qmc -> hrm;
+hrm[label="13: Carry Out OR\nhrm"];
+
+gsv -> vjb;
+qtg -> vjb;
+vjb[label="01: Output AND\nvjb"];
+
+wdg -> z03;
+fbp -> z03;
+z03[label="03: Output XOR\nz03"];
+
+y19 -> mgr;
+x19 -> mgr;
+mgr[label="19: Input XOR\nmgr"];
+
+kcv -> gfm;
+pqv -> gfm;
+gfm[label="32: Output XOR\ngfm"];
+
+pqv -> mnv;
+kcv -> mnv;
+mnv[label="32: Output AND\nmnv"];
+
+y35 -> rkm;
+x35 -> rkm;
+rkm[label="35: Input AND\nrkm"];
+
+x40 -> tqg;
+y40 -> tqg;
+tqg[label="40: Input XOR\ntqg"];
+
+tnr -> rtp;
+hhm -> rtp;
+rtp[label="07: Carry Out OR\nrtp"];
+
+fpk -> ckj;
+jmr -> ckj;
+ckj[label="23: Carry Out OR\nckj"];
+
+msd -> z42;
+tfr -> z42;
+z42[label="42: Output XOR\nz42"];
+
+rkm -> jqm;
+bdd -> jqm;
+jqm[label="35: Carry Out OR\njqm"];
+
+ckj -> hns;
+jjh -> hns;
+hns[label="24: Output AND\nhns"];
+
+hwf -> qmd;
+ftt -> qmd;
+qmd[label="37: Output AND\nqmd"];
+
+x05 -> pjv;
+y05 -> pjv;
+pjv[label="05: Input XOR\npjv"];
+
+y25 -> ctp;
+x25 -> ctp;
+ctp[label="25: Input AND\nctp"];
+
+y14 -> sdn;
+x14 -> sdn;
+sdn[label="14: Input XOR\nsdn"];
+
+nfk -> bfw;
+dkq -> bfw;
+bfw[label="43: Carry Out OR\nbfw"];
+
+x41 -> mqp;
+y41 -> mqp;
+mqp[label="41: Input AND\nmqp"];
+
+dnc -> cdj;
+rtp -> cdj;
+cdj[label="08: Output XOR\ncdj"];
+
+fhk -> vpv;
+wkh -> vpv;
+vpv[label="17: Output AND\nvpv"];
+
+x23 -> crb;
+y23 -> crb;
+crb[label="23: Input XOR\ncrb"];
+
+tqg -> dbc;
+dfv -> dbc;
+dbc[label="40: Output AND\ndbc"];
+
+x17 -> pjm;
+y17 -> pjm;
+pjm[label="17: Input AND\npjm"];
+
+x25 -> rjv;
+y25 -> rjv;
+rjv[label="25: Input XOR\nrjv"];
+
+wmc -> bhn;
+whd -> bhn;
+bhn[label="04: Carry Out OR\nbhn"];
+
+nqv -> z26;
+stc -> z26;
+z26[label="26: Output XOR\nz26"];
+
+spg -> qrw;
+bfw -> qrw;
+qrw[label="44: Output AND\nqrw"];
+
+jfh -> z15;
+gjd -> z15;
+z15[label="15: Output XOR\nz15"];
+
+mpm -> z21;
+gtn -> z21;
+z21[label="21: Output XOR\nz21"];
+
+y14 -> vjh;
+x14 -> vjh;
+vjh[label="14: Input AND\nvjh"];
+
+bqf -> z39;
+vnc -> z39;
+z39[label="39: Output XOR\nz39"];
+
+hsq -> pfh;
+fgq -> pfh;
+pfh[label="34: Carry Out OR\npfh"];
+
+gtn -> dgd;
+mpm -> dgd;
+dgd[label="21: Output AND\ndgd"];
+
+crw -> wvt;
+bbv -> wvt;
+wvt[label="11: Carry Out OR\nwvt"];
+
+gtf -> dfv;
+jjt -> dfv;
+dfv[label="39: Carry Out OR\ndfv"];
+
+kdn -> z29;
+fvk -> z29;
+z29[label="29: Output XOR\nz29"];
+
+spg -> z44;
+bfw -> z44;
+z44[label="44: Output XOR\nz44"];
+
+pjv -> z05;
+bhn -> z05;
+z05[label="05: Output XOR\nz05"];
+
+mhm -> z34;
+mhc -> z34;
+z34[label="34: Output XOR\nz34"];
+
+mjf -> dpv;
+srr -> dpv;
+dpv[label="18: Carry Out OR\ndpv"];
+
+tqg -> z40;
+dfv -> z40;
+z40[label="40: Output XOR\nz40"];
+
+mhs -> whd;
+pbn -> whd;
+whd[label="04: Output AND\nwhd"];
+
+wdg -> bmh;
+fbp -> bmh;
+bmh[label="03: Output AND\nbmh"];
+
+ktw -> hwf;
+jwh -> hwf;
+hwf[label="36: Carry Out OR\nhwf"];
+
+y04 -> pbn;
+x04 -> pbn;
+pbn[label="04: Input XOR\npbn"];
+
+x06 -> fgk;
+y06 -> fgk;
+fgk[label="06: Input XOR\nfgk"];
+
+mbc -> z31;
+sjk -> z31;
+z31[label="31: Output XOR\nz31"];
+
+x34 -> mhc;
+y34 -> mhc;
+mhc[label="34: Input XOR\nmhc"];
+
+jvj -> jmq;
+bch -> jmq;
+jmq[label="26: Carry Out OR\njmq"];
+
+x26 -> stc;
+y26 -> stc;
+stc[label="26: Input XOR\nstc"];
+
+x04 -> wmc;
+y04 -> wmc;
+wmc[label="04: Input AND\nwmc"];
+
+y05 -> vfm;
+x05 -> vfm;
+vfm[label="05: Input AND\nvfm"];
+
+msp -> dqc;
+shq -> dqc;
+dqc[label="28: Output AND\ndqc"];
+
+jpj -> z18;
+brn -> z18;
+z18[label="18: Output XOR\nz18"];
+
+cpp -> kcv;
+tnf -> kcv;
+kcv[label="31: Carry Out OR\nkcv"];
+
+pjv -> jnn;
+bhn -> jnn;
+jnn[label="05: Output AND\njnn"];
+
+qjd -> bgj;
+kvn -> bgj;
+bgj[label="UNKNOWN AND\nbgj"];
+
+x42 -> msd;
+y42 -> msd;
+msd[label="42: Input XOR\nmsd"];
+
+ckj -> z24;
+jjh -> z24;
+z24[label="24: Output XOR\nz24"];
+
+fgk -> z06;
+jbp -> z06;
+z06[label="06: Output XOR\nz06"];
+
+rtp -> skt;
+dnc -> skt;
+skt[label="08: Output AND\nskt"];
+
+bqf -> jjt;
+vnc -> jjt;
+jjt[label="39: Output AND\njjt"];
+
+jnn -> jbp;
+vfm -> jbp;
+jbp[label="05: Carry Out OR\njbp"];
+
+knv -> jsr;
+tkv -> jsr;
+jsr[label="12: Carry Out OR\njsr"];
+
+dpv -> fvd;
+mgr -> fvd;
+fvd[label="19: Output AND\nfvd"];
+
+vjb -> gbg;
+wcd -> gbg;
+gbg[label="01: Carry Out OR\ngbg"];
+
+mdr -> fvk;
+dqc -> fvk;
+fvk[label="28: Carry Out OR\nfvk"];
+
+x10 -> vjd;
+y10 -> vjd;
+vjd[label="10: Input XOR\nvjd"];
+
+ccq -> vdt;
+hns -> vdt;
+vdt[label="24: Carry Out OR\nvdt"];
+
+y13 -> kph;
+x13 -> kph;
+kph[label="13: Input XOR\nkph"];
+
+ghk -> z09;
+pnr -> z09;
+z09[label="09: Output XOR\nz09"];
+
+y36 -> fjc;
+x36 -> fjc;
+fjc[label="36: Input XOR\nfjc"];
+
+x18 -> brn;
+y18 -> brn;
+brn[label="18: Input XOR\nbrn"];
+
+skt -> pnr;
+cdj -> pnr;
+pnr[label="08: Carry Out OR\npnr"];
+
+fkq -> dkn;
+qfs -> dkn;
+dkn[label="10: Carry Out OR\ndkn"];
+
+y08 -> z08;
+x08 -> z08;
+z08[label="08: Input AND\nz08"];
+
+gtm -> tfr;
+mqp -> tfr;
+tfr[label="41: Carry Out OR\ntfr"];
+
+mhm -> hsq;
+mhc -> hsq;
+hsq[label="34: Output AND\nhsq"];
+
+jbc -> z32;
+mnv -> z32;
+z32[label="32: Carry Out OR\nz32"];
+
+rpq -> bdd;
+pfh -> bdd;
+bdd[label="35: Output AND\nbdd"];
+
+x27 -> wqf;
+y27 -> wqf;
+wqf[label="27: Input AND\nwqf"];
+
+x00 -> gsv;
+y00 -> gsv;
+gsv[label="00: Input AND\ngsv"];
+
+y41 -> jhb;
+x41 -> jhb;
+jhb[label="41: Input XOR\njhb"];
+
+hrj -> wfs;
+tjh -> wfs;
+wfs[label="22: Output AND\nwfs"];
+
+x02 -> vgg;
+y02 -> vgg;
+vgg[label="02: Input XOR\nvgg"];
+
+wkh -> z17;
+fhk -> z17;
+z17[label="17: Output XOR\nz17"];
+
+stv -> z43;
+vfw -> z43;
+z43[label="43: Output XOR\nz43"];
+
+y07 -> stn;
+x07 -> stn;
+stn[label="07: Input XOR\nstn"];
+
+x20 -> mmk;
+y20 -> mmk;
+mmk[label="20: Input AND\nmmk"];
+
+x00 -> z00;
+y00 -> z00;
+z00[label="00: Output XOR\nz00"];
+
+stp -> cjh;
+fvd -> cjh;
+cjh[label="19: Carry Out OR\ncjh"];
+
+ffg -> z07;
+stn -> z07;
+z07[label="07: Output XOR\nz07"];
+
+y24 -> ccq;
+x24 -> ccq;
+ccq[label="24: Input AND\nccq"];
+
+x28 -> shq;
+y28 -> shq;
+shq[label="28: Input XOR\nshq"];
+
+}

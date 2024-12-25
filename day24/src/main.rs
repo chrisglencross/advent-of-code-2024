@@ -21,9 +21,9 @@ fn main() -> std::io::Result<()> {
     println!("For each single bit adder with an error confirm that:");
     println!("  1. (x, y) -> XOR1");
     println!("  2. (x, y) -> AND1");
-    println!("  3. (XOR1, Carry In)) -> XOR2 (aka. Output)");
+    println!("  3. (XOR1, Carry In)) -> XOR2 (aka. OUTPUT)");
     println!("  4. (XOR1, Carry In)) -> AND2");
-    println!("  5. (AND1, AND2) -> OR (aka. Carry Out)");
+    println!("  5. (AND1, AND2) -> OR (aka. CARRY)");
 
     return Ok(());
 }
@@ -153,29 +153,29 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         let is_output = gate.starts_with("z");
         if let Some(GateInfo::XOR2(_)) = labels.get(gate) {
             if !is_output {
-                labels.insert(gate, GateInfo::ERROR(String::from("XOR2 gates should be named with a 'z'")));
+                labels.insert(gate, GateInfo::ERROR(String::from("OUTPUT (XOR2) gates should be named with a 'z'")));
             }
         } else if is_output && gate != "z00" && gate != "z01" {
-            labels.insert(gate, GateInfo::ERROR(String::from(format!("Output gate {gate} named with a 'z' should be XOR2"))));
+            labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate {gate} named with a 'z' should be OUTPUT (XOR2)"))));
         }
     }
 
     let path = "day24/graphviz.dot";
     let mut output = File::create(path)?;
     writeln!(output, "digraph G {{")?;
-    for (gate, (i1, op, i2)) in gates {
+    for (gate, (i1, op, i2)) in gates.iter().sorted_by_key(|&(gate, (_, op, _))| (op.clone(), gate.clone())) {
         writeln!(output, "\t{i1} -> {gate};")?;
         writeln!(output, "\t{i2} -> {gate};")?;
-        let (label, color) = match labels.get(gate) {
-            None => (String::from("UNRECOGNIZED"), "red"),
-            Some(GateInfo:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black"),
-            Some(GateInfo:: XOR2(bit)) => (String::from(format!("XOR2 bit {bit}")), "black"),
-            Some(GateInfo:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black"),
-            Some(GateInfo:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black"),
-            Some(GateInfo:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "black"),
-            Some(GateInfo::ERROR(message)) => (String::from(format!("{op}: {message}")), "red"),
+        let (label, color, shape) = match labels.get(gate) {
+            None => (String::from("UNRECOGNIZED"), "red", "box"),
+            Some(GateInfo:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black", "diamond"),
+            Some(GateInfo:: XOR2(bit)) => (String::from(format!("OUTPUT bit {bit}")), "green", "oval"),
+            Some(GateInfo:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black", "doubleoctagon"),
+            Some(GateInfo:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black", "doubleoctagon"),
+            Some(GateInfo:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "blue", "hexagon"),
+            Some(GateInfo::ERROR(message)) => (String::from(format!("{message}")), "red", "box"),
         };
-        writeln!(output, "\t{gate}[color=\"{color}\" label=\"{label}\\n{op} {gate}\"];\n")?;
+        writeln!(output, "\t{gate}[color=\"{color}\" shape=\"{shape}\" label=\"{label}\\n{op} {gate}\"];\n")?;
     }
     writeln!(output, "}}")?;
 

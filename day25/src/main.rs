@@ -25,23 +25,24 @@ fn parse_input(input: &str) -> (Vec<Vec<i64>>, Vec<Vec<i64>>) {
 
     let locks = grids.iter()
         .filter(|grid| is_lock(grid))
-        .map(|grid|  (0..grid.get_width())
-            .map(|x| (0..grid.get_height())
-                .filter(|&y| grid.get((x, y)).unwrap() == '#')
-                .max().unwrap())
-            .collect())
+        .map(|grid| parse_grid(grid, true))
         .collect();
 
     let keys = grids.iter()
         .filter(|grid| !is_lock(grid))
-        .map(|grid| (0..grid.get_width())
-            .map(|x| (0..grid.get_height())
-                .filter(|&y| grid.get((x, grid.get_height() - y - 1)).unwrap() == '#')
-                .max().unwrap())
-            .collect())
+        .map(|grid| parse_grid(grid, false))
         .collect();
 
     (locks, keys)
+}
+
+fn parse_grid(grid: &Grid, is_lock: bool) -> Vec<i64> {
+    let h = grid.get_height();
+    (0..grid.get_width())
+        .map(|x| (0..h)
+            .filter(|&y| grid.get((x, if is_lock {y} else {h-y-1})).unwrap() == '#')
+            .max().unwrap())
+        .collect()
 }
 
 fn is_lock(grid: &Grid) -> bool {

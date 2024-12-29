@@ -21,20 +21,20 @@ fn main() {
     print(&robot_positions_after(&robots, max_interesting_ticks));
 }
 
-fn interesting_score_after(start: &Vec<(Coord, Coord)>, ticks: i64) -> usize {
+fn interesting_score_after(start: &[(Coord, Coord)], ticks: i64) -> usize {
     let robots = robot_positions_after(start, ticks);
     let coords: HashSet<_> = robots.iter().collect();
     robots.iter()
-        .filter(|&(x, y)| coords.contains(&(x+1, y+0)) )
+        .filter(|&(x, y)| coords.contains(&(x+1, *y)) )
         .count()
 }
 
-fn quadrant_score_after(start: &Vec<(Coord, Coord)>, ticks: i64) -> i64 {
+fn quadrant_score_after(start: &[(Coord, Coord)], ticks: i64) -> i64 {
     let coords = robot_positions_after(start, ticks);
     quadrant_score(&coords)
 }
 
-fn robot_positions_after(start: &Vec<(Coord, Coord)>, ticks: i64) -> Vec<Coord> {
+fn robot_positions_after(start: &[(Coord, Coord)], ticks: i64) -> Vec<Coord> {
     start.iter()
         .map(|&(p, v)| robot_position_after(p, v, ticks))
         .collect()
@@ -44,7 +44,7 @@ fn robot_position_after(p: Coord, v: Coord, ticks: i64) -> Coord {
     ((p.0 + v.0 * ticks).rem_euclid(WIDTH), (p.1 + v.1 * ticks).rem_euclid(HEIGHT))
 }
 
-fn quadrant_score(robots: &Vec<Coord>) -> i64 {
+fn quadrant_score(robots: &[Coord]) -> i64 {
     let qs: HashMap<(bool, bool), i64> = robots.iter()
         .filter_map(|&c| quadrant(c))
         .fold(HashMap::new(), |mut acc, c| {
@@ -52,7 +52,7 @@ fn quadrant_score(robots: &Vec<Coord>) -> i64 {
             acc
         });
 
-    qs.values().fold(1, |x, y| x * y)
+    qs.values().product::<i64>()
 }
 
 fn quadrant(c: Coord) -> Option<(bool, bool)> {
@@ -63,7 +63,7 @@ fn quadrant(c: Coord) -> Option<(bool, bool)> {
     }
 }
 
-fn print(robots: &Vec<Coord>) {
+fn print(robots: &[Coord]) {
     let grid = Grid::new_with_coords(robots.iter(), '*');
     grid.print();
 }

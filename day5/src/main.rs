@@ -25,7 +25,7 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-fn sort_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
+fn sort_update(update: &[i64], rules: &HashSet<(i64, i64)>) -> Vec<i64> {
     update.iter()
         .sorted_by(|&a, &b|
             if rules.contains(&(*a, *b)) {
@@ -34,7 +34,7 @@ fn sort_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
                 Ordering::Greater
             }
         )
-        .map(|&i| i)
+        .copied()
         .collect()
 }
 
@@ -52,5 +52,5 @@ fn parse_input(input: &str) -> (HashSet<(i64, i64)>, Vec<Vec<i64>>) {
         .map(|line| line.split(',').map(|n| n.parse().unwrap()).collect())
         .collect();
 
-    return (rules, updates);
+    (rules, updates)
 }

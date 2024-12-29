@@ -60,7 +60,7 @@ fn get_solutions(grid: &Grid) -> Vec<Node> {
         } else if node.position.0 == end {
             solutions.push(node.clone());
         } else {
-            let next_nodes: Vec<Node> = get_next_nodes(&grid, &node).into_iter()
+            let next_nodes: Vec<Node> = get_next_nodes(grid, &node).into_iter()
                 .filter(|n| is_best_score(&best_scores, &solutions, n))
                 .collect();
             for &Node { position, score, .. } in &next_nodes {
@@ -73,7 +73,7 @@ fn get_solutions(grid: &Grid) -> Vec<Node> {
     solutions
 }
 
-fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &Vec<Node>, node: &Node) -> bool {
+fn is_best_score(best_scores: &HashMap<Position, i64>, solutions: &[Node], node: &Node) -> bool {
     if !&solutions.is_empty() && node.score > solutions[0].score {
         false
     } else {

@@ -3,10 +3,12 @@ use std::fs::File;
 use std::io::Write;
 use std::ops::Deref;
 
-use itertools;
 use itertools::Itertools;
 
 const DAY: u8 = 24;
+
+type Inputs = HashMap<String, u8>;
+type Gates = HashMap<String, (String, String, String)>;
 
 fn main() -> std::io::Result<()> {
     let input = aocutil::load_input(DAY);
@@ -25,11 +27,11 @@ fn main() -> std::io::Result<()> {
     println!("  4. (XOR1, Carry In)) -> AND2");
     println!("  5. (AND1, AND2) -> OR (aka. CARRY)");
 
-    return Ok(());
+    Ok(())
 }
 
 /// Draw a graph of the gates, highlighting errors in red where this is not a standard full adder.
-fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::io::Result<String> {
+fn generate_diagram(gates: &Gates) -> std::io::Result<String> {
 
     enum GateInfo {
         XOR1(u8),
@@ -37,7 +39,7 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         AND1(u8),
         AND2(u8),
         OR(u8), // aka. "Carry out"
-        ERROR(String)
+        Error(String)
     }
 
     let mut labels: HashMap<&String, GateInfo> = HashMap::new();
@@ -50,16 +52,16 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
             let xbit = &x[1..];
             let ybit= &y[1..];
             if xbit != ybit {
-                labels.insert(gate, GateInfo::ERROR(String::from(format!("Input connections for different bits {x} and {y}"))));
+                labels.insert(gate, GateInfo::Error(format!("Input connections for different bits {x} and {y}")));
             } else if op == "XOR" {
                 labels.insert(gate, GateInfo::XOR1(xbit.parse().unwrap()));
             } else if op == "AND" {
                 labels.insert(gate, GateInfo::AND1(xbit.parse().unwrap()));
             } else {
-                labels.insert(gate, GateInfo::ERROR(String::from(format!("Inputs should be connected to AND and XOR, not {op}"))));
+                labels.insert(gate, GateInfo::Error(format!("Inputs should be connected to AND and XOR, not {op}")));
             }
         } else if x.is_some() || y.is_some() {
-            labels.insert(gate, GateInfo::ERROR(String::from("Single input connection")));
+            labels.insert(gate, GateInfo::Error(String::from("Single input connection")));
         }
     }
 
@@ -82,10 +84,10 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
                 } else if op == "XOR" {
                     labels.insert(gate, GateInfo::XOR2(bit));
                 } else {
-                    labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate has unexpected input from XOR1"))));
+                    labels.insert(gate, GateInfo::Error("Gate has unexpected input from XOR1".to_string()));
                 }
             } else if op == "AND" || op == "XOR" {
-                labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate should have an input from XOR1"))));
+                labels.insert(gate, GateInfo::Error("Gate should have an input from XOR1".to_string()));
             }
         }
     }
@@ -111,12 +113,12 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
             };
             if op == "OR" {
                 if and1_bit.is_none() || and2_bit.is_none() {
-                    labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate should have an input from both AND1 and AND2"))));
+                    labels.insert(gate, GateInfo::Error("Gate should have an input from both AND1 and AND2".to_string()));
                 } else {
                     labels.insert(gate, GateInfo::OR(and2_bit.unwrap()));
                 }
             } else {
-                labels.insert(gate, GateInfo::ERROR(String::from(format!("Unrecognised gate"))));
+                labels.insert(gate, GateInfo::Error("Unrecognised gate".to_string()));
             }
         }
     }
@@ -140,23 +142,23 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         if let Some(self_bit) = self_bit {
             if let Some(or_bit) = or_bit {
                 if self_bit != or_bit + 1 {
-                    labels.insert(gate, GateInfo::ERROR(String::from("Carry bit input is from incorrect preceding adder")));
+                    labels.insert(gate, GateInfo::Error(String::from("Carry bit input is from incorrect preceding adder")));
                 }
             } else if self_bit > 1 {
-                labels.insert(gate, GateInfo::ERROR(String::from("Expected carry bit input from previous adder")));
+                labels.insert(gate, GateInfo::Error(String::from("Expected carry bit input from previous adder")));
             }
         }
     }
 
     // Verify that 'z' output bits are XOR2
-    for (gate, _) in gates {
+    for gate in gates.keys() {
         let is_output = gate.starts_with("z");
         if let Some(GateInfo::XOR2(_)) = labels.get(gate) {
             if !is_output {
-                labels.insert(gate, GateInfo::ERROR(String::from("OUTPUT (XOR2) gates should be named with a 'z'")));
+                labels.insert(gate, GateInfo::Error(String::from("OUTPUT (XOR2) gates should be named with a 'z'")));
             }
         } else if is_output && gate != "z00" && gate != "z01" {
-            labels.insert(gate, GateInfo::ERROR(String::from(format!("Gate {gate} named with a 'z' should be OUTPUT (XOR2)"))));
+            labels.insert(gate, GateInfo::Error(format!("Gate {gate} named with a 'z' should be OUTPUT (XOR2)")));
         }
     }
 
@@ -168,12 +170,12 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
         writeln!(output, "\t{i2} -> {gate};")?;
         let (label, color, shape) = match labels.get(gate) {
             None => (String::from("UNRECOGNIZED"), "red", "box"),
-            Some(GateInfo:: XOR1(bit)) => (String::from(format!("XOR1 bit {bit}")), "black", "diamond"),
-            Some(GateInfo:: XOR2(bit)) => (String::from(format!("OUTPUT bit {bit}")), "green", "oval"),
-            Some(GateInfo:: AND1(bit)) => (String::from(format!("AND1 bit {bit}")), "black", "doubleoctagon"),
-            Some(GateInfo:: AND2(bit)) => (String::from(format!("AND2 bit {bit}")), "black", "doubleoctagon"),
-            Some(GateInfo:: OR(bit)) => (String::from(format!("CARRY bit {bit}")), "blue", "hexagon"),
-            Some(GateInfo::ERROR(message)) => (String::from(format!("{message}")), "red", "box"),
+            Some(GateInfo:: XOR1(bit)) => (format!("XOR1 bit {bit}"), "black", "diamond"),
+            Some(GateInfo:: XOR2(bit)) => (format!("OUTPUT bit {bit}"), "green", "oval"),
+            Some(GateInfo:: AND1(bit)) => (format!("AND1 bit {bit}"), "black", "doubleoctagon"),
+            Some(GateInfo:: AND2(bit)) => (format!("AND2 bit {bit}"), "black", "doubleoctagon"),
+            Some(GateInfo:: OR(bit)) => (format!("CARRY bit {bit}"), "blue", "hexagon"),
+            Some(GateInfo::Error(message)) => (message.to_string(), "red", "box"),
         };
         writeln!(output, "\t{gate}[color=\"{color}\" shape=\"{shape}\" label=\"{label}\\n{op} {gate}\"];\n")?;
     }
@@ -182,7 +184,7 @@ fn generate_diagram(gates: &HashMap<String, (String, String, String)>) -> std::i
     Ok(String::from(path))
 }
 
-fn evaluate(gate: &String, gates: &HashMap<String, (String, String, String)>, inputs: &HashMap<String, u8>) -> u64 {
+fn evaluate(gate: &String, gates: &Gates, inputs: &Inputs) -> u64 {
     if let Some(&input) = inputs.get(gate) {
         input as u64
     } else if let Some((i1, op, i2)) = gates.get(gate) {
@@ -199,7 +201,7 @@ fn evaluate(gate: &String, gates: &HashMap<String, (String, String, String)>, in
     }
 }
 
-fn parse_input(input: &str) -> (HashMap<String, u8>, HashMap<String, (String, String, String)>) {
+fn parse_input(input: &str) -> (Inputs, Gates) {
     let (block1, block2) = input.split_once("\n\n").unwrap();
 
     let inputs: HashMap<String, u8> = block1.lines()

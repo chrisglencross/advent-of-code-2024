@@ -24,7 +24,7 @@ fn process(input: &str, part1: bool) -> i64 {
             "mul" => if part1 || on {
                 result += args.split(",")
                     .filter_map(|n| n.parse::<i64>().ok())
-                    .fold(1, |x, y| x * y)
+                    .product::<i64>()
             }
             _ => panic!("Unknown operator {}", op)
         }

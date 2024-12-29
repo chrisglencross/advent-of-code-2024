@@ -41,8 +41,8 @@ fn compact_part1(fs: &Vec<Blocks>) -> Vec<Blocks> {
     compacted
 }
 
-fn compact_part2(fs: &Vec<Blocks>) -> Vec<Blocks> {
-    let mut compacted = fs.clone();
+fn compact_part2(fs: &[Blocks]) -> Vec<Blocks> {
+    let mut compacted = fs.iter().cloned().collect_vec();
     for &file in fs.iter().rev() {
         if let Blocks::File { id: file_id, length: file_length } = file {
             if let Some((free_index, free_length)) = find_first_free(&compacted, file_length) {
@@ -60,14 +60,14 @@ fn compact_part2(fs: &Vec<Blocks>) -> Vec<Blocks> {
     compacted
 }
 
-fn find_file_index_by_id(compacted: &Vec<Blocks>, file_id: usize) -> usize {
+fn find_file_index_by_id(compacted: &[Blocks], file_id: usize) -> usize {
     compacted.iter().find_position(|f| match f {
         Blocks::Free { .. } => false,
         Blocks::File { id, .. } => *id == file_id
     }).unwrap().0
 }
 
-fn find_first_free(fs: &Vec<Blocks>, min_length: u32) -> Option<(usize, u32)> {
+fn find_first_free(fs: &[Blocks], min_length: u32) -> Option<(usize, u32)> {
     fs.iter().enumerate().find_map(|(i, b)| match b {
         Blocks::Free { length } => if *length >= min_length { Some((i, *length)) } else { None },
         Blocks::File { .. } => None,

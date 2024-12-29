@@ -11,7 +11,7 @@ fn main() {
     println!("Part 2: {}", length_after_iterations(&numbers, 75, &mut cache));
 }
 
-fn length_after_iterations(values: &Vec<u64>, iterations: u32, cache: &mut HashMap<(u64, u32), usize>) -> usize {
+fn length_after_iterations(values: &[u64], iterations: u32, cache: &mut HashMap<(u64, u32), usize>) -> usize {
     values.iter()
         .map(|&value| length_after_iterations1(value, iterations, cache))
         .sum()

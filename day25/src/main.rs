@@ -1,5 +1,4 @@
 use aocutil::grid::Grid;
-use itertools;
 use itertools::iproduct;
 
 const DAY: u8 = 25;
@@ -14,13 +13,13 @@ fn main() {
     println!("Part 1: {part1}");
 }
 
-fn is_compatible(lock: &Vec<i64>, key: &Vec<i64>) -> bool {
+fn is_compatible(lock: &[i64], key: &[i64]) -> bool {
     lock.iter().zip(key).all(|(a, b)| a + b <= 5)
 }
 
 fn parse_input(input: &str) -> (Vec<Vec<i64>>, Vec<Vec<i64>>) {
     let grids: Vec<Grid> = input.split("\n\n")
-        .map(|b| Grid::parse(b))
+        .map(Grid::parse)
         .collect();
 
     let locks = grids.iter()

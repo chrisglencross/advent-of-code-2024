@@ -25,7 +25,7 @@ fn numeric_value(line: &str) -> i64 {
 
 fn button_presses_for_code(code: &str, directional_keypad_count: i64) -> i64 {
 
-    let mut keypad_moves = chars_to_keypad_moves(&code.chars().collect());
+    let mut keypad_moves = chars_to_keypad_moves(&code.chars().collect::<Vec<char>>());
 
     let numerical_keypad =
         Grid::parse("789\n456\n123\n.0A").index_cells("", "");
@@ -37,10 +37,10 @@ fn button_presses_for_code(code: &str, directional_keypad_count: i64) -> i64 {
         keypad_moves = use_keypad(&directional_keypad, &keypad_moves);
     }
 
-    return keypad_moves.values().sum();
+    keypad_moves.values().sum()
 }
 
-fn chars_to_keypad_moves(code: &Vec<char>) -> HashMap<(char, char), i64> {
+fn chars_to_keypad_moves(code: &[char]) -> HashMap<(char, char), i64> {
     let mut result = HashMap::new();
     for (&from, &to) in ['A'].iter().chain(code.iter()).zip(code.iter()) {
         *result.entry((from, to)).or_default() += 1;
@@ -65,11 +65,11 @@ fn use_keypad(keypad: &HashMap<char, Coord>, moves_to_perform: &HashMap<(char, c
 fn direction_buttons_to_move(start: &Coord, end: &Coord, avoid: &Coord) -> Vec<char> {
 
     let h = {
-        let distance = (start.0 - end.0).abs() as usize;
+        let distance = (start.0 - end.0).unsigned_abs() as usize;
         if start.0 > end.0 { ['<'].repeat(distance) } else { ['>'].repeat(distance) }
     };
     let v = {
-        let distance = (start.1 - end.1).abs() as usize;
+        let distance = (start.1 - end.1).unsigned_abs() as usize;
         if start.1 > end.1 { ['^'].repeat(distance) } else { ['v'].repeat(distance) }
     };
 
@@ -83,15 +83,16 @@ fn direction_buttons_to_move(start: &Coord, end: &Coord, avoid: &Coord) -> Vec<c
         output(&h, &v)
     // If we still have both possibilities, finish the sequence with one of '>', '^', 'v' or '<',
     // in that order of preference, so that we end up near the top-right to type the final 'A'.
-    } else if h.ends_with(&vec!['>']) {
+    } else if h.ends_with(&['>']) {
         output(&v, &h)
     } else {
         output(&h, &v)
     }
 }
 
-fn output(a: &Vec<char>, b: &Vec<char>) -> Vec<char> {
-    let mut result = a.clone();
+fn output(a: &[char], b: &[char]) -> Vec<char> {
+    let mut result = Vec::new();
+    result.extend(a);
     result.extend(b);
     result.push('A');
     result

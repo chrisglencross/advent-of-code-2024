@@ -28,7 +28,7 @@ impl Direction {
         Direction{name, delta}
     }
     pub fn name(&self) -> &str {
-        &self.name
+        self.name
     }
     pub fn delta(&self) -> (i64, i64) {
         self.delta
@@ -185,7 +185,7 @@ impl Directions for Compass8 {
 }
 
 impl Compass8 {
-    pub const fn new() -> Compass8 {
+    const fn new() -> Compass8 {
         Compass8 {
             n: Direction::new("N", (0, -1)),
             ne: Direction::new("NE", (1, -1)),

@@ -1,4 +1,3 @@
-use itertools;
 use itertools::Itertools;
 
 use aocutil::coord;
@@ -34,9 +33,7 @@ fn count_unique_locations(locations_for_mast_pair: fn(Coord, Coord, &Grid) -> Ve
 
 fn locations_for_mast_pair_pt1(a: Coord, b: Coord, _grid: &Grid) -> Vec<Coord> {
     let d = coord::sub(b, a);
-    [coord::sub(a, d), coord::add(b, d)].iter()
-        .map(|&c| c)
-        .collect()
+    [coord::sub(a, d), coord::add(b, d)].to_vec()
 }
 
 fn locations_for_mast_pair_pt2(a: Coord, b: Coord, grid: &Grid) -> Vec<Coord> {
@@ -44,6 +41,6 @@ fn locations_for_mast_pair_pt2(a: Coord, b: Coord, grid: &Grid) -> Vec<Coord> {
     (0..)
         .map(|i| [coord::sub(a, coord::mul(d, i)), coord::add(b, coord::mul(d, i))])
         .take_while(|cs| cs.iter().any(|&c| grid.contains_coord(c)))
-        .flat_map(|cs| cs)
+        .flatten()
         .collect()
 }

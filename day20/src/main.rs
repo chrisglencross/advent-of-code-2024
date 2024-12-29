@@ -16,7 +16,7 @@ fn main() {
     println!("Part 2: {}", shortcuts_saving_at_least_100(&route, 20));
 }
 
-fn shortcuts_saving_at_least_100(route: &Vec<Coord>, max_shortcut_distance: i64) -> i64 {
+fn shortcuts_saving_at_least_100(route: &[Coord], max_shortcut_distance: i64) -> i64 {
     let mut count = 0;
     for (d0, &c0) in route.iter().enumerate() {
         for (route_distance, &c1) in route[d0..].iter().enumerate() {

@@ -17,18 +17,18 @@ fn main() {
     println!("Part 2: {part2}");
 }
 
-fn is_safe(row: &Vec<i64>) -> bool {
+fn is_safe(row: &[i64]) -> bool {
     (row.iter().is_sorted() || row.iter().rev().is_sorted()) &&
         zip(&row[0..row.len() - 1], &row[1..])
             .all(|(&n0, &n1)| (1..=3).contains(&(n1 - n0).abs()))
 }
 
-fn is_safe_with_dampener(row: &Vec<i64>) -> bool {
+fn is_safe_with_dampener(row: &[i64]) -> bool {
     is_safe(row) || (0..row.len())
         .map(|remove_index| row.iter().enumerate()
             .filter_map(|(i, r)| if i == remove_index { None } else { Some(*r) })
             .collect())
-        .any(|dampened_row| is_safe(&dampened_row))
+        .any(|dampened_row: Vec<i64>| is_safe(&dampened_row))
 }
 
 fn parse_input(input: &str) -> Vec<Vec<i64>> {

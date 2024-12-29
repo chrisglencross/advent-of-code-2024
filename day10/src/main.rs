@@ -1,4 +1,3 @@
-use itertools;
 use itertools::Itertools;
 
 use aocutil::coord::Coord;

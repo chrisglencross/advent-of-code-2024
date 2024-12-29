@@ -11,6 +11,12 @@ pub struct Grid {
     bounds: RefCell<Option<(Coord, Coord)>>
 }
 
+impl Default for Grid {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Grid {
     pub fn new() -> Grid {
         Grid { data: HashMap::new(), bounds: RefCell::new(None) }
@@ -23,7 +29,7 @@ impl Grid {
     }
     pub fn load(filename: &str) -> Grid {
         let content = fs::read_to_string(filename)
-            .expect(&format!("Unable to read file {}", filename));
+            .unwrap_or_else(|e| panic!("Unable to read file {}: {}", filename, e));
 
         Self::parse(&content)
     }
@@ -137,7 +143,7 @@ impl Grid {
     }
 
     pub fn all_coords(&self) -> HashSet<Coord> {
-        self.data.keys().map(|&c| c).collect()
+        self.data.keys().copied().collect()
     }
 
     pub fn contains_coord(&self, coord: Coord) -> bool {
@@ -147,10 +153,8 @@ impl Grid {
     pub fn index_cells(&self, symbols: &str, not_symbols: &str) -> HashMap<char, Coord> {
         let mut result = HashMap::new();
         for (&coord, &symbol) in self.data.iter().by_ref() {
-            if Self::index_symbol(symbol, symbols, not_symbols) {
-                if result.insert(symbol, coord).is_some() {
-                    panic!("Symbol '{}' should not appear more than once in the grid. Use 'index_repeating_cells' to fine multiple instances.", symbol);
-                }
+            if Self::index_symbol(symbol, symbols, not_symbols) && result.insert(symbol, coord).is_some() {
+                panic!("Symbol '{}' should not appear more than once in the grid. Use 'index_repeating_cells' to fine multiple instances.", symbol);
             }
         }
         result
@@ -167,9 +171,9 @@ impl Grid {
     }
 
     fn index_symbol(symbol: char, symbols: &str, not_symbols: &str) -> bool {
-        (symbols != "" && symbols.contains(symbol))
-            || (not_symbols != "" && !not_symbols.contains(symbol))
-            || (symbols == "" && not_symbols == "")
+        (!symbols.is_empty() && symbols.contains(symbol))
+            || (!not_symbols.is_empty() && !not_symbols.contains(symbol))
+            || (symbols.is_empty() && not_symbols.is_empty())
     }
 
     pub fn print(&self) {

@@ -23,11 +23,11 @@ fn main() {
 }
 
 fn add_coords_until_no_route(grid: &mut Grid, start: Coord, end: Coord, remaining_coords: Vec<Coord>) -> Coord {
-    let mut current_route = shortest_route(&grid, start, end).unwrap();
+    let mut current_route = shortest_route(grid, start, end).unwrap();
     for coord in remaining_coords {
         grid.set(coord, '#');
         if current_route.contains(&coord) {
-            match shortest_route(&grid, (0, 0), end) {
+            match shortest_route(grid, (0, 0), end) {
                 Some(route) => current_route = route,
                 None => return coord
             }

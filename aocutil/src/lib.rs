@@ -14,7 +14,7 @@ pub fn load_input(day: u8) -> String {
 
 fn load_file(filename: &str) -> String {
     let input = fs::read_to_string(filename)
-        .expect(&format!("Unable to read file {}", filename));
+        .unwrap_or_else(|_| panic!("Unable to read file {}", filename));
     if input.is_empty() {
         panic!("File '{filename}' should not be empty");
     }

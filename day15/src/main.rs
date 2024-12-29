@@ -14,7 +14,7 @@ fn main() {
     part2(&convert_grid_to_part2(&grid), &directions);
 }
 
-fn part1(grid: &Grid, directions: &String) {
+fn part1(grid: &Grid, directions: &str) {
     let mut robot = grid.find_cell('@').unwrap();
     let mut boxes: HashSet<Coord> = grid.find_cells('O').into_iter().collect();
 
@@ -40,7 +40,7 @@ fn part1(grid: &Grid, directions: &String) {
     println!("Part 1: {}", score(&boxes));
 }
 
-fn part2(grid: &Grid, directions: &String) {
+fn part2(grid: &Grid, directions: &str) {
     let mut robot = grid.find_cell('@').unwrap();
     let mut box_lefts: HashSet<Coord> = grid.find_cells('[').into_iter().collect();
     let mut box_rights: HashSet<Coord> = grid.find_cells(']').into_iter().collect();
@@ -55,7 +55,7 @@ fn part2(grid: &Grid, directions: &String) {
         let mut pusher_targets = vec![robot_target];
         let mut pushed_boxes: Vec<(Coord, Coord)>;
         while {
-            pushed_boxes = get_pushed_boxes(&grid, &box_lefts, &box_rights, &pusher_targets);
+            pushed_boxes = get_pushed_boxes(grid, &box_lefts, &box_rights, &pusher_targets);
             !pushed_boxes.is_empty()
         } {
             pusher_targets = Vec::new();
@@ -83,7 +83,7 @@ fn part2(grid: &Grid, directions: &String) {
 }
 
 
-fn get_pushed_boxes(grid: &Grid, box_left: &HashSet<Coord>, box_right: &HashSet<Coord>, pusher_targets: &Vec<Coord>) -> Vec<(Coord, Coord)> {
+fn get_pushed_boxes(grid: &Grid, box_left: &HashSet<Coord>, box_right: &HashSet<Coord>, pusher_targets: &[Coord]) -> Vec<(Coord, Coord)> {
     if pusher_targets.iter().any(|&t| grid.get_or(t, '.') == '#') {
         Vec::new()
     } else {

@@ -22,7 +22,7 @@ fn main() {
 
 }
 
-fn run(registers: (i64, i64, i64), program: &Vec<i64>) -> Vec<i64> {
+fn run(registers: (i64, i64, i64), program: &[i64]) -> Vec<i64> {
     let (mut a, mut b, mut c) = registers;
     let mut pc = 0;
     let mut output = vec![];
@@ -36,7 +36,7 @@ fn run(registers: (i64, i64, i64), program: &Vec<i64>) -> Vec<i64> {
             BXL => b ^= arg,
             BST => b = combo(arg, a, b, c) % 8,
             JNZ => if a != 0 { pc = arg as usize; },
-            BXC => b = b ^ c,
+            BXC => b ^= c,
             OUT => output.push(combo(arg, a, b, c) % 8),
             BDV => b = a >> combo(arg, a, b, c),
             CDV => c = a >> combo(arg, a, b, c),
@@ -69,18 +69,18 @@ fn run_hardcoded(registers: (i64, i64, i64)) -> Vec<i64> {
     let mut output: Vec<i64> = vec![];
     while a != 0 {
         let mut b = a % 8;     // BST 4 | take last 3 bits of a
-        b = b ^ 2;                  // BXL 2 | toggle second bit
+        b ^= 2;                  // BXL 2 | toggle second bit
         let c = a >> b;        // CDV 5 | take 3 higher bits of a (could be up to the 10th bit)
-        b = b ^ 7;                  // BXL 7 | b = not b
-        b = b ^ c;                  // BXC 4 | b = b xor c
-        a = a >> 3;                 // ADV 3 | shift to next 3 bit chunk of a
+        b ^= 7;                  // BXL 7 | b = not b
+        b ^= c;                  // BXC 4 | b = b xor c
+        a >>= 3;                 // ADV 3 | shift to next 3 bit chunk of a
         output.push(b % 8);   // OUT 5 | output b last 3 bits
     }
     output
 }
 
 fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
-    let program_rev: Vec<i64> = program.iter().rev().map(|n| *n).collect();
+    let program_rev: Vec<i64> = program.iter().rev().copied().collect();
 
     let mut octal_a: [i64; 16] = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let mut correct_octal_digits = 0;
@@ -99,10 +99,10 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
         // and in general discover the most significant digits first. This also helps ensure that we find
         // the lowest possible solution value.
 
-        octal_a[correct_octal_digits + 0] = (counter >> 9) % 8;
+        octal_a[correct_octal_digits] = (counter >> 9) % 8;
         octal_a[correct_octal_digits + 1] = (counter >> 6) % 8;
         octal_a[correct_octal_digits + 2] = (counter >> 3) % 8;
-        octal_a[correct_octal_digits + 3] = (counter >> 0) % 8;
+        octal_a[correct_octal_digits + 3] = counter % 8;
 
         // We need a non-zero value in most significant digit to get correct length output
         if octal_a[0] == 0 {
@@ -111,14 +111,14 @@ fn find_self_output(registers: (i64, i64, i64), program: &Vec<i64>) -> i64 {
 
         let a = octal_a.iter().fold(0i64, |a, n| (a << 3) + n);
 
-        let output = run((a, registers.1, registers.2), &program);
+        let output = run((a, registers.1, registers.2), program);
         if output == *program {
             return a
         }
 
         // Check if we found any more digits of correct output at the end. Each octal digit can
         // contribute towards 4 values of output.
-        let output_rev: Vec<i64> = output.iter().rev().map(|n| *n).collect();
+        let output_rev: Vec<i64> = output.iter().rev().copied().collect();
         if output_rev[correct_octal_digits..=correct_octal_digits + 3] == program_rev[correct_octal_digits..=correct_octal_digits + 3] {
             correct_octal_digits += 1;
             counter = 0;

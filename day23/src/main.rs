@@ -1,6 +1,5 @@
 use std::collections::{HashMap, HashSet};
 
-use itertools;
 use itertools::Itertools;
 
 const DAY: u8 = 23;
@@ -9,7 +8,7 @@ fn main() {
     let input = aocutil::load_input(DAY);
 
     let connections = parse_input(&input);
-    let computers: Vec<&str> = connections.keys().map(|k| *k).sorted().collect();
+    let computers: Vec<&str> = connections.keys().copied().sorted().collect();
 
     println!("Part 1: {}", count_triple_parties(&computers, &connections));
     println!("Part 2: {}", find_biggest_party(Vec::new(), &connections, &computers).iter().sorted().join(","));
@@ -21,10 +20,8 @@ fn count_triple_parties(computers: &[&str], connections: &HashMap<&str, HashSet<
         for (j, &n2) in computers[i + 1..].iter().enumerate() {
             if can_add_to_party(&[n1], n2, connections) {
                 for &n3 in computers[i + j + 1..].iter() {
-                    if can_add_to_party(&[n1, n2], n3, connections) {
-                        if n1.starts_with('t') || n2.starts_with('t') || n3.starts_with('t') {
-                            total += 1;
-                        }
+                    if can_add_to_party(&[n1, n2], n3, connections) && (n1.starts_with('t') || n2.starts_with('t') || n3.starts_with('t')) {
+                        total += 1;
                     }
                 }
             }
